@@ -18,13 +18,13 @@ The book, Microservices, IoT and Azure, provides practical guidance for adopting
 
 ##The Reference Implementation
 
-The book provides a working definition of microservices and contrasts this approach with traditional monolithic Layered Architecture. A fictitious, home-biomedical startup is used to demonstrate microservice architecture and automation capabilities for cross-cutting and business services as well as connected device scenarios for Internet of Things (IoT). Several Azure PaaS services are detailed including Storage, SQL Database, DocumentDb, Redis Cache, Cloud Services, Web API’s, API Management, IoT Hub, IoT Suite, Event Hub, and Stream Analytics. Finally the book looks to the future and examines Service Fabric to see how microservices are becoming the de facto approach to building reliable software in the cloud.
+A working definition of microservices is contrasted with with traditional monolithic layered architecture. A fictitious, home-biomedical startup is used to demonstrate microservice architecture and automation capabilities for cross-cutting and business services as well as connected device scenarios for Internet of Things (IoT). Several Azure PaaS services are detailed including Storage, SQL Database, DocumentDb, Redis Cache, Cloud Services, Web API’s, API Management, IoT Hub, IoT Suite, Event Hub, and Stream Analytics. Finally the book looks to the future and examines Service Fabric to see how microservices are becoming the de facto approach to building reliable software in the cloud.
 
 The Reference Implementation will provide PowerShell scripts to automate the Provisioning, Build, Deployment and De-Provisioning of the solution. The Solution consists of several independent Microservices built using C# and ASP.NET Web API along with DocumentDb and Redis. In addition there is an IoT component of the solution that is built using Event Hub, Stream Analytics, Cloud Services and SQL Database. There is a sample real-time data visualization client that demonstrates how to orchestrate the Microservices into a complete solution.
 
- Viewed as a whole, the Reference Implementation demonstrates how to use several Azure PaaS Services together along with custom code and automation scripts to create a modern Software-as-a-Service solution. 
+Viewed as a whole, the Reference Implementation demonstrates how to use several Azure PaaS Services together along with custom code and automation scripts to create a modern Software-as-a-Service solution. 
 
- The software is provided under the Microsoft Public License (Ms-PL) and as such the software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions.
+The software is provided under the Microsoft Public License (Ms-PL) and as such the software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions.
 
 ##What you will learn
  - What are Microservices and why are they a compelling architecture pattern for SaaS applications 
@@ -60,7 +60,7 @@ The Reference Implementation will provide PowerShell scripts to automate the Pro
  - Azure PowerShell 0.9.8
 
 ##Setup
-The details of how to provision, build and deploy the reference implementation are detailed in Chapter 5. There are 10 exercises that take you step by step through the provision, build and deploy process. Once the process is complete, you will have a complete end-to-end IoT solution running in Azure.
+The details of how to setup the reference implementation are detailed in Chapter 5. There are 10 exercises that take you step by step through the provision, build and deploy process. Once the process is complete, you will have a complete end-to-end IoT solution running in Azure.
 
 ----------
 
