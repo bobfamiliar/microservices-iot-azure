@@ -43,9 +43,7 @@ Param(
     [string]$Subscription,
     [Parameter(Mandatory=$True, Position=1, HelpMessage="The storage account name.")]
     [string]$StorageAccountName,
-    [Parameter(Mandatory=$True, Position=2, HelpMessage="The storage resource group.")]
-    [string]$StorageResourceGroup,
-    [Parameter(Mandatory=$True, Position=3, HelpMessage="The name of the Azure Region/Location: East US, Central US, West US.")]
+    [Parameter(Mandatory=$True, Position=2, HelpMessage="The name of the Azure Region/Location: East US, Central US, West US.")]
     [string]$AzureLocation
 )
 
@@ -85,23 +83,13 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-Import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure"
+#Import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure"
 
-if (Test-AzureName -Storage -Name $StorageAccountName) 
-{
-    "Storage account name '$StorageAccountName' is already taken, try another one"
-} 
-else 
-{
-    $Result = New-AzureStorageAccount -StorageAccountName $StorageAccountName -ResourceGroupName $StorageResourceGroup -Type Standard_GRS -Location $AzureLocation
-    If ($Result.OperationStatus -eq "Succeeded") {
-        $Result | Out-String
-        "Created new Storage Account '$StorageAccountName', in '$Location'"
-        Set-AzureSubscription –SubscriptionName $Subscription -CurrentStorageAccount $StorageAccountName 
-    } else {
-        "Failed to create new Storage Account '$StorageAccountName'"
-    }
-}
+# Create a storage account
+New-AzureStorageAccount –StorageAccountName $StorageAccountName -Location $AzureLocation
+
+# Set a default storage account.
+Set-AzureSubscription -CurrentStorageAccountName $StorageAccountName -SubscriptionName $Subscription
 
 # Mark the finish time.
 $FinishTime = Get-Date

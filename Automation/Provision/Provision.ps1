@@ -105,12 +105,12 @@ Select-Subscription $Subscription
 # Create Resource Groups
 .\..\Common\Create-ResourceGroup.ps1 $Subscription $DocDb_RG $AzureLocation
 .\..\Common\Create-ResourceGroup.ps1 $Subscription $Redis_RG $AzureLocation
-.\..\Common\Create-ResourceGroup.ps1 $Subscription $Storage_RG $AzureLocation
+#.\..\Common\Create-ResourceGroup.ps1 $Subscription $Storage_RG $AzureLocation
 #.\..\Common\Create-ResourceGroup.ps1 $Subscription $APIManagement_RG $AzureLocation
 
 # Create Storage Account
 $StorageName = $Prefix + "storage" + $Suffix
-.\..\Common\Create-Storage.ps1 $Subscription $StorageName $Storage_RG $AzureLocation
+.\..\Common\Create-Storage.ps1 $Subscription $StorageName $AzureLocation
 
 # Create DocumentDb
 $DocDbname = $Prefix + "docdb" + $Suffix

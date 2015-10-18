@@ -6,8 +6,8 @@
       "appSettings": [
         {
           "docdburi": "https://looksfamiliardocdbdev.documents.azure.com:443/",
-          "docdbkey": "NNkKcwObzbDEr1IWkviIvpZi8aeTci5anTBBopeReMnfGQ07Cby3TlVrfKqaDxl2+g+VGWcJ67R4KVXgYXc6Og==",
-          "redisuri": "looksfamiliarredisdev.redis.cache.windows.net,ssl=true,password=hgFSuCW7bhwNZeN5UifPloFfm3kPFF1TzWSAPi9Vif4="
+          "docdbkey": "wtGAYB/aG6cTve9NLa72Or8NebUfxLnwoevQILecb7Moi9dxUBgsDb8vzTpZsN08Nd7Ku7JcA+ESYttF7Y1pqA==",
+          "redisuri": "looksfamiliarredisdev.redis.cache.windows.net,ssl=true,password=msr4RfRzJMf6fCoxDKpGpb7Iq17dg6SZd8+c/qdLvG0="
         }
      ]
     }

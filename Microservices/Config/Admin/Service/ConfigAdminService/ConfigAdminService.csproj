@@ -33,12 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConfigModels, Version = 1.2.5769.27457, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigModels.1.2.5769.27457\lib\net452\ConfigModels.dll</HintPath>
+    <Reference Include="ConfigModels, Version = 1.2.5769.31586, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5769.31586\lib\net452\ConfigModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IConfigAdmin, Version = 1.2.5769.27461, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IConfigAdmin.1.2.5769.27461\lib\net452\IConfigAdmin.dll</HintPath>
+    <Reference Include="IConfigAdmin, Version = 1.2.5769.31588, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IConfigAdmin.1.2.5769.31588\lib\net452\IConfigAdmin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Documents.Client, Version=1.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -65,8 +65,8 @@
       <HintPath>..\packages\StackExchange.Redis.StrongName.1.0.481\lib\net45\StackExchange.Redis.StrongName.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Store, Version = 1.2.5769.27442, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Store.1.2.5769.27442\lib\net452\Store.dll</HintPath>
+    <Reference Include="Store, Version = 1.2.5769.31571, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\Store.1.2.5769.31571\lib\net452\Store.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -79,8 +79,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wire, Version = 1.2.5769.27354, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Wire.1.2.5769.27354\lib\net452\Wire.dll</HintPath>
+    <Reference Include="Wire, Version = 1.2.5769.31562, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\Wire.1.2.5769.31562\lib\net452\Wire.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
