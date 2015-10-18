@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Azure.Documents.Client.Test</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest">
+            <summary>
+            Serialization tests applying to all geometry types.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestInvalidJson">
+            <summary>
+            Tests that incorrect JSON throws exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestNullCoordinates">
+            <summary>
+            Tests that coordinates cannot be null.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestNullType">
+            <summary>
+            Tests that type cannot be null.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestNullTypeGeometry">
+            <summary>
+            Tests that type cannot be null and uses <see cref="T:Microsoft.Azure.Documents.Spatial.Converters.GeometryJsonConverter"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestBoundingBoxWithNonEvenNumberOfCoordinates">
+            <summary>
+            Tests bounding box with not even number of coordinates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestBoundingBoxWithNotEnoughCoordinates">
+            <summary>
+            Tests bounding box with insufficient number of coordinates.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestNullBoundingBox">
+            <summary>
+            Tests bounding box which is null.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CommonSerializationTest.TestEmptyCoordinates">
+            <summary>
+            Tests empty coordinates.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.CrsTest">
+            <summary>
+            Tests for <see cref="T:Microsoft.Azure.Documents.Spatial.Crs"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.UnspecifiedCrsSerialization">
+            <summary>
+            Tests serialization of 'unspecified' CRS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.LinkedCrsConstructor">
+            <summary>
+            Tests construction of linked CRS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.LinkedCrsSerialization">
+            <summary>
+            Tests serialization of linked CRS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.LinkedCrsSerializationNoHref">
+            <summary>
+            Tests deserialization of linked CRS when HREF is absent.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.LinkedCrsEquals">
+            <summary>
+            Tests equality/hash code of linked CRS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.LinkedCrsConstructorException">
+            <summary>
+            Tests constructor exceptions of linked CRS.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.NamedCrsConstructor">
+            <summary>
+            Tests named CRS construction.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.NamedCrsSerialization">
+            <summary>
+            Tests named CRS serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.NamedCrsEquals">
+            <summary>
+            Tests named CRS equality and hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.CrsTest.NamedCrsConstructorException">
+            <summary>
+            Tests named CRS constructor exceptions.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.GeometryCollectionTest">
+            <summary>
+            Tests <see cref="T:Microsoft.Azure.Documents.Spatial.GeometryCollection"/> class and serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.GeometryCollectionTest.TestGeometryCollectionSerialization">
+            <summary>
+            Tests serialization/deserialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.GeometryCollectionTest.TestGeometryCollectionEqualsHashCode">
+            <summary>
+            Tests equality/hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.GeometryCollectionTest.TestGeometryCollectionConstructorNullException">
+            <summary>
+            Tests constructor arguments.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.GeometryCollectionTest.TestGeometryCollectionConstructors">
+            <summary>
+            Tests construction.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.LineStringTest">
+            <summary>
+            Tests <see cref="T:Microsoft.Azure.Documents.Spatial.LineString"/> class and serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.LineStringTest.TestLineStringSerialization">
+            <summary>
+            Tests serialization/deserialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.LineStringTest.TestLineStringEqualsHashCode">
+            <summary>
+            Tests equality/hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.LineStringTest.TestLineStringConstructorNullException">
+            <summary>
+            Tests constructor exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.LineStringTest.TestLineStringConstructors">
+            <summary>
+            Tests construction.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.MultiLineStringTest">
+            <summary>
+            Tests <see cref="T:Microsoft.Azure.Documents.Spatial.MultiLineString"/> class and serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiLineStringTest.TestMultiLineStringSerialization">
+            <summary>
+            Tests serialization/deserialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiLineStringTest.TestMultiLineStringEqualsHashCode">
+            <summary>
+            Tests equality/hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiLineStringTest.TestMultiLineStringConstructorNullException">
+            <summary>
+            Tests constructor exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiLineStringTest.TestMultiLineStringConstructors">
+            <summary>
+            Tests construction.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.MultiPointTest">
+            <summary>
+            Tests <see cref="T:Microsoft.Azure.Documents.Spatial.MultiPoint"/> class and serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPointTest.TestMultiPointSerialization">
+            <summary>
+            Tests serialization/deserialization
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPointTest.TestMultiPointEqualsHashCode">
+            <summary>
+            Tests equality/hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPointTest.TestMultiPointConstructorNullException">
+            <summary>
+            Tests constructor exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPointTest.TestMultiPointConstructors">
+            <summary>
+            Tests construction.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.MultiPolygonTest">
+            <summary>
+            Tests <see cref="T:Microsoft.Azure.Documents.Spatial.MultiPolygon"/> class and serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPolygonTest.TestMultiPolygonSerialization">
+            <summary>
+            Tests serialization/deserialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPolygonTest.TestMultiPolygonEqualsHashCode">
+            <summary>
+            Tests equality/hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPolygonTest.TestMultiPolygonConstructorNullException">
+            <summary>
+            Tests constructor exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.MultiPolygonTest.TestMultiPolygonConstructors">
+            <summary>
+            Tests construction.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.PointTest">
+            <summary>
+            Tests <see cref="T:Microsoft.Azure.Documents.Spatial.Point"/> class and serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PointTest.TestPointSerialization">
+            <summary>
+            Tests serialization/deserialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PointTest.TestPointEqualsHashCode">
+            <summary>
+            Tests equality/hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PointTest.TestPointConstructorNullException">
+            <summary>
+            Tests constructor exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PointTest.TestPointConstructors">
+            <summary>
+            Tests construction.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Test.Spatial.PolygonTest">
+            <summary>
+            Tests <see cref="T:Microsoft.Azure.Documents.Spatial.Polygon"/> class and serialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PolygonTest.TestPolygonSerialization">
+            <summary>
+            Tests serialization/deserialization.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PolygonTest.TestPolygonEqualsHashCode">
+            <summary>
+            Tests equality/hash code.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PolygonTest.TestPolygonConstructorNullException">
+            <summary>
+            Tests constructor exceptions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Test.Spatial.PolygonTest.TestPolygonConstructors">
+            <summary>
+            Tests construction.
+            </summary>
+        </member>
+        <member name="T:AssemblyRef">
+            <summary>
+            Sets public key string for friend assemblies.
+            </summary>
+        </member>
+        <member name="F:AssemblyRef.ProductPublicKey">
+            <summary>ProductPublicKey is an official MS supported public key for external releases. TestPublicKey is an unsupported strong key for testing and internal use only</summary>
+        </member>
+    </members>
+</doc>

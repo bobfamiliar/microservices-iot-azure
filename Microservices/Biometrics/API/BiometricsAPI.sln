@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiometricsAPI", "BiometricsAPI\BiometricsAPI.csproj", "{25016828-2D62-4693-82D2-4AB9F0DB41CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{4ADF2583-365B-4384-B41B-9D35B77D772E}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{EA3BAC41-A261-4E09-A3A7-CC0848B765B7}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\Deploy-WAWS-dev.json = PublishScripts\Configurations\Deploy-WAWS-dev.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25016828-2D62-4693-82D2-4AB9F0DB41CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25016828-2D62-4693-82D2-4AB9F0DB41CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25016828-2D62-4693-82D2-4AB9F0DB41CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25016828-2D62-4693-82D2-4AB9F0DB41CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EA3BAC41-A261-4E09-A3A7-CC0848B765B7} = {4ADF2583-365B-4384-B41B-9D35B77D772E}
+	EndGlobalSection
+EndGlobal

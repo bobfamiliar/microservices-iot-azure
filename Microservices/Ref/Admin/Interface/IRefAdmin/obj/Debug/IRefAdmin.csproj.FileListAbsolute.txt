@@ -1,0 +1,9 @@
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\IRefAdmin.dll.config
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\IRefAdmin.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\IRefAdmin.pdb
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\Newtonsoft.Json.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\RefModels.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\Newtonsoft.Json.xml
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.csprojResolveAssemblyReference.cache
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.pdb

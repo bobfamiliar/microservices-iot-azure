@@ -1,0 +1,7 @@
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\bin\Debug\BiometricsService.dll
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\bin\Debug\BiometricsService.pdb
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\bin\Debug\BiometricsModels.dll
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\bin\Debug\IBiometrics.dll
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.csprojResolveAssemblyReference.cache
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.dll
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.pdb

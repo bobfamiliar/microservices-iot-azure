@@ -1,0 +1,6 @@
+<XamlCompilerSaveState>
+  <ReferenceAssemblyList>
+    <LocalAssembly PathName="c:\users\bobfa\source\repos\looksfamiliar\microservices\biometrics\mobilealerts\mobilealerts\obj\debug\intermediatexaml\mobilealerts.exe" HashGuid="374c7888-87a1-1127-dae0-864264327d0f" />
+    <ReferenceAssembly PathName="c:\users\bobfa\source\repos\microservices\microservices\biometrics\mobilealerts\packages\windowsazure.messaging.managed.0.1.7.9\lib\wpa81\microsoft.windowsazure.messaging.managed.dll" HashGuid="a6c77c87-a1d1-2c9f-340a-0958f7d05449" />
+  </ReferenceAssemblyList>
+</XamlCompilerSaveState>

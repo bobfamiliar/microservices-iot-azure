@@ -1,0 +1,73 @@
+    {  
+       "location":"East US",
+       "properties":{  
+          "sku":{  
+             "name":"standard"
+          },
+          "outputStartTime":"2015-10-11 19:16:31Z",
+          "outputStartMode":"CustomTime",
+          "eventsOutOfOrderPolicy":"drop",
+          "eventsOutOfOrderMaxDelayInSeconds":10,
+          "inputs":[  
+             {  
+                "name":"input",
+                "properties":{  
+                   "type":"stream",
+                   "serialization":{  
+                      "type":"JSON",
+                      "properties":{  
+                         "encoding":"UTF8"
+                      }
+                   },
+                   "datasource":{  
+                      "type":"Microsoft.ServiceBus/EventHub",
+                      "properties":{  
+                         "serviceBusNamespace":"looksfamiliarsbdev",
+                         "sharedAccessPolicyName":"RootManageSharedAccessKey",
+                         "sharedAccessPolicyKey":"i5a+dDyN1EnagaY2gHc3qKGd4XZ0t24ea8b9kfCdR3s=",
+                         "eventHubName":"biometrics"
+                      }
+                   }
+                }
+             }
+          ],
+          "transformation":{  
+             "name":"biometrics-store",
+             "properties":{  
+                "streamingUnits":1,
+                "query":
+"WITH Device AS (SELECT * FROM input)
+SELECT
+    Device.deviceid,
+    Device.participantid,
+    Device.location.longitude,
+    Device.location.latitude,
+    Device.reading,
+    DeviceSensors.ArrayValue.type,
+    DeviceSensors.ArrayValue.value
+INTO
+    output
+FROM
+    Device
+CROSS APPLY GetElements(Device.sensors) AS DeviceSensors"
+             }
+          },
+          "outputs":[  
+           {  
+            "name":"output",
+            "properties":{  
+               "datasource":{  
+                  "type":"Microsoft.Sql/Server/Database",
+                  "properties":{  
+                     "server":"looksfamiliarsqlserverdev",
+                     "database":"BiometricsDb",
+                     "table":"biometrics",
+                     "user":"BioMaxUser001",
+                     "password":"BioMaxPass001"
+             }
+          }
+        }
+      }
+    ]
+  }
+}

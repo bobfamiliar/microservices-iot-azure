@@ -1,0 +1,47 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "title": "ConfigM Microservice",
+    "description": "",
+    "version": "1.0"
+  },
+  "host": "configapublicapi.azurewebsites.net/config",
+  "basePath": "/v1/config",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/models/id/{id}": {
+      "get": {
+        "description": "Return a configuration manifest by supplying its unique identifier.",
+        "operationId": "Get a Configuration Manifest By Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "unique configuration manifest id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/models/name/{name}": {
+      "get": {
+        "description": "Return a configuration manifest by supplying its name.",
+        "operationId": "Get a Configuration Manifest by Name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}

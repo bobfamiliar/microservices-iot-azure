@@ -1,0 +1,2 @@
+C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\NuGetUpdate\NuGetUpdate\bin\Debug\NuGetUpdate.exe.config
+C:\Users\bobfa\Source\Repos\Microservices\Tools\NuGetUpdate\NuGetUpdate\bin\Debug\NuGetUpdate.exe.config

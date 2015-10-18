@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B19EAAA5-2992-4B01-8149-B009C976A66F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LooksFamiliar.Simulators.BioMax.IoTHub</RootNamespace>
+    <AssemblyName>BioMaxSimulator-IoTHub</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ConfigModels, Version=1.2.5747.30600, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5747.30600\lib\net452\ConfigModels.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ConfigPublicSDK, Version=1.2.5747.30611, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConfigPublicSDK.1.2.5747.30611\lib\net452\ConfigPublicSDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DeviceAdminSDK, Version=1.0.5754.30183, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DeviceAdminSDK.1.0.5754.30183\lib\net452\DeviceAdminSDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DeviceModels, Version=1.0.5754.30169, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DeviceModels.1.0.5754.30169\lib\net452\DeviceModels.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IConfigPublic, Version=1.2.5747.30601, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IConfigPublic.1.2.5747.30601\lib\net452\IConfigPublic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IDeviceAdmin, Version=1.0.5754.30172, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IDeviceAdmin.1.0.5754.30172\lib\net452\IDeviceAdmin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IProfilePublic, Version=1.2.5747.30672, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IProfilePublic.1.2.5747.30672\lib\net452\IProfilePublic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Amqp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Amqp.1.0.0-preview-002\lib\net451\Microsoft.Azure.Amqp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Devices.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Devices.Client.1.0.0-preview-003-1\lib\net45\Microsoft.Azure.Devices.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ProfileModels, Version=1.2.5747.30670, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProfileModels.1.2.5747.30670\lib\net452\ProfileModels.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ProfilePublicSDK, Version=1.2.5747.30687, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ProfilePublicSDK.1.2.5747.30687\lib\net452\ProfilePublicSDK.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Wire, Version=1.2.5747.30585, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wire.1.2.5747.30585\lib\net452\Wire.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConsoleSpinner.cs" />
+    <Compile Include="DeviceMessage.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

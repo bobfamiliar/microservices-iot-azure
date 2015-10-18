@@ -1,0 +1,722 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.ApplicationInsights.Extensibility.Web</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader">
+            <summary>
+            The reader is platform specific and applies to .NET applications only.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.IAzureRoleEnvironmentContextReader">
+            <summary>
+            The user context reader interface used while reading user related information in a platform specific way.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.IAzureRoleEnvironmentContextReader.Initialize">
+            <summary>
+            Initializes the current reader with respect to its environment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.IAzureRoleEnvironmentContextReader.GetRoleName">
+            <summary>
+            Gets the Azure role name.
+            </summary>
+            <returns>The extracted data.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.IAzureRoleEnvironmentContextReader.GetRoleInstanceName">
+            <summary>
+            Gets the Azure role instance name.
+            </summary>
+            <returns>The extracted data.</returns>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.instance">
+            <summary>
+            The singleton instance for our reader.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.roleName">
+            <summary>
+            The Azure role name (if any).
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.roleInstanceName">
+            <summary>
+            The Azure role instance name (if any).
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.Initialize">
+            <summary>
+            Initializes the current reader with respect to its environment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.GetRoleName">
+            <summary>
+            Gets the Azure role name.
+            </summary>
+            <returns>The extracted data.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.GetRoleInstanceName">
+            <summary>
+            Gets the Azure role instance name.
+            </summary>
+            <returns>The extracted data.</returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.Instance">
+            <summary>
+            Gets or sets the singleton instance for our application context reader.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.AzureRoleEnvironmentContextReader.BaseDirectory">
+            <summary>
+            Gets or sets the base directly where hunting for application DLLs is to start.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.Role">
+            <summary>
+            Represents a role that is defined as part of a hosted service. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject">
+            <summary>
+            A runtime bound object for a given .NET type.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.targetType">
+            <summary>
+            The target type for our object.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.targetObject">
+            <summary>
+            The target object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.#ctor(System.Type,System.Object[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject"/> class.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <param name="activationArgs">The activation arguments.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.GetTargetObjectInstance(System.Type,System.Object[])">
+            <summary>
+            Gets the target object instance.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <param name="activationArgs">The activation arguments.</param>
+            <returns>The activated instance is one is required.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.GetProperty(System.String,System.Object[])">
+            <summary>
+            Gets the property.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="args">The arguments.</param>
+            <returns>The value for our property.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.GetProperty(System.String,System.Type[],System.Object[])">
+            <summary>
+            Gets the property.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="parameterTypes">The parameter types.</param>
+            <param name="args">The arguments.</param>
+            <returns>The value for our property.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.GetProperty(System.String,System.Reflection.BindingFlags,System.Type[],System.Object[])">
+            <summary>
+            Gets the property.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="bindingFlags">The binding flags.</param>
+            <param name="parameterTypes">The parameter types.</param>
+            <param name="args">The arguments.</param>
+            <returns>The value for our property.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.InvokeHelper(System.String,System.Reflection.BindingFlags,System.Object[],System.Globalization.CultureInfo)">
+            <summary>
+            Invocation helper for calling any member on our target object.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="bindingFlags">The binding flags.</param>
+            <param name="args">The arguments.</param>
+            <param name="culture">The culture.</param>
+            <returns>The return value for our invocation.</returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.TargetType">
+            <summary>
+            Gets or sets the type of the target.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RuntimeBindingObject.TargetObject">
+            <summary>
+            Gets or sets the target object.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.Role.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.Role"/> class.
+            </summary>
+            <param name="targetObject">The target object.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.Role.GetTargetObjectInstance(System.Type,System.Object[])">
+            <summary>
+            Gets the target object instance.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <param name="activationArgs">The activation arguments.</param>
+            <returns>
+            The activated instance is one is required.
+            </returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.Role.Name">
+            <summary>
+            Gets the name of the role as it is declared in the service definition file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleEnvironment">
+            <summary>
+            Provides information about the configuration, endpoints, and status of running role instances. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleEnvironment.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleEnvironment"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleEnvironment.GetTargetObjectInstance(System.Type,System.Object[])">
+            <summary>
+            Gets the target object instance.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <param name="activationArgs">The activation arguments.</param>
+            <returns>
+            The activated instance is one is required.
+            </returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleEnvironment.IsAvailable">
+            <summary>
+            Gets a value indicating whether the role instance is running in the Windows Azure environment. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleEnvironment.DeploymentId">
+            <summary>
+            Gets the unique identifier of the deployment in which the role instance is running. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleEnvironment.CurrentRoleInstance">
+            <summary>
+            Gets a RoleInstance object that represents the role instance in which the code is currently running. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleInstance">
+            <summary>
+            Represents an instance of a role. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleInstance.#ctor(System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleInstance"/> class.
+            </summary>
+            <param name="targetObject">The target object.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleInstance.GetTargetObjectInstance(System.Type,System.Object[])">
+            <summary>
+            Gets the target object instance.
+            </summary>
+            <param name="targetType">Type of the target.</param>
+            <param name="activationArgs">The activation arguments.</param>
+            <returns>
+            The activated instance is one is required.
+            </returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleInstance.Id">
+            <summary>
+            Gets the instance identifier (ID) of the role instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.Azure.RoleInstance.Role">
+            <summary>
+            Gets the Role object that is associated with the role instance.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Azure.ServiceRuntime">
+            <summary>
+            The wrapper for the Azure Service Runtime.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Azure.ServiceRuntime.GetRoleEnvironment(System.String)">
+            <summary>
+            Gets the role environment.
+            </summary>
+            <param name="baseDirectory">The base directory.</param>
+            <returns>
+            The role environment object.
+            </returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.ContextInitializers.AzureRoleEnvironmentContextInitializer">
+            <summary>
+            A telemetry context initializer that will gather Azure Role Environment context information.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.ContextInitializers.AzureRoleEnvironmentContextInitializer.Initialize(Microsoft.ApplicationInsights.DataContracts.TelemetryContext)">
+            <summary>
+            Initializes the given <see cref="T:Microsoft.ApplicationInsights.DataContracts.TelemetryContext"/>.
+            </summary>
+            <param name="context">The telemetry context to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.ContextInitializers.DomainNameRoleInstanceContextInitializer">
+            <summary>
+            A telemetry context initializer that populates device context machine name.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.ContextInitializers.DomainNameRoleInstanceContextInitializer.Initialize(Microsoft.ApplicationInsights.DataContracts.TelemetryContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.ContextInitializers.DomainNameRoleInstanceContextInitializer"/> class.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch">
+            <summary>
+            Single high precision clock used by operations.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch.Watch">
+            <summary>
+            High precision stopwatch.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch.NanosecondsPerTick">
+            <summary>
+            Number of nanoseconds per high-precision clock tick.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch.StartTime">
+            <summary>
+            The time clock started.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch.DurationNanoseconds(System.Int64,System.Int64)">
+            <summary>
+            Calculates time between two clock readings in nanoseconds.
+            </summary>
+            <param name="fromTicks">Start time in ticks.</param>
+            <param name="toTicks">End time in ticks.</param>
+            <returns>Time between two clock readings in nanoseconds.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch.Duration(System.Int64,System.Int64)">
+            <summary>
+            Calculates time between two clock readings.
+            </summary>
+            <param name="fromTicks">Start time in ticks.</param>
+            <param name="toTicks">End time in ticks.</param>
+            <returns>Time between two clock readings.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch.Timestamp(System.Int64)">
+            <summary>
+            Converts time on the operation clock (in ticks) to date and time structure.
+            </summary>
+            <param name="elapsedTicks">Ticks elapsed according to operation watch.</param>
+            <returns>Date time structure representing the date and time that corresponds to the operation clock reading.</returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.OperationWatch.ElapsedTicks">
+            <summary>
+            Gets number of ticks elapsed on the clock since the start.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTrackingConstants">
+            <summary>
+            Request tracking constants and keys.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTrackingConstants.RequestTelemetryContextItemName">
+            <summary>
+            Name of the HttpContext item containing RequestTelemetryContext object.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTrackingConstants.TransferHandlerType">
+            <summary>
+            Type name for the transfer handler. This handler is used to enable extension(less) URI 
+            and it produces extra request, which should not be counted.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTrackingExtensions.CreateRequestNamePrivate(System.Web.HttpContext)">
+            <summary>
+            Creates request name on the base of HttpContext.
+            </summary>
+            <returns>Controller/Action for MVC or path for other cases.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.RequestTracking.SyntheticTrafficManager">
+            <summary>
+            Helper class that validates requests and gets information about the request source.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTracking.SyntheticTrafficManager.IsSynthetic(System.Web.HttpContext)">
+            <summary>
+            Determines if the request is from a synthetic source.
+            </summary>
+            <returns>True if request is synthetic.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTracking.SyntheticTrafficManager.GetSessionId(System.Web.HttpContext)">
+            <summary>
+            Returns synthetic session id.
+            </summary>
+            <returns>Synthetic session id.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTracking.SyntheticTrafficManager.GetUserId(System.Web.HttpContext)">
+            <summary>
+            The method returns synthetic user id.
+            </summary>
+            <returns>Returns synthetic user id.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTracking.SyntheticTrafficManager.GetSyntheticSource(System.Web.HttpContext)">
+            <summary>
+            Returns request SyntheticSource or null if the request is not synthetic.
+            </summary>
+            <returns>Request SyntheticSource or null if the request is not synthetic.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTracking.SyntheticTrafficManager.GetHeaderFromPlatformContext(System.Web.HttpContext,System.String)">
+            <summary>
+            Gets header from platform context by header name.
+            </summary>
+            <returns>Header value or null.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle">
+            <summary>
+            Implements the <see cref="T:Microsoft.ApplicationInsights.Extensibility.IApplicationLifecycle"/> events for web applications.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle.Dispose">
+            <summary>
+            Unregisters the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle"/> from <see cref="T:System.Web.Hosting.HostingEnvironment"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle.Stop(System.Boolean)">
+            <summary>
+            Gets called by <see cref="T:System.Web.Hosting.HostingEnvironment"/> when the web application is stopping.
+            </summary>
+            <param name="immediate">
+            False when the method is invoked first time, allowing async shutdown operations.
+            True when the method is invoked second time, demanding to unregister immediately.
+            </param>
+        </member>
+        <member name="E:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle.Started">
+            <summary>
+            The <see cref="E:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle.Started"/> event is raised when the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle"/> instance is first created.
+            This event is not raised for web applications.
+            </summary>
+        </member>
+        <member name="E:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle.Stopping">
+            <summary>
+            The <see cref="E:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle.Stopping"/> event is raised when <see cref="T:System.Web.Hosting.HostingEnvironment"/> calls the <see cref="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebApplicationLifecycle.Stop(System.Boolean)"/> method.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingBuilder">
+            <summary>
+            SDK telemetry module mapping builder and post initializer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingBuilder.BuildUpModules(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Builds up request telemetry related modules and produces a list of them.
+            </summary>
+            <param name="configuration">Telemetry configuration instance.</param>
+            <returns>A readonly list of initialized request tracking telemetry modules.</returns>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingModule">
+            <summary>
+            Platform agnostic module for web application instrumentation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingModule.platformAdapter">
+            <summary>
+            Web platform adapter instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingModule.isEnabled">
+            <summary>
+            Indicates if module initialized successfully.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingModule"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingModule.Init(System.Web.HttpApplication)">
+            <summary>
+            Initializes module for a given application.
+            </summary>
+            <param name="context">HttpApplication instance.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.WebRequestTrackingModule.Dispose">
+            <summary>
+            Required IDisposable implementation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebTelemetryInitializerBase">
+            <summary>
+            Base class for WebOperationTelemetryInitializers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebTelemetryInitializerBase.ResolvePlatformContext">
+            <summary>
+            Resolved web platform specific context.
+            </summary>
+            <returns>An instance of the context.</returns>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebClientIpHeaderTelemetryInitializer.HeaderNames">
+            <summary>
+            Gets a list of request header names that is used to check client id.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebClientIpHeaderTelemetryInitializer.HeaderValueSeparators">
+            <summary>
+            Gets or sets a header values separator.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebClientIpHeaderTelemetryInitializer.UseFirstIp">
+            <summary>
+            Gets or sets a value indicating whether the first or the last IP should be used from the lists of IPs in the header.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebOperationIdTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will set the ID property of OperationContext corresponding to a RequestTelemetry object.
+            Operation.Id is updated with the name derived from the RequestTelemetryContext.RequestTelemetry.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebOperationNameTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will set the NAME property of OperationContext corresponding to a TraceTelemetry object.
+            If the telemetry object is of type RequestTelemetry, then the Name of the RequestTelemetry is updated. For all other cases,
+            Operation.Name is updated with the name derived from the HttpContext.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebSyntheticTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will update the User, Session and Operation contexts if request is synthetic.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebSessionTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will set the Session properties of Context corresponding to a RequestTelemetry object.
+            Session is updated with properties derived from the RequestTelemetryContext.RequestTelemetry.Context.Session.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebUserAgentTelemetryInitializer">
+            <summary>
+            WebUserAgentTelemetryInitializer sets Context.User.UserAgent to HttpContext.Current.Request.UserAgent string.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryInitializers.WebUserTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will set the User properties of Context corresponding to a RequestTelemetry object.
+            User.Id and User.AcquisitionDate are updated with properties derived from the RequestTelemetryContext.RequestTelemetry.Context.User.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebApplicationLifecycleModule">
+            <summary>
+            A module used by the Application Insights to handle web application lifecycle events.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebApplicationLifecycleModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebApplicationLifecycleModule"/> class.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase">
+            <summary>
+            Base web telemetry module.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase.OnPostContextInit(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTelemetryContext,System.Web.HttpContext)">
+            <summary>
+            Post initialization Web Telemetry Module callback.
+            </summary>
+            <param name="state">An instance of request telemetry context.</param>
+            <param name="platformContext">Platform specific context.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase.OnReadRequestInfo(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTelemetryContext,System.Web.HttpContext)">
+            <summary>
+            Request info reading Web Telemetry Module callback.
+            </summary>
+            <param name="state">An instance of request telemetry context.</param>
+            <param name="platformContext">Platform specific context.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase.OnSetResponseInfo(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTelemetryContext,System.Web.HttpContext)">
+            <summary>
+            Response info setting Web Telemetry Module callback.
+            </summary>
+            <param name="state">An instance of request telemetry context.</param>
+            <param name="platformContext">Platform specific context.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase.OnEndRequest(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTelemetryContext,System.Web.HttpContext)">
+            <summary>
+            Request telemetry finalization - sending callback Web Telemetry Module callback.
+            </summary>
+            <param name="state">An instance of request telemetry context.</param>
+            <param name="platformContext">Platform specific context.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase.OnError(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTelemetryContext,System.Web.HttpContext)">
+            <summary>
+            Http Error reporting Web Telemetry Module callback.
+            </summary>
+            <param name="state">An instance of request telemetry context.</param>
+            <param name="platformContext">Platform specific context.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase.SetEnvironmentTime(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.IEnvironmentTime)">
+            <summary>
+            Sets environment time provider instance.
+            </summary>
+            <param name="envTime">An instance of environment time provider.</param>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebTelemetryModuleBase.Time">
+            <summary>
+            Gets environment time provider instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebRequestTrackingTelemetryModule.IsTransferHandler(System.Web.IHttpHandler)">
+            <summary>
+            Checks whether or not handler is a transfer handler.
+            </summary>
+            <param name="handler">An instance of handler to validate.</param>
+            <returns>True if handler is a transfer handler, otherwise - False.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebRequestTrackingTelemetryModule.NeedProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Verifies context to detect whether or not request needs to be processed.
+            </summary>
+            <param name="httpContext">Current http context.</param>
+            <returns>True if request needs to be processed, otherwise - False.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebSessionTrackingTelemetryModule.OnReadRequestInfo(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTelemetryContext,System.Web.HttpContext)">
+            <summary>
+            In this method we read cookie information and save it to HttpContext (to update response later).
+            </summary>
+            <param name="state">Request telemetry context.</param>
+            <param name="platformContext">Platform context.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebSessionTrackingTelemetryModule.OnSetResponseInfo(Microsoft.ApplicationInsights.Extensibility.Web.RequestTracking.RequestTelemetryContext,System.Web.HttpContext)">
+            <summary>
+            In this method we take session information from HttpContext and update Response.
+            This stage will happen on PreSendHeaders - latest moment when we can set cookies
+            Setting cookie on early stages would break output cache.
+            At this point telemetry item with session information may be already sent because we send it on end request.
+            </summary>
+            <param name="state">Request telemetry context.</param>
+            <param name="platformContext">Platform context.</param>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebSessionTrackingTelemetryModule.SetCookie">
+            <summary>
+            Gets or sets a value indicating whether session cookie should be set or not.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Extensibility.Web.TelemetryModules.WebSessionTrackingTelemetryModule.MaxSessionDurationInMinutes">
+            <summary>
+            Gets or sets session timeout in seconds.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource">
+            <summary>
+            ETW EventSource tracing class.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Log">
+            <summary>
+            Instance of the PlatformEventSource class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.WebModuleInitializationExceptionEvent(System.String,System.String)">
+            <summary>
+            Trace exception event from WebRequestTrackingModule initialization.
+            </summary>
+            <param name="excMessage">Exception message.</param>
+            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.WebModuleOnCallbackFailure(System.String,System.String,System.String)">
+            <summary>
+            Trace exception event from WebRequestTrackingModule OnBegin request.
+            </summary>
+            <param name="callbackName">Callback name.</param>
+            <param name="excMessage">Exception message.</param>
+            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.WebTelemetryModuleStageExecutionStarted(System.String,System.String,System.String)">
+            <summary>
+            Stop executing web telemetry module stage.
+            </summary>
+            <param name="type">Module type.</param>
+            <param name="stageName">Stage name.</param>
+            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.WebTelemetryModuleStageExecutionStopped(System.String,System.String,System.String)">
+            <summary>
+            Stop executing web telemetry module stage.
+            </summary>
+            <param name="type">Module type.</param>
+            <param name="stageName">Stage name.</param>
+            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.WebTelemetryModuleStageExecutionFailure(System.String,System.String,System.String,System.String)">
+            <summary>
+            Error on executing web telemetry module stage.
+            </summary>
+            <param name="type">Module type.</param>
+            <param name="stageName">Stage name.</param>
+            <param name="excMsg">Exception message.</param>
+            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords">
+            <summary>
+            Keywords for the PlatformEventSource. Those keywords should match keywords in Core.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.UserActionable">
+            <summary>
+            Key word for user actionable events.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.Diagnostics">
+            <summary>
+            Diagnostics tracing keyword.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.VerboseFailure">
+            <summary>
+            Keyword for errors that trace at Verbose level.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.WebModule">
+            <summary>
+            Key word for Web Request Module initialization failures.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.RequestTelemetry">
+            <summary>
+            Request telemetry keyword.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.ExceptionTelemetry">
+            <summary>
+            Exception telemetry keyword.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.UserTelemetry">
+            <summary>
+            User tracking keyword.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Extensibility.Web.Tracing.WebEventSource.Keywords.SessionTelemetry">
+            <summary>
+            Session tracking keyword.
+            </summary>
+        </member>
+    </members>
+</doc>

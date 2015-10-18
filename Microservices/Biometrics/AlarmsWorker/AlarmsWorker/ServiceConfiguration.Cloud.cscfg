@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="AlarmsWorker" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="Alarms">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=false" />
+      <Setting name="Azure.Storage.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName="/>
+      <Setting name="Azure.ServiceBus.ConnectionString" value="Endpoint=sb://[namespace].servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=[key]" />
+      <Setting name="NotificationHubConnectionString" value="Endpoint=sb://[namespace].servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=[key]"/>
+      <Setting name="EventHubName" value="alarms"/>
+      <Setting name="NotificationHubName" value="alarms"/>
+      <Setting name="ConfigM" value="[ConfigM Public API URI]"/>
+    </ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

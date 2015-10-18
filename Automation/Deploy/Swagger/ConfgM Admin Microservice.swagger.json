@@ -1,0 +1,48 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "title": "ConfgM Admin Microservice",
+    "description": "",
+    "version": "1.0"
+  },
+  "host": "configadminapi.azurewebsites.net/config",
+  "basePath": "/v1/configm/admin",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/manifests": {
+      "post": {
+        "description": "A configuration manifest provides the meta data for an application or microservice.",
+        "operationId": "Create a Configuration Manifest",
+        "responses": {}
+      },
+      "get": {
+        "description": "Return a list of all the configuration manifests in the store.",
+        "operationId": "Get All Configuration Manifests",
+        "responses": {}
+      },
+      "put": {
+        "description": "Update the meta data for a microservice.",
+        "operationId": "Update a Configuration Manifest",
+        "responses": {}
+      }
+    },
+    "/manifests/id/{id}": {
+      "delete": {
+        "description": "Remove a configuration manifest from the store.",
+        "operationId": "Delete a Configuration Manifest",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,328 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #282828;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.border-top {
+    height: 30px;
+    background-color: #dddddd;
+    margin-left: -55px;
+    margin-right: -55px;
+    margin-bottom: 20px;
+}
+
+div .navbar {
+    margin-left: -10px;
+    background-color: transparent;
+    border: none;
+}
+
+.header-title {
+    font-size: 20px;
+    margin-left: 5px;
+    color: #dddddd;
+}
+
+.header-title-content {
+    margin-right: 5px;
+}
+
+.container {
+    background: -webkit-linear-gradient(#545454, #313131); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#545454, #313131); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#545454, #313131); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#545454, #313131); /* Standard syntax */
+    padding-left: 55px;
+    padding-right: 55px;
+    width: 970px;
+}
+
+.tile-summary {
+    height: 200px;
+    margin: 50px 0 0 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*equalizer scale chart*/
+.scales {
+    margin: 30px 0 30px -15px; 
+}
+
+    .scales > div {
+        display: inline-block;
+    }
+
+.scale {
+    height: 120px;
+    position: relative;
+    width: 48px;
+    margin: 0 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.scales .inactive .scale {
+    opacity: .5;
+}
+
+.scaleBar {
+    width: 48px;
+    height: 8px;
+    position: absolute;
+    bottom: 0;
+    font-size: 0;
+    line-height: 0;
+    margin: 0;
+    padding: 0; 
+    z-index: 1;
+}
+
+table.scaleBar { 
+    border-collapse: collapse;  
+    overflow:hidden;
+    
+}
+table.scaleBar td{ 
+   height: 8px;
+   width: 16px; 
+   padding: 0px;
+}
+
+/*.scaleBar .bg-bos, .scaleBar .bg-chi, .scaleBar .bg-ny {
+    width: 16px;
+    height: 8px; 
+    float: right;
+}*/
+
+table.scaleBar td:nth-child(1) {
+    background-color: #fd3189;  
+}
+
+table.scaleBar td:nth-child(2) {
+    background-color: #c3d407;   
+}
+
+table.scaleBar td:nth-child(3) {
+    background-color: #2d90eb; 
+} 
+.hover-boston .scaleBar span, .hover-chicago .scaleBar span, .hover-newyork .scaleBar span {
+    opacity: 0;
+}
+
+.hover-boston table.scaleBar td {
+    background-color: #fd3189;
+}
+
+.hover-chicago table.scaleBar td {
+    background-color: #c3d407;
+}
+
+.hover-newyork table.scaleBar td {
+    background-color: #2d90eb;
+}
+
+.scale {
+    height: 200px;
+    width: 50px;
+}
+
+.scaleBG {
+    background: -webkit-linear-gradient(#2b2a2a, #313131);
+    background: -o-linear-gradient(#2b2a2a, #313131);
+    background: -moz-linear-gradient(#2b2a2a, #313131);
+    background: linear-gradient(#2b2a2a, #313131);
+    bottom: 0;
+    left: 2px;
+    width: 42px;
+    height: 200px;
+    position: absolute;
+}
+
+.scale div.count {
+    margin-bottom: 5px;
+}
+
+.scale div.count, .scale div.scaleLabel {
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    z-index: 1;
+}
+
+.scale div.scaleLabel {
+    bottom: -30px;
+}
+
+/*d3 hexbin chart*/
+.hexbin {
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+}
+
+.hexbin-bg { 
+    position: absolute;
+    border-radius: 15px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.hexbin-bg div:first-of-type {
+    background-size: 100% 100%;
+    background-repeat: no-repeat; 
+    position: absolute;   
+    top: -10px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    width: 320px;
+    height: 260px; 
+}
+
+.hexbin-boston .hexbinContainer .hexbin-bg div:first-of-type {
+    background-image: url('mask-MA.png');
+}
+
+.hexbin-chicago .hexbinContainer .hexbin-bg div:first-of-type {
+    background-image: url('mask-IL.png');
+}
+
+.hexbin-newyork .hexbinContainer .hexbin-bg div:first-of-type {
+    background-image: url('mask-NY.png');
+}
+
+.hexbin.inactive {
+    opacity: .3;
+}
+
+.hexbin-label {
+    font-size: 16px;
+    color: #d2d2d2;   
+    position: absolute;
+    top: 200px;
+    left: 10px;
+}
+
+.hexbinContainer {
+    cursor: pointer;
+    border-radius: 15px;
+    height: 230px;
+    width: 280px;
+    overflow: hidden;
+} 
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+} 
+
+.hexagon { 
+    /*fill: none;*/
+    /*stroke: none;*/
+    stroke-width: 0; 
+}
+
+/*d3 donut pie chart*/
+.donut {
+    margin-top: 30px;
+}
+
+.donut-container { 
+    /*height:100px;
+    width:100px;*/ 
+    float: right;
+}
+
+.donut-container svg {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 15px;
+}
+
+.donut-bg {
+    top: 0;
+    right: 15px;
+    position: absolute;
+    height: 150px;
+    width: 150px; 
+    border: 40px solid #696969;
+    border-radius: 150px;
+    z-index: 0;
+}
+
+#tooltip {
+    position: absolute;
+    z-index: 2;
+    left: 40px;
+    top: 150px;
+    /*padding: 10px;
+    height: 50px;
+    width: 150px;
+    background-color: #282828;*/
+    color: #d2d2d2;
+}
+
+.tooltip-hidden {
+    opacity: 0;
+}
+
+.donutLabel {
+    color: white;
+    font-size: 18px;
+}
+
+.summary-label, .summary-value {
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.summary-symbol {
+    color: #d2d2d2;
+    display: inline-block;
+    width: 20px;
+    float: left;
+}
+
+.summary-label {
+    color: #d2d2d2;
+    text-align: left;
+}
+
+.summary-value {
+    color: white;
+    width: 40px;
+    text-align: right;
+    margin-right: 10px;
+    font-weight: bold;
+}

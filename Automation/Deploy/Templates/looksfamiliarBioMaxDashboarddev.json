@@ -1,0 +1,8 @@
+{
+    "parameterValues": {
+        "siteName": "looksfamiliarBioMaxDashboarddev",
+        "hostingPlanName": "Biometrics_SP",
+        "siteLocation": "East US",
+        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/38230711102015-Biometrics_RG-BiometricsDashboard-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=%2BMm%2Frzqo30ToEFhI4cfdy9bdScAsdvj6BtUyayAHEAw%3D&se=2015-10-12T00%3A23%3A45Z&sp=r"
+    }
+}

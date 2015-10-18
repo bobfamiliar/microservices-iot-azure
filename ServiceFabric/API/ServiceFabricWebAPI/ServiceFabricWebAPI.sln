@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "ServiceFabricWebAPI", "ServiceFabricWebAPI\ServiceFabricWebAPI.sfproj", "{7E7113B3-D488-4E0F-9428-67D1D6D8BCA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatelessWebAPI", "StatelessWebAPI\StatelessWebAPI.csproj", "{136C7812-9E31-45C7-BF9F-500E2C827D67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E7113B3-D488-4E0F-9428-67D1D6D8BCA4}.Debug|x64.ActiveCfg = Debug|x64
+		{7E7113B3-D488-4E0F-9428-67D1D6D8BCA4}.Debug|x64.Build.0 = Debug|x64
+		{7E7113B3-D488-4E0F-9428-67D1D6D8BCA4}.Debug|x64.Deploy.0 = Debug|x64
+		{7E7113B3-D488-4E0F-9428-67D1D6D8BCA4}.Release|x64.ActiveCfg = Release|x64
+		{7E7113B3-D488-4E0F-9428-67D1D6D8BCA4}.Release|x64.Build.0 = Release|x64
+		{7E7113B3-D488-4E0F-9428-67D1D6D8BCA4}.Release|x64.Deploy.0 = Release|x64
+		{136C7812-9E31-45C7-BF9F-500E2C827D67}.Debug|x64.ActiveCfg = Debug|x64
+		{136C7812-9E31-45C7-BF9F-500E2C827D67}.Debug|x64.Build.0 = Debug|x64
+		{136C7812-9E31-45C7-BF9F-500E2C827D67}.Release|x64.ActiveCfg = Release|x64
+		{136C7812-9E31-45C7-BF9F-500E2C827D67}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

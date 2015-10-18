@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>DESKTOP-SQPMM76</Machine>
+    <WindowsUser>bobfa</WindowsUser>
+    <TargetPlatformIdentifier>WindowsPhoneApp</TargetPlatformIdentifier>
+    <TargetOsVersion>6.3</TargetOsVersion>
+    <TargetOsDescription>Windows Phone 8.1</TargetOsDescription>
+    <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
+    <PackageArchitecture>neutral</PackageArchitecture>
+    <PackageIdentityName>eb30ef2e-7ad8-43d1-8332-0f1156cfc6c6</PackageIdentityName>
+    <IntermediateOutputPath>C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\obj\Debug\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\bin\Debug\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\bin\Debug\MobileAlerts.exe">
+      <PackagePath>MobileAlerts.exe</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\packages\WindowsAzure.Messaging.Managed.0.1.7.9\lib\wpa81\Microsoft.WindowsAzure.Messaging.Managed.dll">
+      <PackagePath>Microsoft.WindowsAzure.Messaging.Managed.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\Assets\Logo.scale-240.png">
+      <PackagePath>Assets\Logo.scale-240.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\Assets\SmallLogo.scale-240.png">
+      <PackagePath>Assets\SmallLogo.scale-240.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\Assets\SplashScreen.scale-240.png">
+      <PackagePath>Assets\SplashScreen.scale-240.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\Assets\Square71x71Logo.scale-240.png">
+      <PackagePath>Assets\Square71x71Logo.scale-240.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\Assets\StoreLogo.scale-240.png">
+      <PackagePath>Assets\StoreLogo.scale-240.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\Assets\WideLogo.scale-240.png">
+      <PackagePath>Assets\WideLogo.scale-240.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\bin\Debug\MobileAlerts.xr.xml">
+      <PackagePath>MobileAlerts.xr.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\bin\Debug\App.xbf">
+      <PackagePath>App.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\bin\Debug\MainPage.xbf">
+      <PackagePath>MainPage.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\MobileAlerts\MobileAlerts\bin\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>

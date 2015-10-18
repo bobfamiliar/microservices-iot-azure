@@ -1,0 +1,13 @@
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\ConfigPublicSDK.dll.config
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\ConfigPublicSDK.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\ConfigPublicSDK.pdb
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\ConfigModels.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\IConfigPublic.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\Wire.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\obj\Debug\ConfigPublicSDK.csprojResolveAssemblyReference.cache
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\obj\Debug\LooksFamiliar.Microservices.Config.Public.SDK.Errors.resources
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\obj\Debug\ConfigPublicSDK.csproj.GenerateResource.Cache
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\obj\Debug\ConfigPublicSDK.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\obj\Debug\ConfigPublicSDK.pdb
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\Newtonsoft.Json.dll
+c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\SDK\ConfigPublicSDK\bin\Debug\Newtonsoft.Json.xml

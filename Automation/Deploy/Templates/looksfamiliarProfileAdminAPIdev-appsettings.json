@@ -1,0 +1,15 @@
+{
+  "environmentSettings": {
+    "webSite": {
+      "name": "looksfamiliarProfileAdminAPIdev",
+      "location": "East US",
+      "appSettings": [
+        {
+          "docdburi": "https://looksfamiliardocdbdev.documents.azure.com:443/",
+          "docdbkey": "cYM5+XuCPvI1NBvfUWna8L+kBwk31D1bd+oGl6467qVCaqjYyWsXnj/R4oedla7xRjkbjgYcU8gcZyQVXCLcYw==",
+          "redisuri": "looksfamiliarredisdev.redis.cache.windows.net,ssl=true,password=jVB0GRSU5nA/ezCMHuk5zAUOgU2DowNAemSBvfRaMI0="
+        }
+     ]
+    }
+  }
+}
