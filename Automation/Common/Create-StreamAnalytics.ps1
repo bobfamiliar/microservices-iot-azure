@@ -734,6 +734,7 @@ $StartTime = Get-Date
 
 Select-Subscription $Subscription
 
+$StorageContainerName = $StorageAccountName + "sa"
 Create-StorageContainer $Subscription $StorageAccountName $StorageContainerName
 
 # Get the Azure Service Bus Namespace by that name.
