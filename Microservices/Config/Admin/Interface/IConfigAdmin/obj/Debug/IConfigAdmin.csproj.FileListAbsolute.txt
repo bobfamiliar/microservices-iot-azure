@@ -5,3 +5,10 @@ c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Admin\Interface\I
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Admin\Interface\IConfigAdmin\obj\Debug\IConfigAdmin.csprojResolveAssemblyReference.cache
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Admin\Interface\IConfigAdmin\obj\Debug\IConfigAdmin.dll
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Admin\Interface\IConfigAdmin\obj\Debug\IConfigAdmin.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Admin\Interface\IConfigAdmin\bin\Debug\IConfigAdmin.dll.config
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Admin\Interface\IConfigAdmin\bin\Debug\IConfigAdmin.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Admin\Interface\IConfigAdmin\bin\Debug\IConfigAdmin.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Admin\Interface\IConfigAdmin\bin\Debug\ConfigModels.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Admin\Interface\IConfigAdmin\obj\Debug\IConfigAdmin.csprojResolveAssemblyReference.cache
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Admin\Interface\IConfigAdmin\obj\Debug\IConfigAdmin.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Admin\Interface\IConfigAdmin\obj\Debug\IConfigAdmin.pdb

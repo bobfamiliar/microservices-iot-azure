@@ -7,3 +7,12 @@ c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\Interface\
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\Interface\IConfigPublic\obj\Debug\IConfigPublic.csprojResolveAssemblyReference.cache
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\Interface\IConfigPublic\obj\Debug\IConfigPublic.dll
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Config\Public\Interface\IConfigPublic\obj\Debug\IConfigPublic.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\bin\Debug\IConfigPublic.dll.config
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\bin\Debug\IConfigPublic.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\bin\Debug\IConfigPublic.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\bin\Debug\ConfigModels.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\bin\Debug\Newtonsoft.Json.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\bin\Debug\Newtonsoft.Json.xml
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\obj\Debug\IConfigPublic.csprojResolveAssemblyReference.cache
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\obj\Debug\IConfigPublic.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Public\Interface\IConfigPublic\obj\Debug\IConfigPublic.pdb

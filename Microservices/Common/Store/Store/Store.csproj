@@ -64,8 +64,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wire, Version = 1.2.5747.30585, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Wire.1.2.5747.30585\lib\net452\Wire.dll</HintPath>
+    <Reference Include="Wire, Version = 1.2.5769.27354, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\Wire.1.2.5769.27354\lib\net452\Wire.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
