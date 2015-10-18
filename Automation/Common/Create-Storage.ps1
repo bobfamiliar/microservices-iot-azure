@@ -83,7 +83,9 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-#Import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure"
+Import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure"
+
+switch-azuremode -Name AzureServiceManagement
 
 # Create a storage account
 New-AzureStorageAccount –StorageAccountName $StorageAccountName -Location $AzureLocation

@@ -78,7 +78,7 @@ Select-Subscription $Subscription
 
 Remove-Azureresourcegroup -Name $Redis_RG -force
 Remove-AzureResourceGroup -Name $DocDB_RG -force
-Remove-AzureResourceGroup -Name $Storage_RG -force
+#Remove-AzureResourceGroup -Name $Storage_RG -force
     
 # Mark the finish time.
 $FinishTime = Get-Date
