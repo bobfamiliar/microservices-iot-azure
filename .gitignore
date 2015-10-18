@@ -3,6 +3,7 @@
 
 !*.exe
 !*.dll
+!*.pdb
 
 # User-specific files
 *.suo
