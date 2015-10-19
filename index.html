@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Microservices, IoT and Azure by bobfamiliar</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Microservices, IoT and Azure</h1>
+        <h2>Microservices, IoT and Azure Reference Implementation</h2>
+        <a href="https://github.com/bobfamiliar/microservices-iot-azure" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="microservices-iot-and-azure" class="anchor" href="#microservices-iot-and-azure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Microservices, IoT and Azure</h1>
+
+<h2>
+<a id="date-10202015" class="anchor" href="#date-10202015" aria-hidden="true"><span class="octicon octicon-link"></span></a>Date: 10.20.2015</h2>
+
+<h2>
+<a id="version-v100" class="anchor" href="#version-v100" aria-hidden="true"><span class="octicon octicon-link"></span></a>Version: v1.0.0</h2>
+
+<h2>
+<a id="authors-bob-familiar" class="anchor" href="#authors-bob-familiar" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author(s): Bob Familiar</h2>
+
+<h2>
+<a id="url-httpsgithubcombobfamiliarmicroservices-iot-azure" class="anchor" href="#url-httpsgithubcombobfamiliarmicroservices-iot-azure" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL: <a href="https://github.com/bobfamiliar/microservices-iot-azure">https://github.com/bobfamiliar/microservices-iot-azure</a>
+</h2>
+
+<hr>
+
+<p><img src="http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/10/bookcover-small.jpg" alt="Microservices, IoT and Azure"></p>
+
+<hr>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>This code repository is a reference implementation that accompanies the book Microservices, IoT and Azure by Bob Familiar and published by Apress Media. The book is available for purchase <a href="http://amzn.to/1RFjiUW" title="Amazon">here</a>.</p>
+
+<p>The book, Microservices, IoT and Azure, provides practical guidance for adopting a high velocity, continuous delivery process to create reliable, scalable, Software-as-a-Service (SaaS) solutions that are designed and built using a microservice architecture, deployed to the Azure cloud, and managed through automation. Microservices, IoT, and Azure offers software developers, architects, and operations engineers’ step-by-step directions for building cloud-native applications through code, script, exercises, and a working reference implementation.</p>
+
+<h2>
+<a id="the-reference-implementation" class="anchor" href="#the-reference-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Reference Implementation</h2>
+
+<p>A working definition of microservices is contrasted with with traditional monolithic layered architecture. A fictitious, home-biomedical startup is used to demonstrate microservice architecture and automation capabilities for cross-cutting and business services as well as connected device scenarios for Internet of Things (IoT). Several Azure PaaS services are detailed including Storage, SQL Database, DocumentDb, Redis Cache, Cloud Services, Web API’s, API Management, IoT Hub, IoT Suite, Event Hub, and Stream Analytics. Finally the book looks to the future and examines Service Fabric to see how microservices are becoming the de facto approach to building reliable software in the cloud.</p>
+
+<p>The Reference Implementation will provide PowerShell scripts to automate the Provisioning, Build, Deployment and De-Provisioning of the solution. The Solution consists of several independent Microservices built using C# and ASP.NET Web API along with DocumentDb and Redis. In addition there is an IoT component of the solution that is built using Event Hub, Stream Analytics, Cloud Services and SQL Database. There is a sample real-time data visualization client that demonstrates how to orchestrate the Microservices into a complete solution.</p>
+
+<p>Viewed as a whole, the Reference Implementation demonstrates how to use several Azure PaaS Services together along with custom code and automation scripts to create a modern Software-as-a-Service solution. </p>
+
+<p>The software is provided under the Microsoft Public License (Ms-PL) and as such the software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions.</p>
+
+<h2>
+<a id="what-you-will-learn" class="anchor" href="#what-you-will-learn" aria-hidden="true"><span class="octicon octicon-link"></span></a>What you will learn</h2>
+
+<ul>
+<li>What are Microservices and why are they a compelling architecture pattern for SaaS applications </li>
+<li>How to design, develop and deploy Microservices using Visual Studio, PowerShell and Azure</li>
+<li>Microservice patterns for traditional line of business solutions </li>
+<li>Microservice patterns for Internet of Things and Big Data Analytics solutions </li>
+<li>Techniques for automating Microservice provisioning, build and deployment </li>
+<li>What is Service Fabric and how that is the future direction for Microservices on the Microsoft Azure</li>
+</ul>
+
+<h2>
+<a id="chapters" class="anchor" href="#chapters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapters</h2>
+
+<p><strong>Chapters 1: From Monolithic to Microservice</strong> - Shifting demographics and competitive pressure on business to drive impact at velocity is requiring us to evolve our approach to how we develop, deploy, and support our software products. This chapter lays out a roadmap to evolve not only application architecture but also process and organization.</p>
+
+<p><strong>Chapters 2: What Is a Microservice?</strong> - This chapter provides a working definition of microservices and details the benefits as well as the challenges to evolving to this architecture pattern.</p>
+
+<p><strong>Chapters 3: Microservice Architecture</strong> - Traditionally, we have used separation of concerns, a design principle for separating implementation into distinct layers in order to define horizontal seams in our application architecture. Microservice architecture applies separation of concern to define vertical seams that define their isolation and autonomous nature. This chapter will compare and contrast microservice architecture with traditional layered architecture.</p>
+
+<p><strong>Chapters 4: Azure – A Microservice Platform</strong> - The Azure platform exudes characteristics of microservices. This chapter examines several Azure services to identify common patterns of services that are designed and implemented using microservices. Storage, SQL Database, DocumentDb, Redis Cache, Service Bus, API management, and app containers are reviewed.</p>
+
+<p><strong>Chapters 5: Automation</strong> - Automation is the key to being able to evolve to a continuous delivery approach and realize the benefits of SaaS. This chapter outlines a framework for defining and organizing your automation process and takes you through 10 exercises that will provision, build, and deploy the reference implementation using PowerShell.</p>
+
+<p><strong>Chapters 6: Microservice Reference Implementation</strong> - The epic story of Home Biomedical, a wholly owned subsidiary of LooksFamiliar, Inc., is detailed, and the implementation details of the reference microservices are revealed. The common libraries for ReST calls and DocumentDb and Redis Cache for data access are reviewed. Designing for both public and management APIs is discussed along with the implementation details for the model, interface, service, API, SDK, and console components.</p>
+
+<p><strong>Chapters 7: IoT and Microservices</strong> - IoT is becoming a more common solution pattern as we learn to incorporate streaming data into our solutions. This chapter outlines the capabilities needed to realize an IoT solution and maps them to the Azure IoT stack. IoT Hub, IoT Suite, Event Hub, and Stream Analytics are detailed, as well as how to use Event Hub, Cloud Services, and Notification Hub to support mobile alerts. A working example of data visualization using a JavaScript client along with SignalR, ReST, and SQL Database is reviewed.</p>
+
+<p><strong>Chapters 8: Service Fabric</strong> - Service Fabric is the microservice management, runtime, and infrastructure that Microsoft uses to build, deploy, and manage their own first-class cloud services such as SQL Database, DocumentDb, Bing Cortana, Halo Online, Skype for Business, In Tune, Event Hubs, and many others. This chapter provides a primer and demonstrates Service Fabric by migrating one of the Web API microservices to Service Fabric.</p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>Windows 8.1 or Windows 10</li>
+<li>Visual Studio 2015</li>
+<li>.NET 4.5.2</li>
+<li>Azure SDK 2.7.1</li>
+<li>Azure PowerShell 0.9.8</li>
+</ul>
+
+<h2>
+<a id="recommended" class="anchor" href="#recommended" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recommended</h2>
+
+<ul>
+<li>SQL Server Management Studio</li>
+<li>Postman</li>
+<li>Azure Management Studio</li>
+</ul>
+
+<h2>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<p>The details of how to setup the reference implementation are detailed in Chapter 5. There are 10 exercises that take you step by step through the provision, build and deploy process. Once the process is complete, you will have a complete end-to-end IoT solution running in Azure.</p>
+
+<hr>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/bobfamiliar/microservices-iot-azure/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/bobfamiliar/microservices-iot-azure/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/bobfamiliar/microservices-iot-azure"></a> is maintained by <a href="https://github.com/bobfamiliar">bobfamiliar</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
