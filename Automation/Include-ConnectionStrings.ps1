@@ -1,4 +1,4 @@
-$docdbconnstr = "AccountEndpoint=https://looksfamiliardocdbdev.documents.azure.com:443/;AccountKey=wtGAYB/aG6cTve9NLa72Or8NebUfxLnwoevQILecb7Moi9dxUBgsDb8vzTpZsN08Nd7Ku7JcA+ESYttF7Y1pqA==;"
+$docdbconnstr = "AccountEndpoint=https://looksfamiliardocdbdev.documents.azure.com:443/;AccountKey=dIxk8Ym2CH90ZpgwMUA5AGMCXClLoCdC8AyXxNqmRxeEkUvpODLo0n/2pkcYKVN8UpgbhzudL18TgI7fJmiagA==;"
 $docdburi = "https://looksfamiliardocdbdev.documents.azure.com:443/"
-$docdbkey = "wtGAYB/aG6cTve9NLa72Or8NebUfxLnwoevQILecb7Moi9dxUBgsDb8vzTpZsN08Nd7Ku7JcA+ESYttF7Y1pqA=="
-$redisuri = "looksfamiliarredisdev.redis.cache.windows.net,ssl=true,password=msr4RfRzJMf6fCoxDKpGpb7Iq17dg6SZd8+c/qdLvG0="
+$docdbkey = "dIxk8Ym2CH90ZpgwMUA5AGMCXClLoCdC8AyXxNqmRxeEkUvpODLo0n/2pkcYKVN8UpgbhzudL18TgI7fJmiagA=="
+$redisuri = "looksfamiliarredisdev.redis.cache.windows.net,ssl=true,password=LnnHid/xxpdWL6uDCdPCBIsCW/eWFWysQqRKHVEpffA="

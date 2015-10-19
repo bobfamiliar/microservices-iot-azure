@@ -4,7 +4,7 @@
           "sku":{  
              "name":"standard"
           },
-          "outputStartTime":"2015-10-18 15:00:05Z",
+          "outputStartTime":"2015-10-18 21:20:30Z",
           "outputStartMode":"CustomTime",
           "eventsOutOfOrderPolicy":"drop",
           "eventsOutOfOrderMaxDelayInSeconds":10,
@@ -24,7 +24,7 @@
                       "properties":{  
                          "serviceBusNamespace":"looksfamiliarsbdev",
                          "sharedAccessPolicyName":"RootManageSharedAccessKey",
-                         "sharedAccessPolicyKey":"0xJIIAH47VESzI1WVBOuRm6cWAXbXLIOD2k+JxWP3Eg=",
+                         "sharedAccessPolicyKey":"p1kJPB7wdzhfLHnQmP7NHiY9chjRlVlB5b0fr7R5lOk=",
                          "eventHubName":"biometrics"
                       }
                    }
