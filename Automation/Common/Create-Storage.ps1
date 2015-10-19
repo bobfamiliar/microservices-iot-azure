@@ -1,8 +1,8 @@
 ﻿<#
 .Synopsis 
-    This PowerShell script provisions a Storage Account
+    This PowerShell script provisions a Classic Storage Account
 .Description 
-    This PowerShell script provisions  Storage Account
+    This PowerShell script provisions a Classic Storage Account
 .Notes 
     File Name  : Create-Storage.ps1
     Author     : Ron Bokleman, Bob Familiar
@@ -23,8 +23,6 @@
     Example:  mysubscription
 .Parameter StorageAccountName
     Example:  mystorage
-.Parameter StorageResourceGroup
-    Example:  storage_rg
 .Parameter AzureLocation
     Example:  East US
 .Example
@@ -87,11 +85,18 @@ Import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceMan
 
 switch-azuremode -Name AzureServiceManagement
 
-# Create a storage account
-New-AzureStorageAccount –StorageAccountName $StorageAccountName -Location $AzureLocation
-
-# Set a default storage account.
-Set-AzureSubscription -CurrentStorageAccountName $StorageAccountName -SubscriptionName $Subscription
+if (Test-AzureName -Storage -Name $StorageAccountName) {
+    "Storage account name '$StorageAccountName' is already taken, try another one"
+} else {
+    $Result = New-AzureStorageAccount -StorageAccountName $StorageAccountName -Location $AzureLocation
+    If ($Result.OperationStatus -eq "Succeeded") {
+        $Result | Out-String
+        "Created new Storage Account '$StorageAccountName', in '$Location'"
+        Set-AzureSubscription –SubscriptionName $Subscription -CurrentStorageAccount $StorageAccountName 
+    } else {
+        "Failed to create new Storage Account '$StorageAccountName'"
+    }
+}
 
 # Mark the finish time.
 $FinishTime = Get-Date

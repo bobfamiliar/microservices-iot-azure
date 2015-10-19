@@ -38,7 +38,6 @@ Param(
 
 $Redis_RG = "Redis_RG"
 $DocDB_RG = "DocDb_RG"
-$Storage_RG = "Storage_RG"
 
 #######################################################################################
 # F U N C T I O N S
@@ -78,7 +77,6 @@ Select-Subscription $Subscription
 
 Remove-Azureresourcegroup -Name $Redis_RG -force
 Remove-AzureResourceGroup -Name $DocDB_RG -force
-#Remove-AzureResourceGroup -Name $Storage_RG -force
     
 # Mark the finish time.
 $FinishTime = Get-Date
