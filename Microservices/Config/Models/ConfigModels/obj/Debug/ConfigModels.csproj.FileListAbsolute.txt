@@ -12,3 +12,10 @@ c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Models\
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\obj\Debug\ConfigModels.csprojResolveAssemblyReference.cache
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\obj\Debug\ConfigModels.dll
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\obj\Debug\ConfigModels.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\bin\Debug\ConfigModels.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\bin\Debug\ConfigModels.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\bin\Debug\Newtonsoft.Json.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\bin\Debug\Newtonsoft.Json.xml
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\obj\Debug\ConfigModels.csprojResolveAssemblyReference.cache
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\obj\Debug\ConfigModels.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Models\ConfigModels\obj\Debug\ConfigModels.pdb
