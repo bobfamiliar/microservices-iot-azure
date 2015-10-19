@@ -96,7 +96,7 @@ $Error.Clear()
 # Mark the start time.
 $StartTime = Get-Date
 
-import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure\azure.psd1"
+#import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure\azure.psd1"
 
 # Select Subscription
 Select-Subscription $Subscription

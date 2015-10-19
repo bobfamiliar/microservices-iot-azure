@@ -98,6 +98,8 @@ if (Test-AzureName -Storage -Name $StorageAccountName) {
     }
 }
 
+switch-azuremode -Name AzureResourceManager
+
 # Mark the finish time.
 $FinishTime = Get-Date
 
