@@ -1,2 +1,0 @@
-C:\Users\bobfa\Source\Repos\Microservices\ServiceFabric\API\ServiceFabricWebAPI\StatelessWebAPI\bin\x64\Debug\StatelessWebAPI.exe.config
-C:\Users\bobfa\Source\Repos\Microservices\ServiceFabric\API\ServiceFabricWebAPI\StatelessWebAPI\obj\x64\Debug\StatelessWebAPI.csprojResolveAssemblyReference.cache
