@@ -59,6 +59,12 @@ The software is provided under the Microsoft Public License (Ms-PL) and as such 
  - Azure SDK 2.7.1
  - Azure PowerShell 0.9.8
 
+##Recommended
+
+ - SQL Server Management Studio
+ - Postman
+ - Azure Management Studio
+
 ##Setup
 The details of how to setup the reference implementation are detailed in Chapter 5. There are 10 exercises that take you step by step through the provision, build and deploy process. Once the process is complete, you will have a complete end-to-end IoT solution running in Azure.
 
