@@ -33,16 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IRefPublic, Version = 1.2.5761.29278, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IRefPublic.1.2.5761.29278\lib\net452\IRefPublic.dll</HintPath>
+    <Reference Include="IRefPublic, Version = 1.2.5769.38859, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IRefPublic.1.2.5769.38859\lib\net452\IRefPublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RefModels, Version = 1.2.5761.29277, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\RefModels.1.2.5761.29277\lib\net452\RefModels.dll</HintPath>
+    <Reference Include="RefModels, Version = 1.2.5769.38858, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\RefModels.1.2.5769.38858\lib\net452\RefModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -54,8 +54,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wire, Version = 1.2.5747.30585, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Wire.1.2.5747.30585\lib\net452\Wire.dll</HintPath>
+    <Reference Include="Wire, Version = 1.2.5769.38505, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\Wire.1.2.5769.38505\lib\net452\Wire.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

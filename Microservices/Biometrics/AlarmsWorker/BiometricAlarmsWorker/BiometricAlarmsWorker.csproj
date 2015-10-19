@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -32,24 +32,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BiometricsModels, Version = 1.0.5762.29038, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\BiometricsModels.1.0.5762.29038\lib\net452\BiometricsModels.dll</HintPath>
+    <Reference Include="BiometricsModels, Version = 1.0.5769.38960, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\BiometricsModels.1.0.5769.38960\lib\net452\BiometricsModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigModels, Version = 1.2.5761.28547, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigModels.1.2.5761.28547\lib\net452\ConfigModels.dll</HintPath>
+    <Reference Include="ConfigModels, Version = 1.2.5769.38520, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5769.38520\lib\net452\ConfigModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigPublicSDK, Version = 1.2.5761.28560, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigPublicSDK.1.2.5761.28560\lib\net452\ConfigPublicSDK.dll</HintPath>
+    <Reference Include="ConfigPublicSDK, Version = 1.2.5769.38532, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigPublicSDK.1.2.5769.38532\lib\net452\ConfigPublicSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IConfigPublic, Version = 1.2.5761.28548, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IConfigPublic.1.2.5761.28548\lib\net452\IConfigPublic.dll</HintPath>
+    <Reference Include="IConfigPublic, Version = 1.2.5769.38522, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IConfigPublic.1.2.5769.38522\lib\net452\IConfigPublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IProfilePublic, Version = 1.2.5761.29081, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IProfilePublic.1.2.5761.29081\lib\net452\IProfilePublic.dll</HintPath>
+    <Reference Include="IProfilePublic, Version = 1.2.5769.38746, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IProfilePublic.1.2.5769.38746\lib\net452\IProfilePublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Documents.Client, Version=1.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -102,12 +102,12 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfileModels, Version = 1.2.5761.29080, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ProfileModels.1.2.5761.29080\lib\net452\ProfileModels.dll</HintPath>
+    <Reference Include="ProfileModels, Version = 1.2.5769.38745, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ProfileModels.1.2.5769.38745\lib\net452\ProfileModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfilePublicSDK, Version = 1.2.5761.29091, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ProfilePublicSDK.1.2.5761.29091\lib\net452\ProfilePublicSDK.dll</HintPath>
+    <Reference Include="ProfilePublicSDK, Version = 1.2.5769.38756, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ProfilePublicSDK.1.2.5769.38756\lib\net452\ProfilePublicSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -124,8 +124,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Wire, Version = 1.2.5747.30585, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Wire.1.2.5747.30585\lib\net452\Wire.dll</HintPath>
+    <Reference Include="Wire, Version = 1.2.5769.38505, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\Wire.1.2.5769.38505\lib\net452\Wire.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

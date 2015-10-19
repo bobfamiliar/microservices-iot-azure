@@ -3,6 +3,6 @@
         "siteName": "looksfamiliarRefAdminAPIdev",
         "hostingPlanName": "RefM_SP",
         "siteLocation": "East US",
-        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/36320211102015-RefM_RG-RefAdminAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=ovhnxACtChyUp5M%2Bn94ppkKav9uPrnv2fACi7aNdlWQ%3D&se=2015-10-11T19%3A32%3A42Z&sp=r"
+        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/42360918102015-RefM_RG-RefAdminAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=wKOhD5V7dJUy3MOa%2Fz6dL27xyKfWCAAVLgCZhQ5p1X0%3D&se=2015-10-19T02%3A36%3A51Z&sp=r"
     }
 }

@@ -5,3 +5,10 @@ C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\Biome
 C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.csprojResolveAssemblyReference.cache
 C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.dll
 C:\Users\bobfa\Source\Repos\LooksFamiliar\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Biometrics\Service\BiometricsService\bin\Debug\BiometricsService.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Biometrics\Service\BiometricsService\bin\Debug\BiometricsService.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Biometrics\Service\BiometricsService\bin\Debug\BiometricsModels.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Biometrics\Service\BiometricsService\bin\Debug\IBiometrics.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.csprojResolveAssemblyReference.cache
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Biometrics\Service\BiometricsService\obj\Debug\BiometricsService.pdb

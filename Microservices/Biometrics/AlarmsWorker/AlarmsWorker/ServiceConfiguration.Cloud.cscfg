@@ -4,12 +4,12 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=false" />
-      <Setting name="Azure.Storage.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName="/>
-      <Setting name="Azure.ServiceBus.ConnectionString" value="Endpoint=sb://[namespace].servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=[key]" />
-      <Setting name="NotificationHubConnectionString" value="Endpoint=sb://[namespace].servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=[key]"/>
+      <Setting name="Azure.Storage.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=looksfamiliarstoragetest;AccountKey=bojJTRbFYgyBk54FLWYJp0Rd1u9djIHKlRWjRwFdj2trV2JgmNJMYwE28j5ZVTY5KGabmmtu6OcgKfqNRw6opg=="/>
+      <Setting name="Azure.ServiceBus.ConnectionString" value="Endpoint=sb://looksfamiliarsbtest.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=OPnjm8lA9Pg8hUhgtQuH8pMfeqkeG041BcCBC7w/a3A=" />
+      <Setting name="NotificationHubConnectionString" value="Endpoint=sb://looksfamiliarnhtest.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=QVz5H5JHUHkNEmgOLaiSzaflYZvVDbAKJm3sT9ui2dM="/>
       <Setting name="EventHubName" value="alarms"/>
       <Setting name="NotificationHubName" value="alarms"/>
-      <Setting name="ConfigM" value="[ConfigM Public API URI]"/>
+      <Setting name="ConfigM" value="https://looksfamiliarconfigmpublicapitest.azurewebsites.net/config"/>
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

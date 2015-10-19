@@ -3,6 +3,6 @@
         "siteName": "looksfamiliarConfigPublicAPIdev",
         "hostingPlanName": "ConfigM_SP",
         "siteLocation": "East US",
-        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/16200318102015-ConfigM_RG-ConfigpublicAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=N8Y%2FSOIfonOA6pxuAoEwo6GD2qrqKtp5c7rTK%2FCFliA%3D&se=2015-10-18T20%3A20%3A25Z&sp=r"
+        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/15260918102015-ConfigM_RG-ConfigpublicAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=GWTV7zJnMz%2FEOotC4mfzNmoXocCti1KvVWNpQV7%2Bo58%3D&se=2015-10-19T02%3A26%3A23Z&sp=r"
     }
 }

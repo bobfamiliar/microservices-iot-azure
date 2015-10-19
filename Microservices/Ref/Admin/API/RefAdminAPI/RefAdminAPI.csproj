@@ -43,8 +43,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IRefAdmin, Version = 1.2.5761.29280, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IRefAdmin.1.2.5761.29280\lib\net452\IRefAdmin.dll</HintPath>
+    <Reference Include="IRefAdmin, Version = 1.2.5769.38861, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IRefAdmin.1.2.5769.38861\lib\net452\IRefAdmin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=0.14.3.177, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -104,12 +104,12 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RefAdminService, Version = 1.2.5761.29286, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\RefAdminService.1.2.5761.29286\lib\net452\RefAdminService.dll</HintPath>
+    <Reference Include="RefAdminService, Version = 1.2.5769.38867, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\RefAdminService.1.2.5769.38867\lib\net452\RefAdminService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RefModels, Version = 1.2.5761.29277, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\RefModels.1.2.5761.29277\lib\net452\RefModels.dll</HintPath>
+    <Reference Include="RefModels, Version = 1.2.5769.38858, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\RefModels.1.2.5769.38858\lib\net452\RefModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">
@@ -120,8 +120,8 @@
       <HintPath>..\packages\StackExchange.Redis.StrongName.1.0.481\lib\net45\StackExchange.Redis.StrongName.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Store, Version = 1.2.5747.30591, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Store.1.2.5747.30591\lib\net452\Store.dll</HintPath>
+    <Reference Include="Store, Version = 1.2.5769.38512, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\Store.1.2.5769.38512\lib\net452\Store.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -193,8 +193,8 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Wire, Version = 1.2.5747.30585, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Wire.1.2.5747.30585\lib\net452\Wire.dll</HintPath>
+    <Reference Include="Wire, Version = 1.2.5769.38505, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\Wire.1.2.5769.38505\lib\net452\Wire.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

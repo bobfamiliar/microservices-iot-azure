@@ -37,8 +37,8 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RefModels, Version = 1.2.5761.29277, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\RefModels.1.2.5761.29277\lib\net452\RefModels.dll</HintPath>
+    <Reference Include="RefModels, Version = 1.2.5769.38858, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\RefModels.1.2.5769.38858\lib\net452\RefModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

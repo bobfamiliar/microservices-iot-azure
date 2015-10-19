@@ -5,3 +5,10 @@ c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Models\DeviceMode
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Models\DeviceModels\obj\Debug\DeviceModels.csprojResolveAssemblyReference.cache
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Models\DeviceModels\obj\Debug\DeviceModels.dll
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Models\DeviceModels\obj\Debug\DeviceModels.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Models\DeviceModels\bin\Debug\DeviceModels.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Models\DeviceModels\bin\Debug\DeviceModels.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Models\DeviceModels\bin\Debug\Newtonsoft.Json.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Models\DeviceModels\bin\Debug\Newtonsoft.Json.xml
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Models\DeviceModels\obj\Debug\DeviceModels.csprojResolveAssemblyReference.cache
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Models\DeviceModels\obj\Debug\DeviceModels.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Models\DeviceModels\obj\Debug\DeviceModels.pdb

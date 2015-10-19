@@ -3,6 +3,6 @@
         "siteName": "looksfamiliarBiometricsAPIdev",
         "hostingPlanName": "Biometrics_SP",
         "siteLocation": "East US",
-        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/58220711102015-Biometrics_RG-BiometricsAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=JymV3nyu2EJ2r6IrdxReZYvc2oQPg7jwqcVIyHvXoaQ%3D&se=2015-10-12T00%3A23%3A04Z&sp=r"
+        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/56121018102015-Biometrics_RG-BiometricsAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=MQ7R9e7MJQl4zcb3jOOx4%2FIch2G8jdhvgbaINjbMRk8%3D&se=2015-10-19T03%3A13%3A01Z&sp=r"
     }
 }

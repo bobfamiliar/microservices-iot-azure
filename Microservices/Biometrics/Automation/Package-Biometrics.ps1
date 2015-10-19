@@ -84,5 +84,8 @@ Publish-CloudService $assembly $path
 # D A S H B O A R D
 #######################################################################################
 
+$path = $repo + "\Microservices\Biometrics\Dashboard\Biometrics"
+$assembly = "BiometricsDashboard"
+
 # publish site
 Publish-WebSite $assembly $path

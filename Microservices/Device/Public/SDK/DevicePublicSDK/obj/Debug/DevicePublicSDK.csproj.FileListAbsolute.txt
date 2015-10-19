@@ -11,3 +11,16 @@ c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Public\SDK\Device
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Public\SDK\DevicePublicSDK\obj\Debug\DevicePublicSDK.pdb
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\Newtonsoft.Json.dll
 c:\users\bobfa\source\repos\looksfamiliar\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\Newtonsoft.Json.xml
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\DevicePublicSDK.dll.config
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\DevicePublicSDK.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\DevicePublicSDK.pdb
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\DeviceModels.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\IDevicePublic.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\Newtonsoft.Json.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\Wire.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\bin\Debug\Newtonsoft.Json.xml
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\obj\Debug\DevicePublicSDK.csprojResolveAssemblyReference.cache
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\obj\Debug\LooksFamiliar.Microservices.Device.Public.SDK.Errors.resources
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\obj\Debug\DevicePublicSDK.csproj.GenerateResource.Cache
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\obj\Debug\DevicePublicSDK.dll
+c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Public\SDK\DevicePublicSDK\obj\Debug\DevicePublicSDK.pdb

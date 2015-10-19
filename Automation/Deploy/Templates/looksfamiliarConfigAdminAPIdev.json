@@ -3,6 +3,6 @@
         "siteName": "looksfamiliarConfigAdminAPIdev",
         "hostingPlanName": "ConfigM_SP",
         "siteLocation": "East US",
-        "msdeployPackageUri":""
+        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/22250918102015-ConfigM_RG-ConfigAdminAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=DQ64ELvRfUMqDN2ZnjHsX6xMKjVDjYjL6QeLRbxvplQ%3D&se=2015-10-19T02%3A25%3A34Z&sp=r"
     }
 }

@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DeviceModels, Version = 1.0.5761.28955, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\DeviceModels.1.0.5761.28955\lib\net452\DeviceModels.dll</HintPath>
+    <Reference Include="DeviceModels, Version = 1.0.5769.38635, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\DeviceModels.1.0.5769.38635\lib\net452\DeviceModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
