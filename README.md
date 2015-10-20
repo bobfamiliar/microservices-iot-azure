@@ -2,7 +2,7 @@
 ##Date: 10.20.2015
 ##Version: v1.0.0
 ##Author: Bob Familiar
-##URL: https://github.com/bobfamiliar/microservices-iot-azure
+###URL: http://bobfamiliar.github.io/microservices-iot-azure/
 
 
 ----------
