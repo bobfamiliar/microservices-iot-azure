@@ -10,7 +10,7 @@ setlocal
 @rem ---------------------------------------------------------------------------------
 @rem Please Make sure you have Web Deploy install in your machine. 
 @rem Alternatively, you can explicit set the MsDeployPath to the location it is on your machine
-@rem set MSDeployPath="C:\Program Files\IIS\Microsoft Web Deploy V3\"
+@rem set MSDeployPath="C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\"
 @rem ---------------------------------------------------------------------------------
                       
 @rem ---------------------------------------------------------------------------------

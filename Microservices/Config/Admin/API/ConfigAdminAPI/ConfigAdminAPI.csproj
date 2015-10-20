@@ -48,16 +48,16 @@
     <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConfigAdminService, Version = 1.2.5770.22247, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigAdminService.1.2.5770.22247\lib\net452\ConfigAdminService.dll</HintPath>
+    <Reference Include="ConfigAdminService, Version = 1.2.5770.24999, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigAdminService.1.2.5770.24999\lib\net452\ConfigAdminService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigModels, Version = 1.2.5770.22233, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigModels.1.2.5770.22233\lib\net452\ConfigModels.dll</HintPath>
+    <Reference Include="ConfigModels, Version = 1.2.5770.24985, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5770.24985\lib\net452\ConfigModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IConfigAdmin, Version = 1.2.5770.22238, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IConfigAdmin.1.2.5770.22238\lib\net452\IConfigAdmin.dll</HintPath>
+    <Reference Include="IConfigAdmin, Version = 1.2.5770.24990, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IConfigAdmin.1.2.5770.24990\lib\net452\IConfigAdmin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=0.17.0.576, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

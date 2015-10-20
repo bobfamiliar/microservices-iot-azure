@@ -43,8 +43,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IRefAdmin, Version = 1.2.5769.38861, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IRefAdmin.1.2.5769.38861\lib\net452\IRefAdmin.dll</HintPath>
+    <Reference Include="IRefAdmin, Version = 1.2.5770.28188, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IRefAdmin.1.2.5770.28188\lib\net452\IRefAdmin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=0.14.3.177, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -104,12 +104,12 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RefAdminService, Version = 1.2.5769.38867, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\RefAdminService.1.2.5769.38867\lib\net452\RefAdminService.dll</HintPath>
+    <Reference Include="RefAdminService, Version = 1.2.5770.28197, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\RefAdminService.1.2.5770.28197\lib\net452\RefAdminService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RefModels, Version = 1.2.5769.38858, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\RefModels.1.2.5769.38858\lib\net452\RefModels.dll</HintPath>
+    <Reference Include="RefModels, Version = 1.2.5770.28182, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\RefModels.1.2.5770.28182\lib\net452\RefModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">

@@ -40,16 +40,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DeviceModels, Version = 1.0.5769.38635, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\DeviceModels.1.0.5769.38635\lib\net452\DeviceModels.dll</HintPath>
+    <Reference Include="DeviceModels, Version = 1.0.5770.25489, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\DeviceModels.1.0.5770.25489\lib\net452\DeviceModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevicePublicService, Version = 1.0.5769.38641, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\DevicePublicService.1.0.5769.38641\lib\net452\DevicePublicService.dll</HintPath>
+    <Reference Include="DevicePublicService, Version = 1.0.5770.25499, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\DevicePublicService.1.0.5770.25499\lib\net452\DevicePublicService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IDevicePublic, Version = 1.0.5769.38637, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IDevicePublic.1.0.5769.38637\lib\net452\IDevicePublic.dll</HintPath>
+    <Reference Include="IDevicePublic, Version = 1.0.5770.25492, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IDevicePublic.1.0.5770.25492\lib\net452\IDevicePublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Documents.Client, Version=1.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

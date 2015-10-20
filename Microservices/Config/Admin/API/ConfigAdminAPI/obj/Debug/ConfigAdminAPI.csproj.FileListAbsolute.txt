@@ -235,3 +235,6 @@ c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Admin\API
 c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Admin\API\ConfigAdminAPI\obj\Debug\ConfigAdminAPI.csprojResolveAssemblyReference.cache
 c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Admin\API\ConfigAdminAPI\obj\Debug\ConfigAdminAPI.dll
 c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Admin\API\ConfigAdminAPI\obj\Debug\ConfigAdminAPI.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Admin\API\ConfigAdminAPI\bin\ConfigAdminAPI.dll.config
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Admin\API\ConfigAdminAPI\bin\ConfigAdminAPI.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Config\Admin\API\ConfigAdminAPI\bin\ConfigAdminAPI.pdb

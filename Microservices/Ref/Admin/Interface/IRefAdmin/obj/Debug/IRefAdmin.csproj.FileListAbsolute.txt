@@ -16,3 +16,12 @@ c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Inte
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.csprojResolveAssemblyReference.cache
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.dll
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\IRefAdmin.dll.config
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\IRefAdmin.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\IRefAdmin.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\Newtonsoft.Json.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\RefModels.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\bin\Debug\Newtonsoft.Json.xml
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.csprojResolveAssemblyReference.cache
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Ref\Admin\Interface\IRefAdmin\obj\Debug\IRefAdmin.pdb

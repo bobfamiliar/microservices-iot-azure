@@ -123,6 +123,8 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
+import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure\azure.psd1"
+
 # Create Resource Groups
 .\..\..\..\Automation\Common\Create-ResourceGroup.ps1 $Subscription $Biometrics_RG $AzureLocation
 

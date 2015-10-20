@@ -40,16 +40,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConfigModels, Version = 1.2.5770.22233, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigModels.1.2.5770.22233\lib\net452\ConfigModels.dll</HintPath>
+    <Reference Include="ConfigModels, Version = 1.2.5770.24985, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5770.24985\lib\net452\ConfigModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigPublicService, Version = 1.2.5770.22243, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigPublicService.1.2.5770.22243\lib\net452\ConfigPublicService.dll</HintPath>
+    <Reference Include="ConfigPublicService, Version = 1.2.5770.24995, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigPublicService.1.2.5770.24995\lib\net452\ConfigPublicService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IConfigPublic, Version = 1.2.5770.22235, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IConfigPublic.1.2.5770.22235\lib\net452\IConfigPublic.dll</HintPath>
+    <Reference Include="IConfigPublic, Version = 1.2.5770.24988, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IConfigPublic.1.2.5770.24988\lib\net452\IConfigPublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.Documents.Client, Version=1.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

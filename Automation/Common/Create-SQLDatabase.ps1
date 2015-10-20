@@ -127,21 +127,23 @@ $Credentials = New-Object System.Management.Automation.PSCredential($SQLUserName
 
 # Create an Azure SQL Database Server Instance
 New-AzureSqlServer -ServerName $SQLServerName -SqlAdministratorCredentials $Credentials -ResourceGroupName $ResourceGroupName -Location $AzureLocation
-Start-Sleep -Seconds 60
+Start-Sleep -Seconds 120
 
 #Allow Azure Services (this is set to No by default)
 New-AzureSqlDatabaseServerFirewallRule -ServerName $SQLServerName -AllowAllAzureServices
-Start-Sleep -Seconds 60
+Start-Sleep -Seconds 120
 
 #create the Azure SQL Database
-New-AzureSqlDatabase -DatabaseName $SQLDatabaseName -ResourceGroupName $ResourceGroupName -Edition Standard -ServerName $SQLServerName -MaxSizeBytes 268435456000
-Start-Sleep -Seconds 60
+#New-AzureSqlDatabase -DatabaseName $SQLDatabaseName -ResourceGroupName $ResourceGroupName -Edition Standard -ServerName $SQLServerName -MaxSizeBytes 268435456000
+New-AzureSqlDatabase -DatabaseName $SQLDatabaseName -Edition Standard -ServerName $SQLServerName -MaxSizeBytes 268435456000
+Start-Sleep -Seconds 120
 
 $TcpIPAddress = Get-ExternalIPAddress
 
 # Create SQL Database Server Firewall Rule for this client computer ONLY.
 New-AzureSqlDatabaseServerFirewallRule -ServerName $SQLServerName -RuleName $env:COMPUTERNAME -StartIpAddress $TcpIPAddress -EndIpAddress $TcpIPAddress
 Start-Sleep -Seconds 60
+
 Update-SQLDatabase -Repo $Repo -SQLServer $SQLServerName -SQLDatabase $SQLDatabaseName -SQLUsername $SQLUserName -SQLPassword $SQLPassword
 
 # Mark the finish time.

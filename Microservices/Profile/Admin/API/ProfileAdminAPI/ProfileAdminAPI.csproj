@@ -43,8 +43,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IProfileAdmin, Version = 1.2.5769.38748, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IProfileAdmin.1.2.5769.38748\lib\net452\IProfileAdmin.dll</HintPath>
+    <Reference Include="IProfileAdmin, Version = 1.2.5770.25795, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IProfileAdmin.1.2.5770.25795\lib\net452\IProfileAdmin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=0.14.3.177, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -104,12 +104,12 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfileAdminService, Version = 1.2.5769.38753, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ProfileAdminService.1.2.5769.38753\lib\net452\ProfileAdminService.dll</HintPath>
+    <Reference Include="ProfileAdminService, Version = 1.2.5770.25806, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ProfileAdminService.1.2.5770.25806\lib\net452\ProfileAdminService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfileModels, Version = 1.2.5769.38745, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ProfileModels.1.2.5769.38745\lib\net452\ProfileModels.dll</HintPath>
+    <Reference Include="ProfileModels, Version = 1.2.5770.25789, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ProfileModels.1.2.5770.25789\lib\net452\ProfileModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=1.0.316.0, Culture=neutral, processorArchitecture=MSIL">

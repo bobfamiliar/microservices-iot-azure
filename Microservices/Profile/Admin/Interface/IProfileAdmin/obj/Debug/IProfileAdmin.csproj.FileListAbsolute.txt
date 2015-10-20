@@ -16,3 +16,12 @@ c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Profile\Admin\
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\obj\Debug\IProfileAdmin.csprojResolveAssemblyReference.cache
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\obj\Debug\IProfileAdmin.dll
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\obj\Debug\IProfileAdmin.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\bin\Debug\IProfileAdmin.dll.config
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\bin\Debug\IProfileAdmin.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\bin\Debug\IProfileAdmin.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\bin\Debug\Newtonsoft.Json.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\bin\Debug\ProfileModels.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\bin\Debug\Newtonsoft.Json.xml
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\obj\Debug\IProfileAdmin.csprojResolveAssemblyReference.cache
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\obj\Debug\IProfileAdmin.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Profile\Admin\Interface\IProfileAdmin\obj\Debug\IProfileAdmin.pdb

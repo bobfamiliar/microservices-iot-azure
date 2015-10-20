@@ -3,6 +3,6 @@
         "siteName": "looksfamiliarProfileAdminAPIdev",
         "hostingPlanName": "ProfileM_SP",
         "siteLocation": "East US",
-        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/45320918102015-ProfileM_RG-ProfileAdminAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=tgYsi%2Bej8fcZS1k%2FfGeT%2BjFHkz%2Bpt29jCRVYrw79eSA%3D&se=2015-10-19T02%3A32%3A53Z&sp=r"
+        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/01220319102015-ProfileM_RG-ProfileAdminAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=%2F%2FSBeytYa4XMu4UiXa469NX%2Bx8iZ5as3ClvtAoZ43Vs%3D&se=2015-10-19T20%3A22%3A10Z&sp=r"
     }
 }

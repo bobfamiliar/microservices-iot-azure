@@ -14,3 +14,11 @@ c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Admin\I
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\obj\Debug\IDeviceAdmin.csprojResolveAssemblyReference.cache
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\obj\Debug\IDeviceAdmin.dll
 c:\users\bobfa\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\obj\Debug\IDeviceAdmin.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\bin\Debug\IDeviceAdmin.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\bin\Debug\IDeviceAdmin.pdb
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\bin\Debug\DeviceModels.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\bin\Debug\Newtonsoft.Json.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\bin\Debug\Newtonsoft.Json.xml
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\obj\Debug\IDeviceAdmin.csprojResolveAssemblyReference.cache
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\obj\Debug\IDeviceAdmin.dll
+c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Admin\Interface\IDeviceAdmin\obj\Debug\IDeviceAdmin.pdb

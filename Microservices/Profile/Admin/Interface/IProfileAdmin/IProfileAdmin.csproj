@@ -37,8 +37,8 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfileModels, Version = 1.2.5769.38745, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ProfileModels.1.2.5769.38745\lib\net452\ProfileModels.dll</HintPath>
+    <Reference Include="ProfileModels, Version = 1.2.5770.25789, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ProfileModels.1.2.5770.25789\lib\net452\ProfileModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

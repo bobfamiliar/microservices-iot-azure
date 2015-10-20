@@ -83,7 +83,7 @@ Select-Subscription $Subscription
 
 Import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure"
 
-switch-azuremode -Name AzureServiceManagement
+#switch-azuremode -Name AzureServiceManagement
 
 if (Test-AzureName -Storage -Name $StorageAccountName) {
     "Storage account name '$StorageAccountName' is already taken, try another one"
@@ -98,7 +98,7 @@ if (Test-AzureName -Storage -Name $StorageAccountName) {
     }
 }
 
-switch-azuremode -Name AzureResourceManager
+#switch-azuremode -Name AzureResourceManager
 
 # Mark the finish time.
 $FinishTime = Get-Date
