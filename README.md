@@ -34,6 +34,8 @@ The software is provided under the Microsoft Public License (Ms-PL) and as such 
  - Techniques for automating Microservice provisioning, build and deployment 
  - What is Service Fabric and how that is the future direction for Microservices on the Microsoft Azure
 
+See the ![Wiki][3] for release notes and known issues
+
 ## Chapters 
 **Chapters 1: From Monolithic to Microservice** - Shifting demographics and competitive pressure on business to drive impact at velocity is requiring us to evolve our approach to how we develop, deploy, and support our software products. This chapter lays out a roadmap to evolve not only application architecture but also process and organization.
 
@@ -77,3 +79,4 @@ The details of how to setup the reference implementation are detailed in Chapter
 
   [1]: http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/10/bookcover-small.jpg
   [2]: http://amzn.to/1RFjiUW "Amazon"
+  [3]: https://github.com/bobfamiliar/microservices-iot-azure/wiki
