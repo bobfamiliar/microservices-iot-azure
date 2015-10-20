@@ -310,6 +310,7 @@ function Get-VisualStudioCommandPromptPath
 	$vs2010CommandPrompt = $env:VS100COMNTOOLS + "vcvarsall.bat"
 	$vs2012CommandPrompt = $env:VS110COMNTOOLS + "VsDevCmd.bat"
 	$vs2013CommandPrompt = $env:VS120COMNTOOLS + "VsDevCmd.bat"
+	$vs2015CommandPrompt = $env:VS140COMNTOOLS + "VsDevCmd.bat"
 
 	# Store the VS Command Prompt to do the build in, if one exists.
 	$vsCommandPrompt = $null
@@ -332,7 +333,8 @@ function Get-MsBuildPath
 #>
 
 	# Array of valid MsBuild versions
-	$versions = @("14.0", "12.0", "4.0", "3.5", "2.0")
+	#$versions = @("14.0", "12.0", "4.0", "3.5", "2.0")
+	$versions = @("14.0")
 
 	# Loop through each version from largest to smallest.
 	foreach ($version in $versions) 

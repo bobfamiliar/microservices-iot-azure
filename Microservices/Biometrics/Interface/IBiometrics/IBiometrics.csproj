@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BiometricsModels, Version = 1.0.5769.38960, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\BiometricsModels.1.0.5769.38960\lib\net452\BiometricsModels.dll</HintPath>
+    <Reference Include="BiometricsModels, Version = 1.0.5771.18038, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\BiometricsModels.1.0.5771.18038\lib\net452\BiometricsModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

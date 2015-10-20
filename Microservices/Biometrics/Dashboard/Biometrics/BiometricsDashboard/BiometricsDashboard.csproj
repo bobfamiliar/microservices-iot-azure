@@ -41,20 +41,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BiometricsModels, Version = 1.0.5769.38960, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\BiometricsModels.1.0.5769.38960\lib\net452\BiometricsModels.dll</HintPath>
+    <Reference Include="BiometricsModels, Version = 1.0.5771.18038, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\BiometricsModels.1.0.5771.18038\lib\net452\BiometricsModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigModels, Version = 1.2.5769.38520, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigModels.1.2.5769.38520\lib\net452\ConfigModels.dll</HintPath>
+    <Reference Include="ConfigModels, Version = 1.2.5770.24985, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5770.24985\lib\net452\ConfigModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigPublicSDK, Version = 1.2.5769.38532, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigPublicSDK.1.2.5769.38532\lib\net452\ConfigPublicSDK.dll</HintPath>
+    <Reference Include="ConfigPublicSDK, Version = 1.2.5770.25003, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigPublicSDK.1.2.5770.25003\lib\net452\ConfigPublicSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IConfigPublic, Version = 1.2.5769.38522, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IConfigPublic.1.2.5769.38522\lib\net452\IConfigPublic.dll</HintPath>
+    <Reference Include="IConfigPublic, Version = 1.2.5770.24988, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IConfigPublic.1.2.5770.24988\lib\net452\IConfigPublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

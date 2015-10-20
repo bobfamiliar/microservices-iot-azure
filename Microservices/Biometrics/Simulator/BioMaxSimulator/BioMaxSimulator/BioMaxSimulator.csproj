@@ -33,32 +33,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConfigModels, Version = 1.2.5769.38520, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigModels.1.2.5769.38520\lib\net452\ConfigModels.dll</HintPath>
+    <Reference Include="ConfigModels, Version = 1.2.5770.24985, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5770.24985\lib\net452\ConfigModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigPublicSDK, Version = 1.2.5769.38532, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigPublicSDK.1.2.5769.38532\lib\net452\ConfigPublicSDK.dll</HintPath>
+    <Reference Include="ConfigPublicSDK, Version = 1.2.5770.25003, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ConfigPublicSDK.1.2.5770.25003\lib\net452\ConfigPublicSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DeviceAdminSDK, Version = 1.0.5769.38648, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\DeviceAdminSDK.1.0.5769.38648\lib\net452\DeviceAdminSDK.dll</HintPath>
+    <Reference Include="DeviceAdminSDK, Version = 1.0.5770.25510, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\DeviceAdminSDK.1.0.5770.25510\lib\net452\DeviceAdminSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DeviceModels, Version = 1.0.5769.38635, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\DeviceModels.1.0.5769.38635\lib\net452\DeviceModels.dll</HintPath>
+    <Reference Include="DeviceModels, Version = 1.0.5770.25489, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\DeviceModels.1.0.5770.25489\lib\net452\DeviceModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IConfigPublic, Version = 1.2.5769.38522, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IConfigPublic.1.2.5769.38522\lib\net452\IConfigPublic.dll</HintPath>
+    <Reference Include="IConfigPublic, Version = 1.2.5770.24988, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IConfigPublic.1.2.5770.24988\lib\net452\IConfigPublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IDeviceAdmin, Version = 1.0.5769.38638, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IDeviceAdmin.1.0.5769.38638\lib\net452\IDeviceAdmin.dll</HintPath>
+    <Reference Include="IDeviceAdmin, Version = 1.0.5770.25494, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IDeviceAdmin.1.0.5770.25494\lib\net452\IDeviceAdmin.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IProfilePublic, Version = 1.2.5769.38746, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IProfilePublic.1.2.5769.38746\lib\net452\IProfilePublic.dll</HintPath>
+    <Reference Include="IProfilePublic, Version = 1.2.5770.25792, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IProfilePublic.1.2.5770.25792\lib\net452\IProfilePublic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ServiceBus, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -73,12 +73,12 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfileModels, Version = 1.2.5769.38745, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ProfileModels.1.2.5769.38745\lib\net452\ProfileModels.dll</HintPath>
+    <Reference Include="ProfileModels, Version = 1.2.5770.25789, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ProfileModels.1.2.5770.25789\lib\net452\ProfileModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ProfilePublicSDK, Version = 1.2.5769.38756, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ProfilePublicSDK.1.2.5769.38756\lib\net452\ProfilePublicSDK.dll</HintPath>
+    <Reference Include="ProfilePublicSDK, Version = 1.2.5770.25810, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\ProfilePublicSDK.1.2.5770.25810\lib\net452\ProfilePublicSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
