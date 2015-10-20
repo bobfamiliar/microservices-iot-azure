@@ -4,7 +4,7 @@
           "sku":{  
              "name":"standard"
           },
-          "outputStartTime":"2015-10-20 10:14:35Z",
+          "outputStartTime":"2015-10-20 15:05:59Z",
           "outputStartMode":"CustomTime",
           "eventsOutOfOrderPolicy":"drop",
           "eventsOutOfOrderMaxDelayInSeconds":10,
@@ -24,7 +24,7 @@
                       "properties":{  
                          "serviceBusNamespace":"looksfamiliarsbdev",
                          "sharedAccessPolicyName":"RootManageSharedAccessKey",
-                         "sharedAccessPolicyKey":"w5Sm4lm/jEikwfm+vq4t5NvZBVEUr85YpWr5GU7b/fM=",
+                         "sharedAccessPolicyKey":"pEXPRYrlQ8JBxtF8Vl2TWihIh1M0EhYg1olE1Qd7wGs=",
                          "eventHubName":"biometrics"
                       }
                    }
@@ -70,7 +70,7 @@ WHERE
                 "properties": {
                     "serviceBusNamespace":"looksfamiliarsbdev",
                     "sharedAccessPolicyName":"RootManageSharedAccessKey",
-                    "sharedAccessPolicyKey":"w5Sm4lm/jEikwfm+vq4t5NvZBVEUr85YpWr5GU7b/fM=",
+                    "sharedAccessPolicyKey":"pEXPRYrlQ8JBxtF8Vl2TWihIh1M0EhYg1olE1Qd7wGs=",
                     "eventHubName":"alarms"
                 }
               }

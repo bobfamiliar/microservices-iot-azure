@@ -40,16 +40,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BiometricsModels, Version = 1.0.5771.18038, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\BiometricsModels.1.0.5771.18038\lib\net452\BiometricsModels.dll</HintPath>
+    <Reference Include="BiometricsModels, Version = 1.0.5771.27223, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\BiometricsModels.1.0.5771.27223\lib\net452\BiometricsModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="BiometricsService, Version = 1.0.5769.38963, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\BiometricsService.1.0.5769.38963\lib\net452\BiometricsService.dll</HintPath>
+    <Reference Include="BiometricsService, Version = 1.0.5771.27227, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\BiometricsService.1.0.5771.27227\lib\net452\BiometricsService.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IBiometrics, Version = 1.0.5771.18040, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IBiometrics.1.0.5771.18040\lib\net452\IBiometrics.dll</HintPath>
+    <Reference Include="IBiometrics, Version = 1.0.5771.27225, Culture = neutral, processorArchitecture = MSIL">
+      <HintPath>..\packages\IBiometrics.1.0.5771.27225\lib\net452\IBiometrics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />

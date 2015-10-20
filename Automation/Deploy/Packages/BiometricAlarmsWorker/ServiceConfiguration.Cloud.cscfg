@@ -13,9 +13,9 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=false" />
-      <Setting name="Azure.Storage.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=looksfamiliarstoragedev;AccountKey=DnBctO6J44G8PwQLkG+OcmkCM8kMTF6ucwaEigQ4krH4Xn6OAekyTibEn2wFT6o3AsTvBuP4BmJbDaZu8fWT9Q==" />
-      <Setting name="Azure.ServiceBus.ConnectionString" value="Endpoint=sb://looksfamiliarsbdev.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=HgMnwpwjORR3CpczNIkNbXkKpzwj7d4f0bdRsSt0gAk=" />
-      <Setting name="NotificationHubConnectionString" value="Endpoint=sb://looksfamiliarnhdev.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=zg4eCADaE1nhmqolgGW2lo5dL9VHnRp/N4dcdxs5yQk=" />
+      <Setting name="Azure.Storage.ConnectionString" value="DefaultEndpointsProtocol=https;AccountName=looksfamiliarstoragedev;AccountKey=RgkGwpbjHaxRG9qu0FkhlR6Ldd1JpN8hD4Gci1WHI9dIxbEdwa2FkAsKsvcpQ2zr/XGm9F1Sx3TDhn4YfaMz4Q==" />
+      <Setting name="Azure.ServiceBus.ConnectionString" value="Endpoint=sb://looksfamiliarsbdev.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=38QfY/Gs+C6PaKhsBMKiOQys7hGodxn7DqNG+lJipRE=" />
+      <Setting name="NotificationHubConnectionString" value="Endpoint=sb://looksfamiliarnhdev.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=n7/IlJTaYEdmcHdkv8IbxG7y3l+MdSANio6Hlkj6kIw=" />
       <Setting name="EventHubName" value="alarms" />
       <Setting name="NotificationHubName" value="alarms" />
       <Setting name="ConfigM" value="https://looksfamiliarConfigPublicAPIdev.azurewebsites.net/config" />
