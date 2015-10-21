@@ -72,11 +72,6 @@ The details of how to setup the reference implementation are detailed in Chapter
 
 ----------
 
-##Change Log
-###v1.0.0
-
-
-
   [1]: http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/10/bookcover-small.jpg
   [2]: http://amzn.to/1RFjiUW "Amazon"
   [3]: https://github.com/bobfamiliar/microservices-iot-azure/wiki
