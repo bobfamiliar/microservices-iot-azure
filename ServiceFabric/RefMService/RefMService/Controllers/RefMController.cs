@@ -13,7 +13,7 @@ namespace RefMService.Controllers
         {
             var docdburi = "[docdburi]";
             var docdbkey = "[docdbkey]";
-            var redisuri = "[redis-account]v.redis.cache.windows.net,ssl=true,password=[redis-key]";
+            var redisuri = "[redis-account].redis.cache.windows.net,ssl=true,password=[redis-key]";
 
             _refM = new RefM(docdburi, docdbkey, redisuri);
         }

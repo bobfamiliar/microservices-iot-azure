@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<sitemanifest>
-  <IisApp path="c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Public\API\DevicePublicAPI\obj\Debug\Package\PackageTmp" />
-  <setAcl path="c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Public\API\DevicePublicAPI\obj\Debug\Package\PackageTmp" setAclResourceType="Directory" />
-  <setAcl path="c:\users\bob\source\repos\microservices-iot-azure\Microservices\Device\Public\API\DevicePublicAPI\obj\Debug\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
-</sitemanifest>

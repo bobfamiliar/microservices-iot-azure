@@ -1,8 +1,0 @@
-{
-    "parameterValues": {
-        "siteName": "looksfamiliarRefAdminAPIdev",
-        "hostingPlanName": "RefM_SP",
-        "siteLocation": "East US",
-        "msdeployPackageUri":"https://looksfamiliarstoragedev.blob.core.windows.net/msdeploypackages/18410419102015-RefM_RG-RefAdminAPI-WebDeployPackage.zip?sv=2015-02-21&sr=b&sig=l%2BEgQEeeKaRc2q0Fet6Men7OehkErCy5HIKCcikF8gQ%3D&se=2015-10-19T21%3A41%3A24Z&sp=r"
-    }
-}
