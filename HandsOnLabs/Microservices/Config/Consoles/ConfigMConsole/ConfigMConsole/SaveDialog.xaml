@@ -1,0 +1,14 @@
+﻿<Window x:Class="ConfigMConsole.SaveDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Save" Height="200" Width="300" Loaded="Window_Loaded">
+    <Grid>
+            <StackPanel>
+            <TextBlock x:Name="Message" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,50,0,50"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Click="OkClick" Content="OK" IsDefault="true" Width="100" Margin="0,0,20,0"/>
+                </StackPanel>
+
+            </StackPanel>
+    </Grid>
+</Window>

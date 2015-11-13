@@ -1,0 +1,96 @@
+﻿<Window x:Class="ConfigMConsole.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ConfigM Management Console" Height="720" Width="1280" Background="AliceBlue">
+
+    <Window.Resources>
+        <DataTemplate x:Key="ItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding icon}" Stretch="Fill" Width="50" Height="50"/>
+                <TextBlock Text="{Binding name}" VerticalAlignment="Center" Margin="20,0,0,0" FontSize="24"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AttrTemplate">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Vertical" Width="150">
+                    <TextBox x:Name="name" Text="{Binding name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Width="130" KeyDown="UIElement_OnKeyDown" TextChanged="Name_OnTextChanged"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBox x:Name="value" Text="{Binding value}" VerticalAlignment="Center" Margin="20,0,20,0" FontSize="20" Width="650" KeyDown="UIElement_OnKeyDown" TextChanged="Value_OnTextChanged"/>
+                </StackPanel>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*"/>
+                <RowDefinition Height="50*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="15*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="80*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Right" FontSize="20" VerticalAlignment="Center" Margin="0,20,20,0">Id:</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" TextAlignment="Right" FontSize="20" VerticalAlignment="Center" Margin="0,20,20,0">Name:</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" TextAlignment="Right" FontSize="20" VerticalAlignment="Center" Margin="0,20,20,0">Description:</TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" TextAlignment="Right" FontSize="20" VerticalAlignment="Center" Margin="0,20,20,0">Cache TTL:</TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="0" TextAlignment="Right" FontSize="20" VerticalAlignment="Center" Margin="0,20,20,0">Version:</TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="0" TextAlignment="Right" FontSize="20" VerticalAlignment="Center" Margin="0,20,20,0">Last Modified:</TextBlock>
+
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="MicroserviceId"  VerticalAlignment="Center" Margin="0,20,20,0" FontSize="20" Height="28" IsEnabled="False"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="MicroserviceName"  VerticalAlignment="Center" Margin="0,20,20,0" FontSize="20" Height="28" KeyDown="MicroserviceName_OnKeyDown" TextChanged="MicroserviceName_TextChanged" />
+                <TextBox Grid.Row="2" Grid.Column="1" x:Name="MicroserviceDesc"  VerticalAlignment="Center" Margin="0,20,20,0"  FontSize="20" Height="28" KeyDown="MicroserviceDesc_OnKeyDown"  TextChanged="MicroserviceDesc_TextChanged" />
+                <TextBox Grid.Row="3" Grid.Column="1" x:Name="MicroserviceCacheTTL"  VerticalAlignment="Center" Margin="0,20,20,0"  FontSize="20" Height="28" KeyDown="MicroserviceCacheTTL_OnKeyDown" TextChanged="MicroserviceCacheTTL_TextChanged" />
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="MicroserviceVersion"  VerticalAlignment="Center" Margin="0,20,20,0"  FontSize="20" Height="28" KeyDown="MicroserviceVersion_OnKeyDown" TextChanged="MicroserviceVersion_TextChanged" />
+                <TextBox Grid.Row="5" Grid.Column="1" x:Name="MicroserviceModified"  VerticalAlignment="Center" Margin="0,20,20,0"  FontSize="20" Height="28" IsEnabled="False" />
+
+
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0">
+                    <Button x:Name="AddButton" Height="36" Width="36" Click="AddButton_OnClick" IsEnabled="True">
+                        <StackPanel>
+                            <Image Height="36" Source="images\plus.png" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="SaveButton" Height="36" Width="36" Margin="18,0,0,0" Click="SaveButton_OnClick" IsEnabled="False">
+                        <StackPanel>
+                            <Image Height="36" Source="images\save.png" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+            
+            <ListView Grid.Row="1" 
+                      x:Name="AttributeEditor"
+                      ItemTemplate="{StaticResource AttrTemplate}" ItemsSource="{Binding Attribute}"
+                      Margin="20,20,20,20">
+            </ListView>
+        </Grid>
+
+        <ListView Grid.Column="0" Margin="20,20,20,20"
+                  x:Name="MicroserviceList" 
+                  ItemTemplate="{StaticResource ItemTemplate}" ItemsSource="{Binding Microservice}"
+                  SelectionChanged="MicroserviceList_OnSelectionChanged"/>
+
+    </Grid>
+</Window>
