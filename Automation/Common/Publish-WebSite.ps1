@@ -25,26 +25,6 @@ param
 # F U N C T I O N S
 #######################################################################################
 
-Function Select-Subscription()
-{
-    Param([String] $Subscription)
-
-    Try
-    {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
-    }
-    Catch
-    {
-        Write-Verbose -Message $Error[0].Exception.Message
-        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
-    }
-}
-
 function Set-WebsiteConfiguration
 {
     [CmdletBinding()]
@@ -69,9 +49,7 @@ function Set-WebsiteConfiguration
         -Process { $appSettingsHash.Add($_,$appSettings.$_) } `
         -End {$appSettingsHash}
 
-    #Switch-AzureMode -Name AzureServiceManagement
     Set-AzureWebsite $siteName -AppSettings $appSettingsHash 
-    #Switch-AzureMode -Name AzureResourceManager
 }
 
 ##########################################################################################
@@ -82,7 +60,7 @@ $Error.Clear()
 
 Set-StrictMode -Version 3
 
-import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure\azure.psd1"
+#Select-Subscription $Subscription
 
 $TemplateFile = $Repo + "\Automation\Deploy\Templates\Deploy-WebSite.json"
 $WebDeployPackage = $Repo + "\Automation\Deploy\Packages\" + $DeploymentName + "\" + $DeploymentName + ".zip"
@@ -93,7 +71,8 @@ $WebDeployPackage = $Repo + "\Automation\Deploy\Packages\" + $DeploymentName + "
 $containerName = 'msdeploypackages'
 $blobName = (Get-Date -Format 'ssmmhhddMMyyyy') + '-' + $ResourceGroupName + '-' + $DeploymentName + '-WebDeployPackage.zip'
 
-# Use the CurrentStorageAccount which is set by Set-AzureSubscription
+# Use the CurrentStorageAccount which is set by Set-AzureRmSubscription
+
 if (!(Get-AzureStorageContainer $containerName -ErrorAction SilentlyContinue)) 
 {
     New-AzureStorageContainer -Name $containerName -Permission Off
@@ -126,7 +105,7 @@ $jsonContent.parameterValues | Get-Member -Type NoteProperty | ForEach-Object {
 }
 
 # Create a new resource group (if it doesn't already exist) using our template file and template parameters
-New-AzureResourceGroup -Name $ResourceGroupName -DeploymentName $DeploymentName -Location $Location -TemplateFile $TemplateFile -TemplateParameterObject $parameters -Force
+New-AzureRmResourceGroupDeployment -ResourceGroupName $ResourceGroupName -Name $DeploymentName -TemplateFile $TemplateFile -TemplateParameterObject $parameters -Force
 
 # generate the appsettigs config file
 $JSON = @"

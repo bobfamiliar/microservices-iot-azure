@@ -85,20 +85,24 @@ Param(
 )
 
 #######################################################################################
+# V A R I I B L E S
+#######################################################################################
+
+$Storage_RG = "Storage_RG"
+$Storage = $Prefix + "storage" + $Suffix
+
+#######################################################################################
 # F U N C T I O N S
 #######################################################################################
 
 Function Select-Subscription()
 {
-    Param([String] $Subscription)
+    Param([String] $Subscription, [String] $ResourceGroupName, [String] $StorageName)
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
+        Set-AzureRmCurrentStorageAccount -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageName
     }
     Catch
     {
@@ -106,31 +110,6 @@ Function Select-Subscription()
         Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
     }
 }
-
-Function Create-StorageContainer()
-{
-    Param ([string]$Subscription, [string]$StorageAccountName, [string] $StorageContainerName)
-
-    $StorageAccountKey = Get-AzureStorageKey -StorageAccountName $StorageAccountName
-
-    $StorageContext = New-AzureStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $StorageAccountKey.Primary
-    
-    # Set the proper storage account for the Stream Analytics Jobs to be stored.
-    Set-AzureSubscription -SubscriptionName $Subscription -CurrentStorageAccountName $StorageAccountName
-
-    If (!(Get-AzureStorageContainer -Name $StorageContainerName -ErrorAction SilentlyContinue))
-    {
-        Write-Verbose -Message "Creating new Azure storage container $StorageContainerName in $Subscription."
-        New-AzureStorageContainer -Name $StorageContainerName -Context $StorageContext -Permission Off
-        Write-Verbose -Message "Created new Azure storage container $StorageContainerName in $Subscription."
-    }
-    Else
-    {
-        Write-Verbose -Message "Azure storage container $StorageContainerName in $Subscription already exists."
-    }
-
-    return $StorageContainerName
-} 
 
 Function Create-Archive-Messages-JSON()
 {
@@ -732,10 +711,7 @@ $Error.Clear()
 # Mark the start time.
 $StartTime = Get-Date
 
-Select-Subscription $Subscription
-
-$StorageContainerName = $StorageAccountName + "sa"
-Create-StorageContainer $Subscription $StorageAccountName $StorageContainerName
+Select-Subscription $Subscription $Storage_RG $Storage
 
 # Get the Azure Service Bus Namespace by that name.
 $AzureSBNS = Get-AzureSBNamespace $AzureSBNameSpace
@@ -746,31 +722,38 @@ $RulePrimaryKey = $Rule.Rule.PrimaryKey
 $StorageAccountKey = Get-AzureStorageKey -StorageAccountName $StorageAccountName
 $SAKeyPrimary = $StorageAccountKey.Primary
 
-# BUG in JSON
-#Write-Verbose -Message "Creating / Updating Stream Analytics Job Biometric Archive."
-#$Path = Create-Archive-Messages-JSON $AzureLocation $AzureSBNameSpace $RulePrimaryKey $EHInputName $StorageAccountName $SAKeyPrimary
-#Switch-AzureMode AzureResourceManager
-#New-AzureStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "biometric-blob" -File $Path -Force
-
 Write-Verbose -Message "Creating / Updating Stream Analytics Job Biometric Database."
 $Path = Create-Database-Messages-JSON $AzureLocation $AzureSBNameSpace $RulePrimaryKey $EHInputName $SQLServerName $SQLDatabaseName $SQLDatabaseTable $SQLDatabaseUser $SQLDatabasePassword
-New-AzureStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "biometric-store" -File $Path -Force
+New-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "biometric-store" -File $Path -Force
 
 Write-Verbose -Message "Creating / Updating Stream Analytics Job Glucose Alarm."
 $Path = Create-Glucose-Alarm-Messages-JSON $AzureLocation $AzureSBNameSpace $RulePrimaryKey $EHInputName $EHOutputName $StorageAccountName $SAKeyPrimary
-New-AzureStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "glucose-alarms" -File $Path -Force
+New-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "glucose-alarms" -File $Path -Force
 
 Write-Verbose -Message "Creating / Updating Stream Analytics Job Heartrate Alarm."
 $Path = Create-Heartrate-Alarm-Messages-JSON $AzureLocation $AzureSBNameSpace $RulePrimaryKey $EHInputName $EHOutputName $StorageAccountName $SAKeyPrimary
-New-AzureStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "heartrate-alarms" -File $Path -Force
+New-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "heartrate-alarms" -File $Path -Force
 
 Write-Verbose -Message "Creating / Updating Stream Analytics Job Temperature Alarm."
 $Path = Create-Temperature-Alarm-Messages-JSON $AzureLocation $AzureSBNameSpace $RulePrimaryKey $EHInputName $EHOutputName $StorageAccountName $SAKeyPrimary
-New-AzureStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "temperature-alarms" -File $Path -Force
+New-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "temperature-alarms" -File $Path -Force
 
 Write-Verbose -Message "Creating / Updating Stream Analytics Job Blood Oxygen Alarm."
 $Path = Create-Bloodoxygen-Alarm-Messages-JSON $AzureLocation $AzureSBNameSpace $RulePrimaryKey $EHInputName $EHOutputName $StorageAccountName $SAKeyPrimary
-New-AzureStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "bloodoxygen-alarms" -File $Path -Force
+New-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "bloodoxygen-alarms" -File $Path -Force
+
+$StartDate = Get-Date -Foramt u
+
+Write-Verbose -Message "Starting Stream Analytics Job Biometric Database."
+Start-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "biometric-store" -OutputStartMode CustomTime -OutputStartTime $StartDate
+Write-Verbose -Message "Starting Stream Analytics Job Glucose Alarm."
+Start-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "glucose-alarms" -OutputStartMode CustomTime -OutputStartTime $StartDate
+Write-Verbose -Message "Starting Stream Analytics Job Heartrate Alarm."
+Start-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "heartrate-alarms" -OutputStartMode CustomTime -OutputStartTime $StartDate
+Write-Verbose -Message "Starting Stream Analytics Job Temperature Alarm."
+Start-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "temperature-alarms" -OutputStartMode CustomTime -OutputStartTime $StartDate
+Write-Verbose -Message "Starting Stream Analytics Job Blood Oxygen Alarm."
+Start-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "bloodoxygen-alarms" -OutputStartMode CustomTime -OutputStartTime $StartDate
 
 # Mark the finish time.
 $FinishTime = Get-Date

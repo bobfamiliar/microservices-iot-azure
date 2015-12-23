@@ -85,12 +85,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
     }
     Catch
     {
@@ -112,14 +107,12 @@ $StartTime = Get-Date
 Select-Subscription $Subscription
 
 # Create Resource Group
-.\..\..\..\Automation\Common\Create-ResourceGroup.ps1 $Subscription $ConfigM_RG $AzureLocation
+$command = $repo + "\Automation\Common\Create-ResourceGroup.ps1"
+&$command $Subscription $ConfigM_RG $AzureLocation
 
 # create app service plans
-.\..\..\..\Automation\Common\Create-AppServicePlan $Subscription $ConfigM_RG $ConfigM_SP $AzureLocation
-
-# create web site containers
-.\..\..\..\Automation\Common\Create-WebSite.ps1 $Subscription $ConfigAdminAPI  $ConfigM_RG $ConfigM_SP $AzureLocation
-.\..\..\..\Automation\Common\Create-WebSite.ps1 $Subscription $ConfigPublicAPI $ConfigM_RG $ConfigM_SP $AzureLocation
+$command = $repo + "\Automation\Common\Create-AppServicePlan.ps1"
+&$command $Subscription $ConfigM_RG $ConfigM_SP $AzureLocation
 
 #update the BioMax Simulator config file
 $path = $repo + "\Microservices\Biometrics\Simulator\BioMaxSimulator"

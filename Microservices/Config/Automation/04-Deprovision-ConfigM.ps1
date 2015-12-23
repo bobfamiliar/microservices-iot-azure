@@ -44,21 +44,17 @@ $ConfigM_RG = "ConfigM_RG"
 
 Function Select-Subscription()
 {
-    Param([String] $Subscription)
+    Param([String] $Subscription, [String] $ResourceGroupName, [String] $StorageName)
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop -Verbose
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop -Verbose
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription." -Verbose
+        Select-AzureRmSubscription -SubscriptionName $Subscription
+        Set-AzureRmCurrentStorageAccount -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageName
     }
     Catch
     {
-        Write-Verbose -Message $Error[0].Exception.Message -Verbose
-        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected." -Verbose
+        Write-Verbose -Message $Error[0].Exception.Message
+        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
     }
 }
 
@@ -74,7 +70,7 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-remove-azureresourcegroup -Name $ConfigM_RG -force
+remove-azurermresourcegroup -Name $ConfigM_RG -force
     
 # Mark the finish time.
 $FinishTime = Get-Date

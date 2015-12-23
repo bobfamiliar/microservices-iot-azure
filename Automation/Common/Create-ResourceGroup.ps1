@@ -55,12 +55,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription -ErrorAction Stop
     }
     Catch
     {
@@ -69,13 +64,14 @@ Function Select-Subscription()
     }
 }
 
+
 Function Create-ResourceGroup
 {
     Param([String] $Name, [String] $Location)
 
     Try
     {
-        New-AzureResourceGroup -Name $Name -Location $Location -ErrorAction Stop
+        New-AzureRmResourceGroup -Name $Name -Location $Location -Force -ErrorAction Stop
     }
     Catch
     {

@@ -78,12 +78,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
     }
     Catch
     {
@@ -104,15 +99,13 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-# Create Resource Groups
-.\..\..\..\Automation\Common\Create-ResourceGroup.ps1 $Subscription $ProfileM_RG $AzureLocation
+# Create Resource Group
+$command = $repo + "\Automation\Common\Create-ResourceGroup.ps1"
+&$command $Subscription $ProfileM_RG $AzureLocation
 
 # create app service plans
-.\..\..\..\Automation\Common\Create-AppServicePlan $Subscription $ProfileM_RG $ProfileM_SP $AzureLocation
-
-# create web site containers
-.\..\..\..\Automation\Common\Create-WebSite.ps1 $Subscription $ProfileAdminAPI  $ProfileM_RG $profileM_SP $AzureLocation
-.\..\..\..\Automation\Common\Create-WebSite.ps1 $Subscription $ProfilePublicAPI $ProfileM_RG $profileM_SP $AzureLocation
+$command = $repo + "\Automation\Common\Create-AppServicePlan.ps1"
+&$command $Subscription $ProfileM_RG $ProfileM_SP $AzureLocation
 
 # Mark the finish time.
 $FinishTime = Get-Date

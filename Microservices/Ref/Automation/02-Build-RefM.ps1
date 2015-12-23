@@ -4,7 +4,7 @@
 .Description 
     This PowerShell script builds the RefM Microservice
 .Notes 
-    File Name  : Ref.ps1
+    File Name  : Build-Ref.ps1
     Author     : Bob Familiar
     Requires   : PowerShell V4 or above, PowerShell / ISE Elevated
     Requires   : Invoke-MsBuild.psm1
@@ -26,7 +26,7 @@
 .Parameter Configuration
     Example:  Debug
 .Example
-    .\Ref.ps1 -repo "c:\users\bob\source\repos\looksfamiliar" -configuration "debug"
+    .\Build-Ref.ps1 -repo "c:\users\bob\source\repos\looksfamiliar" -configuration "debug"
 .Inputs
     The [Repo] parameter is the path to the top level folder of the Git Repo.
     The [Configuration] parameter is the build configuration such as Debug or Release

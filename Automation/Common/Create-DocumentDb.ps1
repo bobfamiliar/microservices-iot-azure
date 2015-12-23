@@ -65,12 +65,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
     }
     Catch
     {
@@ -88,7 +83,7 @@ Function Create-DocumentDb
 
         $JSON = @"
 {
-        "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentParameters.json#",
+        "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "databaseAccountName": {
@@ -105,9 +100,9 @@ Function Create-DocumentDb
 
         $JSON | Set-Content -Path $ParamsPath
 
-        Register-AzureProvider -ProviderNamespace Microsoft.DocumentDb -Force
+        #Register-AzureProvider -ProviderNamespace Microsoft.DocumentDb -Force
 
-        New-AzureResourceGroupDeployment -ResourceGroupName $Group -TemplateFile $TemplatePath -TemplateParameterFile $ParamsPath
+        New-AzureRmResourceGroupDeployment -ResourceGroupName $Group -TemplateFile $TemplatePath -TemplateParameterFile $ParamsPath
     }
     Catch
     {

@@ -62,6 +62,9 @@ Param(
 $includePath = $Repo + "\Automation\Include-ConnectionStrings.ps1"
 ."$includePath"
 
+$Storage_RG = "Storage_RG"
+$Storage = $Prefix + "storage" + $Suffix
+
 $ProfileM_RG = "ProfileM_RG"
 $ProfileM_SP = "ProfileM_SP"
 $ProfileM_DB = "ProfileM"
@@ -74,16 +77,12 @@ $ProfileAdminAPI = $Prefix + "ProfileAdminAPI" + $Suffix
 
 Function Select-Subscription()
 {
-    Param([String] $Subscription)
+    Param([String] $Subscription, [String] $ResourceGroupName, [String] $StorageName)
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
+        Set-AzureRmCurrentStorageAccount -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageName
     }
     Catch
     {
@@ -102,21 +101,24 @@ $Error.Clear()
 $StartTime = Get-Date
 
 # Select Subscription
-Select-Subscription $Subscription 
+Select-Subscription $Subscription $Storage_RG $Storage
 
-# Load DocumetnDb with User Profile data
+# Load configuration data to DocumetnDb
 if ($DeployData)
 {
     $connStr = $docdbconnstr + "Database=" + $ProfileM_DB
-    .\..\..\..\Automation\Common\Load-DocDb.ps1 -Repo $Repo -Subscription $Subscription -DocDbConnStr $connStr -CollectionName ProfileCollection
+    $command = $repo + "\Automation\Common\Load-DocDb.ps1"
+    &$command -Repo $Repo -Subscription $Subscription -DocDbConnStr $connStr -CollectionName ProfileCollection
 }
 
 # Package APIs
 .\Package-ProfileM.ps1 $Repo
 
 # Deploy the APIs and update their app settings for documentdb and redis
-.\..\..\..\Automation\Common\Publish-WebSite.ps1 -Repo $Repo -ResourceGroupName $ProfileM_RG -DeploymentName ProfileAdminAPI  -Location $AzureLocation -SiteName $ProfileAdminAPI  -ServicePlan $ProfileM_SP -DocDbURI $docdburi -DocDbKEY $docdbkey -RedisURI $redisuri 
-.\..\..\..\Automation\Common\Publish-WebSite.ps1 -Repo $Repo -ResourceGroupName $ProfileM_RG -DeploymentName ProfilePublicAPI -Location $AzureLocation -SiteName $ProfilePublicAPI -ServicePlan $ProfileM_SP -DocDbURI $docdburi -DocDbKEY $docdbkey -RedisURI $redisuri 
+$command = $repo + "\Automation\Common\Publish-WebSite.ps1"
+&$command -Repo $Repo -ResourceGroupName $ProfileM_RG -DeploymentName ProfileAdminAPI  -Location $AzureLocation -SiteName $ProfileAdminAPI  -ServicePlan $ProfileM_SP -DocDbURI $docdburi -DocDbKEY $docdbkey -RedisURI $redisuri
+&$command -Repo $Repo -ResourceGroupName $ProfileM_RG -DeploymentName ProfilePublicAPI -Location $AzureLocation -SiteName $ProfilePublicAPI -ServicePlan $ProfileM_SP -DocDbURI $docdburi -DocDbKEY $docdbkey -RedisURI $redisuri
+
 # Mark the finish time.
 $FinishTime = Get-Date
 

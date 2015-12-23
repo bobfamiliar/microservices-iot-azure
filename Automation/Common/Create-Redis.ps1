@@ -60,12 +60,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
     }
     Catch
     {
@@ -87,7 +82,7 @@ $StartTime = Get-Date
 Select-Subscription $Subscription
 
 # Create Redis Cache Account
-New-AzureRedisCache -Location $AzureLocation -Name $RedisCacheName -ResourceGroupName $ResourceGroupName -Size 250MB -Sku Basic
+New-AzureRmRedisCache -Location $AzureLocation -Name $RedisCacheName -ResourceGroupName $ResourceGroupName -Size 250MB -Sku Basic
 
 # Mark the finish time.
 $FinishTime = Get-Date

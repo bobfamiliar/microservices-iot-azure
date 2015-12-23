@@ -57,12 +57,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
     }
     Catch
     {
@@ -95,9 +90,9 @@ function Create-CloudService($serviceName, $resourcegroup, $serviceLocation)
     }
 
     # move the cloud service into the designated resource group
-    $r = Get-AzureResource -Name $servicename -OutputObjectFormat New
-    Move-AzureResource -ResourceId $r.ResourceId -DestinationResourceGroupName $resourcegroup -Force
-    remove-azureresourcegroup -Name $servicename -force
+    $r = Get-AzureRmResource -ResourceName  $servicename -ResourceGroupName $servicename
+    Move-AzureRmResource -ResourceId $r.ResourceId -DestinationResourceGroupName $resourcegroup -Force
+    remove-azurermresourcegroup -Name $servicename -force
 
     Write-Verbose "$(Get-Date –f $timeStampFormat) - Cloud service creation - Completed"
 } 

@@ -38,16 +38,16 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConfigAdminSDK, Version = 1.2.5723.27037, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigAdminSDK.1.2.5723.27037\lib\net452\ConfigAdminSDK.dll</HintPath>
+    <Reference Include="ConfigAdminSDK, Version=1.2.5835.21745, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConfigAdminSDK.1.2.5835.21745\lib\net452\ConfigAdminSDK.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ConfigModels, Version = 1.2.5723.27023, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\ConfigModels.1.2.5723.27023\lib\net452\ConfigModels.dll</HintPath>
+    <Reference Include="ConfigModels, Version=1.2.5835.21729, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ConfigModels.1.2.5835.21729\lib\net452\ConfigModels.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="IConfigAdmin, Version = 1.2.5723.27026, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\IConfigAdmin.1.2.5723.27026\lib\net452\IConfigAdmin.dll</HintPath>
+    <Reference Include="IConfigAdmin, Version=1.2.5835.21733, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IConfigAdmin.1.2.5835.21733\lib\net452\IConfigAdmin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -70,8 +70,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Wire, Version = 1.2.5720.19054, Culture = neutral, processorArchitecture = MSIL">
-      <HintPath>..\packages\Wire.1.2.5720.19054\lib\net452\Wire.dll</HintPath>
+    <Reference Include="Wire, Version=1.2.5832.22169, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Wire.1.2.5832.22169\lib\net452\Wire.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BioMaxSimulator
+namespace LooksFamiliar.Simulators.BioMax
 {
     public class ConsoleSpiner
     {

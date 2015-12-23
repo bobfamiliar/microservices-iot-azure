@@ -82,12 +82,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription -ErrorAction Stop
     }
     Catch
     {
@@ -111,11 +106,6 @@ Select-Subscription $Subscription
 # create app service plans
 $command = $Repo + "\Automation\Common\Create-AppServicePlan.ps1" 
 &$command $Subscription $HOL_RG $Biometrics_SP $AzureLocation
-
-# create web site containers
-$command = $Repo + "\Automation\Common\Create-WebSite.ps1"
-&$command $Subscription $BiometricsAPI $HOL_RG $Biometrics_SP $AzureLocation
-&$command $Subscription $BiometricsDashboard $HOL_RG $Biometrics_SP $AzureLocation
 
 # Mark the finish time.
 $FinishTime = Get-Date

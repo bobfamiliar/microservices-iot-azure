@@ -70,17 +70,12 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop -Verbose
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop -Verbose
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription." -Verbose
+        Select-AzureRmSubscription -SubscriptionName $Subscription -ErrorAction Stop
     }
     Catch
     {
-        Write-Verbose -Message $Error[0].Exception.Message -Verbose
-        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected." -Verbose
+        Write-Verbose -Message $Error[0].Exception.Message
+        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
     }
 }
 
@@ -93,8 +88,6 @@ $Error.Clear()
 # Mark the start time.
 $StartTime = Get-Date
 
-import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure\azure.psd1"
-
 # Select Subscription
 Select-Subscription $Subscription
 
@@ -105,7 +98,7 @@ $command = $Repo + "\Automation\Common\Create-ResourceGroup.ps1"
 # Create Storage Account
 $StorageName = $UserTag + "storage" + $UserTag
 $command = $Repo + "\Automation\Common\Create-Storage.ps1"
-&$command $Subscription $StorageName $AzureLocation
+&$command $Subscription $StorageName $HOL_RG $AzureLocation
 
 # Create DocumentDb
 $DocDbname = $UserTag + "docdb" + $UserTag

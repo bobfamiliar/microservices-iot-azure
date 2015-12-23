@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BioMaxSimulator
+namespace LooksFamiliar.Simulators.BioMax.IoTHub
 {
     public enum SensorType { NotSet = 0, Glucose = 1, Heartrate = 2, Bloodoxygen = 3, Temperature = 4}
 
@@ -25,11 +25,13 @@ namespace BioMaxSimulator
     {
         public DeviceMessage()
         {
+            id = Guid.NewGuid().ToString();
             reading = new DateTime();
             location = new Location();
             sensors = new SensorReadings();
         }
 
+        public string id { get; set; }
         public string key { get; set; }
         public string deviceid { get; set; }
         public string participantid { get; set; }

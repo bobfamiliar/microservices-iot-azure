@@ -48,17 +48,12 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop -Verbose
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop -Verbose
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription." -Verbose
+        Select-AzureRmSubscription -SubscriptionName $Subscription
     }
     Catch
     {
-        Write-Verbose -Message $Error[0].Exception.Message -Verbose
-        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected." -Verbose
+        Write-Verbose -Message $Error[0].Exception.Message
+        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
     }
 }
 
@@ -74,7 +69,7 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-remove-azureresourcegroup -Name $ProfileM_RG -force
+remove-azurermresourcegroup -Name $ProfileM_RG -force
 
 # Mark the finish time.
 $FinishTime = Get-Date

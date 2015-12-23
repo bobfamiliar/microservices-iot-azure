@@ -87,6 +87,10 @@ $SQLPassword = "BioMaxPass001"
 $EHInputName = "biometrics"
 $EHOutputName = "alarms"
 
+$SQLServerName = $Prefix + "sqlserver" + $Suffix
+$ServiceBusNamespace = $Prefix + "sb" + $Suffix
+$NotificationHubNamespace = $Prefix + "nh" + $Suffix
+
 ##########################################################################################
 # F U N C T I O N S
 ##########################################################################################
@@ -97,12 +101,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
     }
     Catch
     {
@@ -123,24 +122,21 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure\azure.psd1"
-
-# Create Resource Groups
-.\..\..\..\Automation\Common\Create-ResourceGroup.ps1 $Subscription $Biometrics_RG $AzureLocation
+# Create Resource Group
+$command = $repo + "\Automation\Common\Create-ResourceGroup.ps1"
+&$command $Subscription $Biometrics_RG $AzureLocation
 
 # create app service plans
-.\..\..\..\Automation\Common\Create-AppServicePlan $Subscription $Biometrics_RG $Biometrics_SP $AzureLocation
-
-# create web site containers
-.\..\..\..\Automation\Common\Create-WebSite.ps1 $Subscription $BiometricsAPI $Biometrics_RG $Biometrics_SP $AzureLocation
-.\..\..\..\Automation\Common\Create-WebSite.ps1 $Subscription $BiometricsDashboard $Biometrics_RG $Biometrics_SP $AzureLocation
+$command = $repo + "\Automation\Common\Create-AppServicePlan.ps1"
+&$command $Subscription $Biometrics_RG $Biometrics_SP $AzureLocation
 
 # Create Cloud Service Container
-.\..\..\..\Automation\Common\Create-CloudService $Subscription $AlarmServiceName $Biometrics_RG $AzureLocation
+$command = $repo + "\Automation\Common\Create-CloudService"
+&$command $Subscription $AlarmServiceName $Biometrics_RG $AzureLocation
 
 # Create SQL Database
-$SQLServerName = $Prefix + "sqlserver" + $Suffix
-.\..\..\..\Automation\Common\Create-SQLDatabase.ps1 $Repo $Subscription $Biometrics_RG $AzureLocation $SQLUserName $SQLPassword $SQLServerName $SQLDatabase
+$command = $repo + "\Automation\Common\Create-SQLDatabase.ps1"
+&$command $Repo $Subscription $Biometrics_RG $AzureLocation $SQLUserName $SQLPassword $SQLServerName $SQLDatabase
 
 # update the connection string setting in the Biometrics API config file
 $path = $repo + "\Microservices\Biometrics\API"
@@ -151,13 +147,13 @@ $SQLConnStr = "Server=tcp:$SQLServerName.database.windows.net,1433;Database=$SQL
 Update-Config $repo $ConfigFile $setting $SQLConnStr
 
 # Create Service Bus Namespace, Notification Hub Namespace and Event Hubs and Notification HUb
-$ServiceBusNamespace = $Prefix + "sb" + $Suffix
-$NotificationHubNamespace = $Prefix + "nh" + $Suffix
-.\..\..\..\Automation\Common\Create-ServiceBus.ps1 -Repo $Repo -Subscription $Subscription -SBNamespace $ServiceBusNamespace -NHNamespace $NotificationHubNamespace -AzureLocation $AzureLocation 
+#$command = $repo + "\Automation\Common\Create-ServiceBus.ps1"
+#&$command -Repo $Repo -Subscription $Subscription -SBNamespace $ServiceBusNamespace -NHNamespace $NotificationHubNamespace -AzureLocation $AzureLocation 
 
 # Create Stream Analytics Jobs
 $StorageName = $Prefix + "storage" + $Suffix
-.\..\..\..\Automation\Common\Create-StreamAnalytics.ps1 $Subscription $Biometrics_RG $StorageName $ServiceBusNamespace $EHInputName $EHOutputName $SQLServerName $SQLDatabase $SQLDatabaseTable $SQLUserName $SQLPassword $AzureLocation
+$command = $repo + "\Automation\Common\Create-StreamAnalytics.ps1"
+&$command $Subscription $Biometrics_RG $StorageName $ServiceBusNamespace $EHInputName $EHOutputName $SQLServerName $SQLDatabase $SQLDatabaseTable $SQLUserName $SQLPassword $AzureLocation
 
 # Mark the finish time.
 $FinishTime = Get-Date

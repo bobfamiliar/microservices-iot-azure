@@ -83,22 +83,21 @@ $SQLDatabaseTable = "biometrics"
 $SQLUserName = "BioMaxUser001"
 $SQLPassword = "BioMaxPass001"
 
+$Storage_RG = "Storage_RG"
+$Storage = $UserTag + "storage" + $UserTag
+
 #######################################################################################
 # F U N C T I O N S
 #######################################################################################
 
 Function Select-Subscription()
 {
-    Param([String] $Subscription)
+    Param([String] $Subscription, [String] $ResourceGroupName, [String] $StorageName)
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription
+        Set-AzureRmCurrentStorageAccount -ResourceGroupName $ResourceGroupName -StorageAccountName $StorageName
     }
     Catch
     {
@@ -106,7 +105,6 @@ Function Select-Subscription()
         Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
     }
 }
-
 ##########################################################################################
 # M A I N
 ##########################################################################################
@@ -117,7 +115,7 @@ $Error.Clear()
 $StartTime = Get-Date
 
 # Select Subscription
-Select-Subscription $Subscription 
+Select-Subscription $Subscription $HOL_RG $Storage
 
 # update the connection string setting in the Biometrics API config file
 $path = $repo + "\Microservices\Biometrics\API"

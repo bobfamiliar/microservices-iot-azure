@@ -67,12 +67,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription -ErrorAction Stop
     }
     Catch
     {
@@ -93,8 +88,7 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-New-AzureAppServicePlan -Name $ServicePlanName -Location $AzureLocation -ResourceGroupName $ResourceGroupName -Sku Free -NumberofWorkers 1 -WorkerSize Small
-New-AzureWebApp -Name $WebSiteName -ResourceGroupName $ResourceGroupName -AppServicePlan $ServicePlanName -Location $AzureLocation
+New-AzureRmAppServicePlan -Name $ServicePlanName -Location $AzureLocation -ResourceGroupName $ResourceGroupName -Tier Free -NumberofWorkers 1 -WorkerSize Small
 
 # Mark the finish time.
 $FinishTime = Get-Date

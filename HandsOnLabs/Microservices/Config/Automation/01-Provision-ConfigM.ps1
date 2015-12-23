@@ -82,12 +82,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription -ErrorAction Stop
     }
     Catch
     {
@@ -111,11 +106,6 @@ Select-Subscription $Subscription
 # create app service plans
 $command = $Repo + "\Automation\Common\Create-AppServicePlan"
 &$command $Subscription $HOL_RG $ConfigM_SP $AzureLocation
-
-# create web site containers
-$command = $Repo + "\Automation\Common\Create-WebSite.ps1"
-&$command $Subscription $ConfigAdminAPI  $HOL_RG  $ConfigM_SP $AzureLocation
-&$command $Subscription $ConfigPublicAPI $HOL_RG  $ConfigM_SP $AzureLocation
 
 #update the BioMaxDashboard config file
 $path = $repo + "\Microservices\Biometrics\Dashboard\Biometrics"

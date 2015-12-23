@@ -1,8 +1,8 @@
 ﻿<#
 .Synopsis 
-    This PowerShell script provisions a Classic Storage Account
+    This PowerShell script provisions a Storage Account
 .Description 
-    This PowerShell script provisions a Classic Storage Account
+    This PowerShell script provisions  Storage Account
 .Notes 
     File Name  : Create-Storage.ps1
     Author     : Ron Bokleman, Bob Familiar
@@ -41,8 +41,11 @@ Param(
     [string]$Subscription,
     [Parameter(Mandatory=$True, Position=1, HelpMessage="The storage account name.")]
     [string]$StorageAccountName,
-    [Parameter(Mandatory=$True, Position=2, HelpMessage="The name of the Azure Region/Location: East US, Central US, West US.")]
-    [string]$AzureLocation
+    [Parameter(Mandatory=$true, Position=2, HelpMessage="The Resource Group Name.")]
+    [string]$ResourceGroup,
+    [Parameter(Mandatory=$True, Position=3, HelpMessage="The name of the Azure Region/Location: East US, Central US, West US.")]
+    [string]$AzureLocation,
+    [Switch]$Classic
 )
 
 #######################################################################################
@@ -55,12 +58,7 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription."
+        Select-AzureRmSubscription -SubscriptionName $Subscription -ErrorAction Stop
     }
     Catch
     {
@@ -81,24 +79,25 @@ $StartTime = Get-Date
 # Select Subscription
 Select-Subscription $Subscription
 
-Import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure"
-
-#switch-azuremode -Name AzureServiceManagement
-
-if (Test-AzureName -Storage -Name $StorageAccountName) {
-    "Storage account name '$StorageAccountName' is already taken, try another one"
-} else {
-    $Result = New-AzureStorageAccount -StorageAccountName $StorageAccountName -Location $AzureLocation
-    If ($Result.OperationStatus -eq "Succeeded") {
-        $Result | Out-String
-        "Created new Storage Account '$StorageAccountName', in '$Location'"
-        Set-AzureSubscription –SubscriptionName $Subscription -CurrentStorageAccount $StorageAccountName 
+if ($Classic)
+{
+    New-AzureStorageAccount -StorageAccountName $StorageAccountName -Location $AzureLocation -Type Standard_GRS
+}
+else
+{
+    if (Test-AzureName -Storage -Name $StorageAccountName) {
+        "Storage account name '$StorageAccountName' is already taken, try another one"
     } else {
-        "Failed to create new Storage Account '$StorageAccountName'"
+        $Result = New-AzureRmStorageAccount -StorageAccountName $StorageAccountName -ResourceGroupName $ResourceGroup -Location $AzureLocation -Type Standard_GRS
+        If ($Result.OperationStatus -eq "Succeeded") {
+            $Result | Out-String
+            "Created new Storage Account '$StorageAccountName', in '$Location'"
+            Set-AzureRmCurrentStorageAccount -ResourceGroupName $ResourceGroup -StorageAccountName $StorageAccountName
+        } else {
+            "Failed to create new Storage Account '$StorageAccountName'"
+        }
     }
 }
-
-#switch-azuremode -Name AzureResourceManager
 
 # Mark the finish time.
 $FinishTime = Get-Date

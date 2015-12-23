@@ -59,9 +59,9 @@ Param(
 ##########################################################################################
 
 # names for resource groups
+$Storage_RG = "Storage_RG"
 $DocDb_RG = "DocDb_RG"
 $Redis_RG =  "Redis_RG"
-$APIManagement_RG = "APIManagement_RG"
 
 ##########################################################################################
 # F U N C T I O N S
@@ -73,17 +73,12 @@ Function Select-Subscription()
 
     Try
     {
-        Select-AzureSubscription -SubscriptionName $Subscription -ErrorAction Stop -Verbose
-
-        # List Subscription details if successfully connected.
-        Get-AzureSubscription -Current -ErrorAction Stop -Verbose
-
-        Write-Verbose -Message "Currently selected Azure subscription is: $Subscription." -Verbose
+        Select-AzureRmSubscription -SubscriptionName $Subscription -ErrorAction Stop
     }
     Catch
     {
-        Write-Verbose -Message $Error[0].Exception.Message -Verbose
-        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected." -Verbose
+        Write-Verbose -Message $Error[0].Exception.Message
+        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
     }
 }
 
@@ -96,31 +91,29 @@ $Error.Clear()
 # Mark the start time.
 $StartTime = Get-Date
 
-#import-module "C:\Program Files (x86)\Microsoft SDKs\Azure\PowerShell\ServiceManagement\Azure\azure.psd1"
-
 # Select Subscription
 Select-Subscription $Subscription
 
 # Create Resource Groups
-.\..\Common\Create-ResourceGroup.ps1 $Subscription $DocDb_RG $AzureLocation
-.\..\Common\Create-ResourceGroup.ps1 $Subscription $Redis_RG $AzureLocation
-#.\..\Common\Create-ResourceGroup.ps1 $Subscription $APIManagement_RG $AzureLocation
+$command = $repo + "\Automation\Common\Create-ResourceGroup.ps1"
+&$command $Subscription $Storage_RG $AzureLocation
+&$command $Subscription $DocDb_RG $AzureLocation
+&$command $Subscription $Redis_RG $AzureLocation
 
 # Create Storage Account
 $StorageName = $Prefix + "storage" + $Suffix
-.\..\Common\Create-Storage.ps1 $Subscription $StorageName $AzureLocation
+$command = $repo + "\Automation\Common\Create-Storage.ps1"
+&$command $Subscription $StorageName $Storage_RG $AzureLocation
 
 # Create DocumentDb
 $DocDbname = $Prefix + "docdb" + $Suffix
-.\..\Common\Create-DocumentDb.ps1 $Repo $Subscription $DocDbname $DocDb_RG $AzureLocation
+$command = $repo + "\Automation\Common\Create-DocumentDb.ps1"
+&$command $Repo $Subscription $DocDbname $DocDb_RG $AzureLocation
 
 # Create Redis Cache
 $RedisCacheName = $Prefix + "redis" + $Suffix
-.\..\Common\Create-Redis.ps1 $Subscription $RedisCacheName $Redis_RG $AzureLocation
-
-# Create API Management - NOTE: THIS TAKES A LONG TIME TO PROVISION 
-# recommend that you perform this operation manually
-#.\..\CommonCreate-APIManagement.ps1 $Subscription $APIManagement_RG $AzureLocation
+$command = $repo + "\Automation\Common\Create-Redis.ps1"
+&$command $Subscription $RedisCacheName $Redis_RG $AzureLocation
 
 # Mark the finish time.
 $FinishTime = Get-Date
