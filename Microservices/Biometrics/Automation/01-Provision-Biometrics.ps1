@@ -147,8 +147,8 @@ $SQLConnStr = "Server=tcp:$SQLServerName.database.windows.net,1433;Database=$SQL
 Update-Config $repo $ConfigFile $setting $SQLConnStr
 
 # Create Service Bus Namespace, Notification Hub Namespace and Event Hubs and Notification HUb
-#$command = $repo + "\Automation\Common\Create-ServiceBus.ps1"
-#&$command -Repo $Repo -Subscription $Subscription -SBNamespace $ServiceBusNamespace -NHNamespace $NotificationHubNamespace -AzureLocation $AzureLocation 
+$command = $repo + "\Automation\Common\Create-ServiceBus.ps1"
+&$command -Repo $Repo -Subscription $Subscription -SBNamespace $ServiceBusNamespace -NHNamespace $NotificationHubNamespace -AzureLocation $AzureLocation 
 
 # Create Stream Analytics Jobs
 $StorageName = $Prefix + "storage" + $Suffix
