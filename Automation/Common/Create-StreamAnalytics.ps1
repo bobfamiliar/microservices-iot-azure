@@ -742,7 +742,7 @@ Write-Verbose -Message "Creating / Updating Stream Analytics Job Blood Oxygen Al
 $Path = Create-Bloodoxygen-Alarm-Messages-JSON $AzureLocation $AzureSBNameSpace $RulePrimaryKey $EHInputName $EHOutputName $StorageAccountName $SAKeyPrimary
 New-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "bloodoxygen-alarms" -File $Path -Force
 
-$StartDate = Get-Date -Foramt u
+$StartDate = Get-Date -Format u
 
 Write-Verbose -Message "Starting Stream Analytics Job Biometric Database."
 Start-AzureRmStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name "biometric-store" -OutputStartMode CustomTime -OutputStartTime $StartDate
