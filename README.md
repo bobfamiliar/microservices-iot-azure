@@ -1,6 +1,6 @@
 #Microservices, IoT and Azure
-###Date: 10.20.2015
-###Version: v1.0.0
+###Date: 04.09.2016
+###Version: v2.0.0
 ###Author: Bob Familiar
 ###URL: http://bobfamiliar.github.io/microservices-iot-azure/
 
@@ -17,13 +17,11 @@
 In order to support the velocity of development in Azure and Azure PowerShell, I have created a new content collection that is offered as a 5-module hands-on-lab that focuses on automation, microservices and IoT. The previous content collection for the book is located in the 'archive' folder. To leverage the new material, see the Lab Workbooks in the documentation folder.
 
 ##Overview
-The book, Microservices, IoT and Azure, provides practical guidance for adopting a high velocity, continuous delivery process to create reliable, scalable, Software-as-a-Service (SaaS) solutions that are designed and built using a microservice architecture, deployed to the Azure cloud, and managed through automation. Microservices, IoT, and Azure offers software developers, architects, and operations engineers’ step-by-step directions for building cloud-native applications through code, script, exercises, and a working reference implementation.
-
-This code repository is a reference implementation that accompanies the book Microservices, IoT and Azure by Bob Familiar and published by Apress Media. The book is available for purchase [here][2].
+The book, Microservices, IoT and Azure, provides practical guidance for adopting a high velocity, continuous delivery process to create reliable, scalable, Software-as-a-Service (SaaS) solutions that are designed and built using a microservice architecture, deployed to the Azure cloud, and managed through automation. Microservices, IoT, and Azure offers software developers, architects, and operations engineers’ step-by-step directions for building cloud-native applications through code, script, exercises, and a working reference implementation. This code repository is a reference implementation that accompanies the book Microservices, IoT and Azure by Bob Familiar and published by Apress Media. The book is available for purchase [here][2].
 
 This hands-on training content provides foundational knowledge in how to architect and implement an IoT solution using Windows 10 Core IoT hardware devices and Azure IoT Hub and Stream Analytics. Both Device to Cloud and Cloud to Device communication patterns are covered.
 
-At the conclusion of going through this workshop you will have provisioned an Azure environment using PowerShell that contains IoT Hub, DocumentDb, API Management, Storage, Service Bus, Stream Analytics Jobs and a Microservice for provisioning devices. You will also develop a Windows 10 Core IoT application that sends telemetry and receives incoming commands as well as develop a real-time dashboard that displays incoming telemetry and has the ability to send commands to the remote device. Device Provisioning, IoT Hub monitoring and techniques for dynamic business rules are covered.
+At the conclusion of going through this material you will have provisioned an Azure environment using PowerShell that contains IoT Hub, DocumentDb, API Management, Storage, Service Bus, Stream Analytics Jobs and a Microservice for provisioning devices. You will also develop a Windows 10 Core IoT application that sends telemetry and receives incoming commands as well as develop a real-time dashboard that displays incoming telemetry and has the ability to send commands to the remote device. Device Provisioning, IoT Hub monitoring and techniques for dynamic business rules are covered.
 
 The solution that you will build and deploy consists of the following components:
 
