@@ -39,8 +39,6 @@ namespace LooksFamiliar.Microservices.Common.Store
 
         public List<T> SelectByQuery<T>(string query)
         {
-            var objType = typeof (T);
-            var typeName = objType.Name;
             var modelList = _client.CreateDocumentQuery<T>(_collection.SelfLink, query);
             return modelList.ToList().Select(item => (T) item).ToList();
         }
@@ -98,7 +96,6 @@ namespace LooksFamiliar.Microservices.Common.Store
         public void Update<T>(T model)
         {
             var objType = typeof (T);
-            var typeName = objType.Name;
             var id = (string) objType.GetProperty("id").GetValue(model);
             dynamic doc =
                 _client.CreateDocumentQuery<Document>(_collection.SelfLink)

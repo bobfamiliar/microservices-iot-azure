@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -13,6 +14,7 @@ namespace LooksFamliar.Tools.NuGetUpdate
         public static string ProjectFilePath { get; private set; }
         public static string NugetFolderPath { get; private set; }
         public static string NewVersionNumber { get; private set; }
+        public static string NetFwVersion { get; private set; }
         public static bool Verbose { get; private set; }
 
         static void Main(string[] args)
@@ -23,6 +25,7 @@ namespace LooksFamliar.Tools.NuGetUpdate
             ProjectFilePath = string.Empty;
             NugetFolderPath = string.Empty;
             NewVersionNumber = string.Empty;
+            NetFwVersion = string.Empty;
 
             if (args.Length < 10)
             {
@@ -55,6 +58,10 @@ namespace LooksFamliar.Tools.NuGetUpdate
                         i++;
                         NugetFolderPath = args[i];
                         break;
+                    case "-netfw": // framework version
+                        i++;
+                        NetFwVersion = args[i];
+                        break;
                     case "-verbose": // output debugging info
                         i++;
                         Verbose = true;
@@ -72,7 +79,8 @@ namespace LooksFamliar.Tools.NuGetUpdate
                 (PackageConfigFile == string.Empty) ||
                 (PackageFolderPath == string. Empty) ||
                 (ProjectFilePath == string.Empty) ||
-                (NugetFolderPath == string.Empty))
+                (NugetFolderPath == string.Empty) ||
+                (NetFwVersion == string.Empty))
             {
                 Console.WriteLine("ERROR: missing command line arguments.");
                 Usage();
@@ -94,9 +102,9 @@ namespace LooksFamliar.Tools.NuGetUpdate
                 GetNuGetPackageVersion();
                 if (Verbose) Console.WriteLine("NuGetUpdate: Using " + AssemblyName + "." + NewVersionNumber);
                 UpdateVersionInPackagesConfig();
-                if (Verbose) Console.WriteLine("NuGetUpdate: Updated " + PackageConfigFile);
-                DeleteOldPacakgeFolder();
-                if (Verbose) Console.WriteLine("NuGetUpdate: Removed old package folder for " + AssemblyName);
+                //if (Verbose) Console.WriteLine("NuGetUpdate: Updated " + PackageConfigFile);
+                //DeleteOldPacakgeFolder();
+                //if (Verbose) Console.WriteLine("NuGetUpdate: Removed old package folder for " + AssemblyName);
                 UpdateProjectFile();
                 if (Verbose) Console.WriteLine("NuGetUpdate: Updated " + ProjectFilePath);
             }
@@ -112,13 +120,14 @@ namespace LooksFamliar.Tools.NuGetUpdate
 
         private static void Usage()
         {
-            Console.WriteLine("Usage: NuGetUpdate -name [assembly name] -proj [project file] -config [packages.config file] -folder [packages folder] -nugets [local NuGet folder] -verbose");
+            Console.WriteLine("Usage: NuGetUpdate -name [assembly name] -proj [project file] -config [packages.config file] -folder [packages folder] -nugets [local NuGet folder] -netfw [framework version] -verbose");
             Console.WriteLine("");
             Console.WriteLine("   -name            short name of the assembly");
             Console.WriteLine("   -proj            path to the project file");
             Console.WriteLine("   -config          path to the packages.config file");
             Console.WriteLine("   -folder          path to the project packages folder");
             Console.WriteLine("   -nugets          path to the local NuGet package folder");
+            Console.WriteLine("   -netfw           .net fw servion, i.e. net40, net452"   );
             Console.WriteLine("   -verbose         [optional] outputs detail at each step");
             Console.WriteLine("");
         }
@@ -127,8 +136,13 @@ namespace LooksFamliar.Tools.NuGetUpdate
         {
             var nugetFolderInfo = new DirectoryInfo(NugetFolderPath);
 
+            if (Verbose)
+                Console.WriteLine(NugetFolderPath);
+
             foreach (var versionElements in from file in nugetFolderInfo.GetFiles() where file.Name.StartsWith(AssemblyName) select file.Name.Split('.'))
             {
+                if (Verbose)
+                    Console.WriteLine($"Parsing {AssemblyName}");
                 NewVersionNumber = versionElements[1] + "." + versionElements[2] + "." + versionElements[3] + "." + versionElements[4];
             }
 
@@ -178,9 +192,9 @@ namespace LooksFamliar.Tools.NuGetUpdate
                 {
                     item.Attributes["Include"].InnerText = AssemblyName + @", Version = " + NewVersionNumber + ", Culture = neutral, processorArchitecture = MSIL"; ;
                     if (item.FirstChild.InnerText.StartsWith(".."))
-                        item.FirstChild.InnerText = @"..\packages\" + AssemblyName + @"." + NewVersionNumber + @"\lib\net452\" + AssemblyName + @".dll";
+                        item.FirstChild.InnerText = @"..\packages\" + AssemblyName + @"." + NewVersionNumber + @"\lib\" + NetFwVersion + @"\" + AssemblyName + @".dll";
                     else
-                        item.FirstChild.InnerText = @"packages\" + AssemblyName + @"." + NewVersionNumber + @"\lib\net452\" + AssemblyName + @".dll";
+                        item.FirstChild.InnerText = @"packages\" + AssemblyName + @"." + NewVersionNumber + @"\lib\" + NetFwVersion + @"\" + AssemblyName + @".dll";
                 }
             }
 

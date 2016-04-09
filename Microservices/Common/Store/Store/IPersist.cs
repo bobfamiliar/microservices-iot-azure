@@ -4,6 +4,6 @@ namespace LooksFamiliar.Microservices.Common.Store
 {
     public interface IPersist : IDbase
     {
-        void InsertCache<T>(T model);
+        //void InsertCache<T>(T model);
     }
 }

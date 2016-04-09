@@ -4,6 +4,31 @@
         <name>Microsoft.Azure.Documents.Client</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.Azure.Documents.DelayTaskTimer">
+            <summary>
+            This class is an optimized version of Task.Delay for performance which uses System Timer for keeping track of the specified timeout 
+            and returns a Task that you can await on. This is preferred over using CancellationTokenSource with Task.Delay since this implementation doesn't 
+            throws any exception if the Task is cancelled which is much cleaner approach since we don't see any first chance exceptions being thrown 
+            whenever a timer task is cancelled. Marking it sealed as it will boost the performance by some factor.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.DelayTaskTimer.#ctor(System.Int32)">
+            <summary>
+            Constructor that takes in the specified timeout for the delay task
+            </summary>
+            <param name="timeoutInSeconds"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.DelayTaskTimer.StartTimer">
+            <summary>
+            Starts the timer for the timeout period
+            </summary>
+            <returns>Returns the Task upon which you can await on until completion</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.DelayTaskTimer.CancelTimer">
+            <summary>
+            Cancels the timer
+            </summary>
+        </member>
         <member name="T:Microsoft.Azure.Documents.Resource">
             <summary> 
              Represents an abstract resource type.
@@ -248,13 +273,14 @@
             
              </summary>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Base64Helper.SecureStringToNativeBytes(System.Security.SecureString,System.IntPtr@,System.UInt32@)">
+        <member name="M:Microsoft.Azure.Documents.Base64Helper.SecureStringToNativeBytes(System.Security.SecureString,System.Int32,System.IntPtr@,System.UInt32@)">
             <summary>
             Interprets <paramref name="secureString"/> as a Base64 string, and decodes it into a native byte array,
             which it returns.
             Avoids loading either the original Base64 or decoded binary into managed heap.
             </summary>
             <param name="secureString">Base64 string to decode</param>
+            <param name="secureStringLength">Length of the Base64 string to decode</param>
             <param name="bytes">
               An IntPtr allocated with Marshal.AllocCoTaskMem, which, when the user is done, 
               MUST be zeroed out and then freed with Marshal.FreeCoTaskMem by the caller.
@@ -267,8 +293,7 @@
             </summary>
             <remarks>
             The requested Consistency Level must match or be weaker than that provisioned for the database account.
-            For more information on consistency levels, please see <a href="http://azure.microsoft.com/documentation/articles/documentdb-consistency-levels/">
-            Consistency Levels</a> article.
+            For more information on consistency levels, please see <see>http://azure.microsoft.com/documentation/articles/documentdb-consistency-levels/"</see> Consistency Levels article.
             </remarks>
         </member>
         <member name="F:Microsoft.Azure.Documents.ConsistencyLevel.Strong">
@@ -465,17 +490,37 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:Microsoft.Azure.Documents.DocumentServiceRequest.ServiceIdentity">
+            <summary>
+            ServiceIdentity of the target service where this request should reach
+            Only valid for gateway
+            </summary>
+        </member>
         <member name="P:Microsoft.Azure.Documents.DocumentServiceRequest.ResourceAddress">
             <summary>
             Normalized resourcePath, for both Name based and Rid based.
-            This is the path passed for AuthZ. 
-            todo: mingliu: For Rid based, we will change to use path (instead of ResourceId) for the authorization.  
+            This is the string passed for AuthZ. 
+            It is resourceId in Rid case passed for AuthZ
             </summary>
         </member>
         <member name="P:Microsoft.Azure.Documents.DocumentServiceRequest.ReadRequestAuthorizationTokenType">
             <summary>
             Authorization token used for the read request.
             This will be used to generate any child requests that are needed to process the read.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Documents.DocumentServiceRequestContext.TargetIdentity">
+            <summary>
+            Unique Identity that represents the target partition where the request should reach.
+            In gateway it is same as ServiceIdentity. 
+            In client it is a string that represents the partition and service index
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Documents.DocumentServiceRequestContext.PerformLocalRefreshOnGoneException">
+            <summary>
+            If the StoreReader should perform the local refresh for GoneException instead of 
+            throwing is back to retry policy. This is done to avoid losing the state (response + LSN)
+            while executing quorum read logic
             </summary>
         </member>
         <member name="T:Microsoft.Azure.Documents.Error">
@@ -535,7 +580,7 @@
             </param>
             <returns>Is the retry helper should retry</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.GoneAndRetryWithRetryPolicy.ShouldRetry(System.Exception,System.TimeSpan@,System.Exception@,System.Tuple{System.Boolean,System.TimeSpan}@)">
+        <member name="M:Microsoft.Azure.Documents.GoneAndRetryWithRetryPolicy.ShouldRetry(System.Exception,System.TimeSpan@,System.Exception@,System.Tuple{System.Boolean,System.Boolean,System.TimeSpan}@)">
             <summary>
             ShouldRetry method
             </summary>
@@ -544,6 +589,7 @@
             <param name="exceptionToThrow">RetryPolicy should throw this exception.</param>
             <param name="forceRefreshAndTimeout">
             bool: If the address cache needs to refreshed
+            bool: If it is a retry attempt.
             TimeSpan: Timeout after beyond which the task should not execute
             </param>
             <returns>Is the retry helper should retry</returns>
@@ -753,9 +799,10 @@
             <remarks>
             Indexing policies can used to configure which properties (JSON paths) are included/excluded, whether the index is updated consistently
             or offline (lazy), automatic vs. opt-in per-document, as well as the precision and type of index per path.
-            
-            Refer to http://azure.microsoft.com/documentation/articles/documentdb-indexing-policies/ for additional information on how to specify
+            <para>
+            Refer to <see>http://azure.microsoft.com/documentation/articles/documentdb-indexing-policies/</see> for additional information on how to specify
             indexing policies.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.DocumentCollection"/>
         </member>
@@ -785,9 +832,9 @@
             IndexingPolicy indexingPolicy = new IndexingPolicy(hashIndexOverride, rangeIndexOverride, spatialIndexOverride);
             ]]>
             </code>
-            <para>
+            </example>
+            <example>
             If you would like to just override the indexingPolicy for Numbers you can specify just that:
-            </para>
             <code language="c#">
             <![CDATA[
             RangeIndex rangeIndexOverride = Index.Range(DataType.Number, 2);
@@ -1284,6 +1331,11 @@
             Represents a string data type.
             </summary>
         </member>
+        <member name="T:Microsoft.Azure.Documents.TimeoutHelper">
+            <summary>
+            Tracks remaining timespan.
+            </summary>
+        </member>
         <member name="M:Microsoft.Azure.Documents.IRetryPolicy.ShouldRetry(System.Exception,System.TimeSpan@,System.Exception@)">
             <summary>
             Method that is called to determine from the policy that needs to retry on the exception
@@ -1742,6 +1794,11 @@
         <member name="P:Microsoft.Azure.Documents.RMResources.InvalidStalenessPolicy">
             <summary>
               Looks up a localized string similar to Staleness Policy specified is invalid. Ensure both MaxPrefix and MaxStalenessIntervalInSeconds are both 0 or both not zero..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Documents.RMResources.InvalidTarget">
+            <summary>
+              Looks up a localized string similar to Target for the request is invalid.
             </summary>
         </member>
         <member name="P:Microsoft.Azure.Documents.RMResources.InvalidTokenTimeRange">
@@ -2405,6 +2462,14 @@
             Gets or sets the Id of the resource on which the Offer applies to.
             </summary>
         </member>
+        <member name="M:Microsoft.Azure.Documents.AddressCache.ThrowIfTargetChanged(Microsoft.Azure.Documents.DocumentServiceRequest,System.IComparable)">
+            <summary>
+            Validates if the target partition to which the request is being sent has changed during retry.
+            If that happens, the request is no more valid and need to be retried.
+            </summary>
+            <param name="request">Request in progress</param>
+            <param name="targetIdentity">Identity of the target determined by address cache</param>
+        </member>
         <member name="T:Microsoft.Azure.Documents.Conflict">
             <summary>
             This is the conflicting resource resulting from a concurrent async operation.
@@ -2643,16 +2708,6 @@
             Direct connectivity client can use this value to dynamically decide where to send reads to effectively use the service.
             </summary>
         </member>
-        <member name="M:Microsoft.Azure.Documents.ReplicatedResourceReader.PickDesiredReplicaIndexForRead(System.Boolean)">
-            <summary>
-            Function picks a replicaIndex based on their respective read co-efficients.
-            All secondaries have equivalent coefficient.
-            Primary got different coefficient.
-            It factors in Co-efficient + Replica Count to find the correct replica to read.        
-            </summary>
-            <param name="isMaster">Indiciates whether this is master resource of server resource</param>
-            <returns></returns>        
-        </member>
         <member name="P:Microsoft.Azure.Documents.ResourceId.UniqueDocumentCollectionId">
             <summary>
             Unique (across all databases) Id for the DocumentCollection.
@@ -2686,13 +2741,6 @@
             </summary>
             <param name="bytesToHash">payload that is hashed</param>
             <returns></returns>
-        </member>
-        <member name="T:Microsoft.Azure.Documents.WFStoreProxy">
-            <summary>
-            Instantiated to issue requests to the backend on:
-                - Gateway (for gateway mode clients)
-                - Client (for direct mode clients)
-            </summary>
         </member>
         <member name="T:Microsoft.Azure.Documents.StoreClient">
             <summary>
@@ -2921,6 +2969,11 @@
               Looks up a localized string similar to Range low value must be less than or equal the high value..
             </summary>
         </member>
+        <member name="P:Microsoft.Azure.Documents.ClientResources.InvalidTakeValue">
+            <summary>
+              Looks up a localized string similar to The count value provided for a Take expression must be an integer..
+            </summary>
+        </member>
         <member name="P:Microsoft.Azure.Documents.ClientResources.InvalidTypesForMethod">
             <summary>
               Looks up a localized string similar to Method &apos;{0}&apos; can not be invoked for type &apos;{1}&apos;. Supported types are &apos;[{2}]&apos;..
@@ -3006,6 +3059,16 @@
               Looks up a localized string similar to Spatial position must have at least two coordinates..
             </summary>
         </member>
+        <member name="P:Microsoft.Azure.Documents.ClientResources.StringCompareToInvalidConstant">
+            <summary>
+              Looks up a localized string similar to The right hand side of string.CompareTo() comparison must be constant &apos;0&apos;.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Documents.ClientResources.StringCompareToInvalidOperator">
+            <summary>
+              Looks up a localized string similar to Invalid operator for string.CompareTo(). Vaid operators are (&apos;==&apos;, &apos;&lt;&apos;, &apos;&lt;=&apos;, &apos;&gt;&apos; or &apos;&gt;=&apos;).
+            </summary>
+        </member>
         <member name="P:Microsoft.Azure.Documents.ClientResources.UdfNameIsNullOrEmpty">
             <summary>
               Looks up a localized string similar to User-defined function name can not be null or empty..
@@ -3042,7 +3105,7 @@
             </summary>
             <remarks>
             Direct and Gateway connectivity modes are supported. Gateway is the default. 
-            Refer to http://azure.microsoft.com/documentation/articles/documentdb-interactions-with-resources/#connectivity-options for additional details.
+            Refer to <see>http://azure.microsoft.com/documentation/articles/documentdb-interactions-with-resources/#connectivity-options</see> for additional details.
             </remarks>
             <example>
             <code language="c#">
@@ -3127,7 +3190,7 @@
             </summary>
             <param name="documentUri">the self-link of the document to create an attachment for.</param>
             <param name="attachment">the attachment object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateAttachmentAsync(System.Uri,System.IO.Stream,Microsoft.Azure.Documents.Client.MediaOptions)">
@@ -3145,7 +3208,7 @@
             </summary>
             <param name="documentCollectionUri">the self-link of the collection to create the document in.</param>
             <param name="document">the document object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <param name="disableAutomaticIdGeneration">Disables the automatic id generation, will throw an exception if id is missing.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
@@ -3155,7 +3218,7 @@
             </summary>
             <param name="databaseUri">the self-link of the database to create the collection in.</param>
             <param name="documentCollection">the Microsoft.Azure.Documents.DocumentCollection object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateStoredProcedureAsync(System.Uri,Microsoft.Azure.Documents.StoredProcedure,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3164,7 +3227,7 @@
             </summary>
             <param name="collectionUri">the self-link of the collection to create the stored procedure in.</param>
             <param name="storedProcedure">the Microsoft.Azure.Documents.StoredProcedure object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateTriggerAsync(System.Uri,Microsoft.Azure.Documents.Trigger,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3173,7 +3236,7 @@
             </summary>
             <param name="collectionUri">the self-link of the collection to create the trigger in.</param>
             <param name="trigger">the Microsoft.Azure.Documents.Trigger object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateUserDefinedFunctionAsync(System.Uri,Microsoft.Azure.Documents.UserDefinedFunction,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3182,7 +3245,7 @@
             </summary>
             <param name="collectionUri">the self-link of the collection to create the user defined function in.</param>
             <param name="function">the Microsoft.Azure.Documents.UserDefinedFunction object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreatePermissionAsync(System.Uri,Microsoft.Azure.Documents.Permission,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3191,7 +3254,7 @@
             </summary>
             <param name="userUri">the self-link of the user to create the permission for.</param>
             <param name="permission">the Microsoft.Azure.Documents.Permission object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateUserAsync(System.Uri,Microsoft.Azure.Documents.User,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3200,23 +3263,23 @@
             </summary>
             <param name="databaseUri">the self-link of the database to create the user in.</param>
             <param name="user">the Microsoft.Azure.Documents.User object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.UpsertAttachmentAsync(System.Uri,System.Object,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
             Upserts an attachment as an asychronous operation.
             </summary>
-            <param name="documentUri">the self-link of the document to upsert an attachment for.</param>
+            <param name="documentUri">the URI of the document to upsert an attachment for.</param>
             <param name="attachment">the attachment object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.UpsertAttachmentAsync(System.Uri,System.IO.Stream,Microsoft.Azure.Documents.Client.MediaOptions)">
             <summary>
             Upserts an attachment as an asynchronous operation.
             </summary>
-            <param name="documentUri">the attachments link for the document.</param>
+            <param name="documentUri">the URI of the document to upsert an attachment for.</param>
             <param name="mediaStream">the stream of the attachment media.</param>
             <param name="options">the media options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
@@ -3225,9 +3288,9 @@
             <summary>
             Upserts a document as an asychronous operation.
             </summary>
-            <param name="documentCollectionUri">the self-link of the collection to upsert the document in.</param>
+            <param name="documentCollectionUri">the URI of the collection to upsert the document in.</param>
             <param name="document">the document object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <param name="disableAutomaticIdGeneration">Disables the automatic id generation, will throw an exception if id is missing.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
@@ -3235,45 +3298,45 @@
             <summary>
             Upserts a stored procedure as an asychronous operation.
             </summary>
-            <param name="collectionUri">the self-link of the collection to upsert the stored procedure in.</param>
+            <param name="collectionUri">the URI of the collection to upsert the stored procedure in.</param>
             <param name="storedProcedure">the Microsoft.Azure.Documents.StoredProcedure object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.UpsertTriggerAsync(System.Uri,Microsoft.Azure.Documents.Trigger,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
             Upserts a trigger as an asychronous operation.
             </summary>
-            <param name="collectionUri">the self-link of the collection to upsert the trigger in.</param>
+            <param name="collectionUri">the URI of the collection to upsert the trigger in.</param>
             <param name="trigger">the Microsoft.Azure.Documents.Trigger object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.UpsertUserDefinedFunctionAsync(System.Uri,Microsoft.Azure.Documents.UserDefinedFunction,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
             Upserts a user defined function as an asychronous operation.
             </summary>
-            <param name="collectionUri">the self-link of the collection to upsert the user defined function in.</param>
+            <param name="collectionUri">the URI of the collection to upsert the user defined function in.</param>
             <param name="function">the Microsoft.Azure.Documents.UserDefinedFunction object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.UpsertPermissionAsync(System.Uri,Microsoft.Azure.Documents.Permission,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
             Upserts a permission as an asychronous operation.
             </summary>
-            <param name="userUri">the self-link of the user to upsert the permission for.</param>
+            <param name="userUri">the URI of the user to upsert the permission for.</param>
             <param name="permission">the Microsoft.Azure.Documents.Permission object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.UpsertUserAsync(System.Uri,Microsoft.Azure.Documents.User,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
             Upserts a user as an asychronous operation.
             </summary>
-            <param name="databaseUri">the self-link of the database to upsert the user in.</param>
+            <param name="databaseUri">the URI of the database to upsert the user in.</param>
             <param name="user">the Microsoft.Azure.Documents.User object.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteAttachmentAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3281,7 +3344,7 @@
             Delete an attachment as an asynchronous operation.
             </summary>
             <param name="attachmentUri">the self-link of the attachment to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteDatabaseAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3289,7 +3352,7 @@
             Delete a database as an asynchronous operation.
             </summary>
             <param name="databaseUri">the self-link of the database to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteDocumentAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3297,7 +3360,7 @@
             Delete a document as an asynchronous operation.
             </summary>
             <param name="documentUri">the self-link of the document to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteDocumentCollectionAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3305,7 +3368,7 @@
             Delete a collection as an asynchronous operation.
             </summary>
             <param name="documentCollectionUri">the self-link of the collection to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteStoredProcedureAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3313,7 +3376,7 @@
             Delete a stored procedure as an asynchronous operation.
             </summary>
             <param name="storedProcedureUri">the self-link of the stored procedure to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteTriggerAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3321,7 +3384,7 @@
             Delete a trigger as an asynchronous operation.
             </summary>
             <param name="triggerUri">the self-link of the trigger to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteUserDefinedFunctionAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3329,7 +3392,7 @@
             Delete a user defined function as an asynchronous operation.
             </summary>
             <param name="functionUri">the self-link of the trigger to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeletePermissionAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3337,7 +3400,7 @@
             Delete a permission as an asynchronous operation.
             </summary>
             <param name="permissionUri">the self-link of the trigger to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteUserAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3345,7 +3408,7 @@
             Delete a user as an asynchronous operation.
             </summary>
             <param name="userUri">the self-link of the user to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.DeleteConflictAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3353,7 +3416,7 @@
             Delete a conflict as an asynchronous operation.
             </summary>
             <param name="conflictUri">the self-link of the conflict to delete.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplaceAttachmentAsync(System.Uri,Microsoft.Azure.Documents.Attachment,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3362,7 +3425,7 @@
             </summary>
             <param name="attachmentsUri">the updated attachment.</param>
             <param name="attachment">the attachment resource.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplaceDocumentAsync(System.Uri,System.Object,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3371,7 +3434,7 @@
             </summary>
             <param name="documentCollectionUri">the self-link of the document to be updated.</param>
             <param name="document">the updated document.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplaceDocumentCollectionAsync(System.Uri,Microsoft.Azure.Documents.DocumentCollection,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3380,7 +3443,7 @@
             </summary>
             <param name="documentCollectionUri">the self-link of the document collection to be updated.</param>
             <param name="documentCollection">the updated document collection.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplaceStoredProcedureAsync(System.Uri,Microsoft.Azure.Documents.StoredProcedure,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3389,7 +3452,7 @@
             </summary>
             <param name="storedProcedureUri">the self-link for the attachment.</param>
             <param name="storedProcedure">the updated stored procedure.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplaceTriggerAsync(System.Uri,Microsoft.Azure.Documents.Trigger,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3398,7 +3461,7 @@
             </summary>
             <param name="triggerUri">the self-link for the attachment.</param>
             <param name="trigger">the updated trigger.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplaceUserDefinedFunctionAsync(System.Uri,Microsoft.Azure.Documents.UserDefinedFunction,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3407,7 +3470,7 @@
             </summary>
             <param name="userDefinedFunctionUri">the self-link for the attachment.</param>
             <param name="function">the updated user defined function.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplacePermissionAsync(System.Uri,Microsoft.Azure.Documents.Permission,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3416,7 +3479,7 @@
             </summary>
             <param name="permissionUri">the self-link for the attachment.</param>
             <param name="permission">the updated permission.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReplaceUserAsync(System.Uri,Microsoft.Azure.Documents.User,Microsoft.Azure.Documents.Client.RequestOptions)">
@@ -3425,95 +3488,462 @@
             </summary>
             <param name="userUri">the self-link for the attachment.</param>
             <param name="user">the updated user.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadAttachmentAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read an attachment as an asynchronous operation.
+            Reads an <see cref="T:Microsoft.Azure.Documents.Attachment"/> as an asynchronous operation.
             </summary>
-            <param name="attachmentUri">the self-link for the attachment.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="attachmentUri">A URI to the Attachment resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps an <see cref="T:Microsoft.Azure.Documents.Attachment"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="attachmentUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads an Attachment resource where 
+            // - db_id is the ID property of the Database
+            // - coll_id is the ID property of the DocumentCollection
+            // - doc_id is the ID property of the Document
+            // - attachment_id is the ID property of the Attachment resource you wish to read. 
+            var attachLink = UriFactory.CreateAttachmentUri("db_id", "coll_id", "doc_id", "attachment_id");
+            Attachment attachment = await client.ReadAttachmentAsync(attachLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.Attachment"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDatabaseAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a database as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Database"/> as an asynchronous operation.
             </summary>
-            <param name="databaseUri">the self-link for the database.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="databaseUri">A URI to the Database resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Database"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="databaseUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a Database resource where 
+            // - db_id is the ID property of the Database you wish to read. 
+            var dbLink = UriFactory.CreateDatabaseUri("db_id");
+            Database database = await client.ReadDatabaseAsync(dbLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.Database"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDocumentAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a document as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Document"/> as an asynchronous operation.
             </summary>
-            <param name="documentUri">the self-link for the document.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="documentUri">A URI to the Document resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Document"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="documentUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a Document resource where 
+            // - db_id is the ID property of the Database
+            // - coll_id is the ID property of the DocumentCollection
+            // - doc_id is the ID property of the Document you wish to read. 
+            var docLink = UriFactory.CreateDocumentUri("db_id", "coll_id", "doc_id");
+            Document document = await client.ReadDocumentAsync(docLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.Document"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDocumentCollectionAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a collection as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.DocumentCollection"/> as an asynchronous operation.
             </summary>
-            <param name="documentCollectionUri">the self-link for the collection.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="documentCollectionUri">A URI to the DocumentCollection resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.DocumentCollection"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="documentCollectionUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a Document resource where 
+            // - db_id is the ID property of the Database
+            // - coll_id is the ID property of the DocumentCollection you wish to read. 
+            var collLink = UriFactory.CreateCollectionUri("db_id", "coll_id");
+            DocumentCollection coll = await client.ReadDocumentCollectionAsync(collLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.DocumentCollection"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadStoredProcedureAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a stored procedure as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.StoredProcedure"/> as an asynchronous operation.
             </summary>
-            <param name="storedProcedureUri">the self-link for the collection.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="storedProcedureUri">A URI to the StoredProcedure resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.StoredProcedure"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="storedProcedureUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a StoredProcedure resource where 
+            // - db_id is the ID property of the Database
+            // - coll_id is the ID property of the DocumentCollection 
+            // - sproc_id is the ID property of the StoredProcedure you wish to read. 
+            var sprocLink = UriFactory.CreateStoredProcedureUri("db_id", "coll_id", "sproc_id");
+            StoredProcedure sproc = await client.ReadStoredProcedureAsync(sprocLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.StoredProcedure"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadTriggerAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a trigger as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Trigger"/> as an asynchronous operation.
             </summary>
-            <param name="triggerUri">the self-link for the trigger.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="triggerUri">A URI to the Trigger resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Trigger"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="triggerUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a Trigger resource where 
+            // - db_id is the ID property of the Database
+            // - coll_id is the ID property of the DocumentCollection 
+            // - trigger_id is the ID property of the Trigger you wish to read. 
+            var triggerLink = UriFactory.CreateTriggerUri("db_id", "coll_id", "trigger_id");
+            Trigger trigger = await client.ReadTriggerAsync(triggerLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.Trigger"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadUserDefinedFunctionAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a user defined function as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> as an asynchronous operation.
             </summary>
-            <param name="functionUri">the self-link for the user defined function.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="functionUri">A URI to the User Defined Function resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="functionUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a UserDefinedFunction resource where 
+            // - db_id is the ID property of the Database
+            // - coll_id is the ID property of the DocumentCollection 
+            // - udf_id is the ID property of the UserDefinedFunction you wish to read. 
+            var udfLink = UriFactory.CreateUserDefinedFunctionUri("db_id", "coll_id", "udf_id");
+            UserDefinedFunction udf = await client.ReadUserDefinedFunctionAsync(udfLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadPermissionAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a permission as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Permission"/> resource as an asynchronous operation.
             </summary>
-            <param name="permissionUri">the self-link for the permission.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="permissionUri">A URI to the Permission resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Permission"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="permissionUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a Permission resource where 
+            // - db_id is the ID property of the Database
+            // - user_id is the ID property of the User 
+            // - permission_id is the ID property of the Permission you wish to read. 
+            var permissionLink = UriFactory.CreatePermissionUri("db_id", "coll_id", "user_id");
+            Permission permission = await client.ReadPermissionAsync(permissionLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.Permission"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadUserAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a user as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.User"/> as an asynchronous operation.
             </summary>
-            <param name="userUri">the self-link for the user.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="userUri">A URI to the User resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.User"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="userUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a User resource where 
+            // - db_id is the ID property of the Database
+            // - user_id is the ID property of the User you wish to read. 
+            var userLink = UriFactory.CreateUserUri("db_id", "user_id");
+            User user = await client.ReadUserAsync(userLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.User"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadConflictAsync(System.Uri,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Read a conflict as an asynchronous operation.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Conflict"/> as an asynchronous operation.
             </summary>
-            <param name="conflictUri">the self-link for the conflict.</param>
-            <param name="options">the request options for the request.</param>
-            <returns>The task object representing the service response for the asynchronous operation.</returns>
+            <param name="conflictUri">A URI to the Conflict resource to be read.</param>
+            <param name="options">The request options for the request.</param>
+            <returns>
+            A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Conflict"/> containing the read resource record.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="conflictUri"/> is not set.</exception>
+            <exception cref="T:Microsoft.Azure.Documents.DocumentClientException">This exception can encapsulate many different types of errors. To determine the specific error always look at the StatusCode property. Some common codes you may get when creating a Document are:
+            <list type="table">
+                <listheader>
+                    <term>StatusCode</term><description>Reason for exception</description>
+                </listheader>
+                <item>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
+                </item>
+                <item>
+                    <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
+                </item>
+            </list>
+            </exception>
+            <example>
+            <code language="c#">
+            <![CDATA[
+            //Reads a Conflict resource where 
+            // - db_id is the ID property of the Database
+            // - coll_id is the ID property of the DocumentCollection
+            // - conflict_id is the ID property of the Conflict you wish to read. 
+            var conflictLink = UriFactory.CreateConflictUri("db_id", "coll_id", "conflict_id");
+            Conflict conflict = await client.ReadConflictAsync(conflictLink);
+            ]]>
+            </code>
+            </example>
+            <remarks>
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            </remarks>
+            <seealso cref="T:Microsoft.Azure.Documents.Conflict"/> 
+            <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
+            <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
+            <seealso cref="T:System.Threading.Tasks.Task"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadAttachmentFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
             <summary>
             Reads the feed (sequence) of attachments for a document as an asynchronous operation.
             </summary>
             <param name="attachmentsUri">the link for the attachments.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDocumentCollectionFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3521,7 +3951,7 @@
             Reads the feed (sequence) of collections for a database as an asynchronous operation.
             </summary>
             <param name="collectionsUri">the link for the collections.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadStoredProcedureFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3529,7 +3959,7 @@
             Reads the feed (sequence) of stored procedures for a collection as an asynchronous operation.
             </summary>
             <param name="storedProceduresUri">the link for the stored procedures.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadTriggerFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3537,7 +3967,7 @@
             Reads the feed (sequence) of triggers for a collection as an asynchronous operation.
             </summary>
             <param name="triggersUri">the link for the triggers.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadUserDefinedFunctionFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3545,7 +3975,7 @@
             Reads the feed (sequence) of user defined functions for a collection as an asynchronous operation.
             </summary>
             <param name="userDefinedFunctionsUri">the link for the user defined functions.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadPermissionFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3553,7 +3983,7 @@
             Reads the feed (sequence) of permissions for a user as an asynchronous operation.
             </summary>
             <param name="permissionsUri">the link for the permissions.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDocumentFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3561,7 +3991,7 @@
             Reads the feed (sequence) of documents for a collection as an asynchronous operation.
             </summary>
             <param name="documentsUri">the link for the documents.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadUserFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3569,7 +3999,7 @@
             Reads the feed (sequence) of users for a database as an asynchronous operation.
             </summary>
             <param name="usersUri">the link for the users.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadConflictFeedAsync(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -3577,7 +4007,7 @@
             Reads the feed (sequence) of conflicts for a collection as an asynchronous operation.
             </summary>
             <param name="conflictsUri">the link for the conflicts.</param>
-            <param name="options">the request options for the request.</param>
+            <param name="options">The request options for the request.</param>
             <returns>The task object representing the service response for the asynchronous operation.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ExecuteStoredProcedureAsync``1(System.Uri,System.Object[])">
@@ -3772,59 +4202,71 @@
             <param name="feedOptions">the options for processing the query results feed.</param>
             <returns>the query result set.</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery``1(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
+        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery``1(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions,System.Object)">
             <summary>
             Extension method to create a query for documents.
             </summary>
             <typeparam name="T">the type of object to query.</typeparam>
-            <param name="documentsUri">the link to the documents.</param>
+            <param name="documentCollectionOrDatabaseUri">The URI of the document collection, e.g. dbs/db_rid/colls/coll_rid/. 
+            Alternatively, this can be a URI of the database when using an <see cref="T:Microsoft.Azure.Documents.Client.IPartitionResolver"/>, e.g. dbs/db_rid/</param>
             <param name="feedOptions">the options for processing the query results feed.</param>
+            <param name="partitionKey">Optional partition key that can be used with an IPartitionResolver.</param>
             <returns>the query result set.</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery``1(System.Uri,System.String,Microsoft.Azure.Documents.Client.FeedOptions)">
+        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery``1(System.Uri,System.String,Microsoft.Azure.Documents.Client.FeedOptions,System.Object)">
             <summary>
             Extension method to create a query for documents.
             </summary>
             <typeparam name="T">the type of object to query.</typeparam>
-            <param name="documentsUri">the link to the documents.</param>
+            <param name="documentCollectionOrDatabaseUri">The URI of the document collection, e.g. dbs/db_rid/colls/coll_rid/. 
+            Alternatively, this can be a URI of the database when using an <see cref="T:Microsoft.Azure.Documents.Client.IPartitionResolver"/>, e.g. dbs/db_rid/</param>
             <param name="sqlExpression">the sql query.</param>
             <param name="feedOptions">the options for processing the query results feed.</param>
+            <param name="partitionKey">Optional partition key that can be used with an IPartitionResolver.</param>
             <returns>the query result set.</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery``1(System.Uri,Microsoft.Azure.Documents.SqlQuerySpec,Microsoft.Azure.Documents.Client.FeedOptions)">
+        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery``1(System.Uri,Microsoft.Azure.Documents.SqlQuerySpec,Microsoft.Azure.Documents.Client.FeedOptions,System.Object)">
             <summary>
             Extension method to create a query for documents.
             </summary>
             <typeparam name="T">the type of object to query.</typeparam>
-            <param name="documentsUri">the link to the documents.</param>
+            <param name="documentCollectionOrDatabaseUri">The URI of the document collection, e.g. dbs/db_rid/colls/coll_rid/. 
+            Alternatively, this can be a URI of the database when using an <see cref="T:Microsoft.Azure.Documents.Client.IPartitionResolver"/>, e.g. dbs/db_rid/</param>
             <param name="querySpec">the sql query.</param>
             <param name="feedOptions">the options for processing the query results feed.</param>
+            <param name="partitionKey">Optional partition key that can be used with an IPartitionResolver.</param>
             <returns>the query result set.</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
+        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions,System.Object)">
             <summary>
             Extension method to create a query for documents.
             </summary>
-            <param name="documentsUri">the link to the documents.</param>
+            <param name="documentCollectionOrDatabaseUri">The URI of the document collection, e.g. dbs/db_rid/colls/coll_rid/. 
+            Alternatively, this can be a URI of the database when using an <see cref="T:Microsoft.Azure.Documents.Client.IPartitionResolver"/>, e.g. dbs/db_rid/</param>
             <param name="feedOptions">the options for processing the query results feed.</param>
+            <param name="partitionKey">Optional partition key that can be used with an IPartitionResolver.</param>
             <returns>the query result set.</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery(System.Uri,System.String,Microsoft.Azure.Documents.Client.FeedOptions)">
+        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery(System.Uri,System.String,Microsoft.Azure.Documents.Client.FeedOptions,System.Object)">
             <summary>
             Extension method to create a query for documents.
             </summary>
-            <param name="documentsUri">the link to the documents.</param>
+            <param name="documentCollectionOrDatabaseUri">The URI of the document collection, e.g. dbs/db_rid/colls/coll_rid/. 
+            Alternatively, this can be a URI of the database when using an <see cref="T:Microsoft.Azure.Documents.Client.IPartitionResolver"/>, e.g. dbs/db_rid/</param>
             <param name="sqlExpression">the sql query.</param>
             <param name="feedOptions">the options for processing the query results feed.</param>
+            <param name="partitionKey">Optional partition key that can be used with an IPartitionResolver.</param>
             <returns>the query result set.</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery(System.Uri,Microsoft.Azure.Documents.SqlQuerySpec,Microsoft.Azure.Documents.Client.FeedOptions)">
+        <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateDocumentQuery(System.Uri,Microsoft.Azure.Documents.SqlQuerySpec,Microsoft.Azure.Documents.Client.FeedOptions,System.Object)">
             <summary>
             Extension method to create a query for documents.
             </summary>
-            <param name="documentsUri">the link to the documents.</param>
+            <param name="documentCollectionOrDatabaseUri">The URI of the document collection, e.g. dbs/db_rid/colls/coll_rid/. 
+            Alternatively, this can be a URI of the database when using an <see cref="T:Microsoft.Azure.Documents.Client.IPartitionResolver"/>, e.g. dbs/db_rid/</param>
             <param name="querySpec">the sql query.</param>
             <param name="feedOptions">the options for processing the query results feed.</param>
+            <param name="partitionKey">Optional partition key that can be used with an IPartitionResolver.</param>
             <returns>the query result set.</returns>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.CreateUserQuery(System.Uri,Microsoft.Azure.Documents.Client.FeedOptions)">
@@ -5217,9 +5659,9 @@
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadAttachmentAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.Attachment"/> as an asynchronous operation using its SelfLink property.
+            Reads an <see cref="T:Microsoft.Azure.Documents.Attachment"/> as an asynchronous operation.
             </summary>
-            <param name="attachmentLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/colls/col_rid/docs/doc_rid/attachments/attachment_rid/ </param>
+            <param name="attachmentLink">The link to the attachment to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Attachment"/> containing the read resource record.
@@ -5231,7 +5673,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5241,23 +5683,39 @@
             <example>
             <code language="c#">
             <![CDATA[
-            Attachment attachment = await client.ReadAttachmentAsync("/dbs/db_rid/colls/col_rid/docs/doc_rid/attachments/attachment_rid/");
+            //Reads an Attachment resource where 
+            // - sample_db is the ID property of the Database
+            // - sample_coll is the ID property of the DocumentCollection
+            // - sample_doc is the ID property of the Document
+            // - attachment_id is the ID property of the Attachment resource you wish to read. 
+            var attachLink = "/dbs/sample_db/colls/sample_coll/docs/sample_doc/attachments/attachment_id/";
+            Attachment attachment = await client.ReadAttachmentAsync(attachLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the service. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the Database if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="attachmentLink"/> is always "/dbs/{db identifier}/colls/{coll identifier}/docs/{doc identifier}/attachments/{attachment identifier}" only 
+            the values within the {} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.Attachment"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDatabaseAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.Database"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Database"/> as an asynchronous operation.
             </summary>
-            <param name="databaseLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/ </param>
+            <param name="databaseLink">The link of the Database resource to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Database"/> containing the read resource record.
@@ -5269,7 +5727,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5279,23 +5737,36 @@
             <example>
             <code language="c#">
             <![CDATA[
-            Database database = await client.ReadDatabaseAsync("/dbs/db_rid/");
+            //Reads a Database resource where 
+            // - database_id is the ID property of the Database resource you wish to read. 
+            var dbLink = "/dbs/database_id";
+            Database database = await client.ReadDatabaseAsync(dbLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the Database if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="databaseLink"/> is always "/dbs/{db identifier}" only 
+            the values within the {} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.Database"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDocumentAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.Document"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Document"/> as an asynchronous operation.
             </summary>
-            <param name="documentLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/colls/coll_rid/docs/doc_rid/ </param>
+            <param name="documentLink">The link for the document to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Document"/> containing the read resource record.
@@ -5307,7 +5778,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5317,23 +5788,38 @@
             <example>
             <code language="c#">
             <![CDATA[
-            Document doc = await client.ReadDocumentAsync("/dbs/db_rid/colls/coll_rid/docs/doc_rid/");
+            //This reads a document record from a database & collection where 
+            // - sample_database is the ID of the database
+            // - sample_collection is the ID of the collection
+            // - document_id is the ID of the document resource
+            var docLink = "/dbs/sample_database/colls/sample_collection/docs/document_id";
+            Document doc = await client.ReadDocumentAsync(docLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the Document if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="documentLink"/> is always "/dbs/{db identifier}/colls/{coll identifier}/docs/{doc identifier}" only 
+            the values within the {} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.Document"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadDocumentCollectionAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.DocumentCollection"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.DocumentCollection"/> as an asynchronous operation.
             </summary>
-            <param name="documentCollectionLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/colls/coll_rid/ </param>
+            <param name="documentCollectionLink">The link for the DocumentCollection to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.DocumentCollection"/> containing the read resource record.
@@ -5345,7 +5831,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5355,23 +5841,37 @@
             <example>
             <code language="c#">
             <![CDATA[
-            DocumentCollection coll = await client.ReadDocumentCollectionAsync("/dbs/db_rid/colls/coll_rid/");
+            //This reads a DocumentCollection record from a database where 
+            // - sample_database is the ID of the database
+            // - collection_id is the ID of the collection resource to be read
+            var collLink = "/dbs/sample_database/colls/collection_id";
+            DocumentCollection coll = await client.ReadDocumentCollectionAsync(collLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the DocumentCollection if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="documentCollectionLink"/> is always "/dbs/{db identifier}/colls/{coll identifier}" only 
+            the values within the {} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.DocumentCollection"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadStoredProcedureAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.StoredProcedure"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.StoredProcedure"/> as an asynchronous operation.
             </summary>
-            <param name="storedProcedureLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/colls/coll_rid/sprocs/sproc_rid/ </param>
+            <param name="storedProcedureLink">The link of the stored procedure to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.StoredProcedure"/> containing the read resource record.
@@ -5383,7 +5883,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5393,23 +5893,38 @@
             <example>
             <code language="c#">
             <![CDATA[
-            StoredProcedure sproc = await client.ReadStoredProcedureAsync("/dbs/db_rid/colls/coll_rid/sprocs/sproc_rid/");
+            //Reads a StoredProcedure from a Database and DocumentCollection where 
+            // - sample_database is the ID of the database
+            // - sample_collection is the ID of the collection
+            // - sproc_id is the ID of the stored procedure to be read
+            var sprocLink = "/dbs/sample_database/colls/sample_collection/sprocs/sproc_id";
+            StoredProcedure sproc = await client.ReadStoredProcedureAsync(sprocLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the Stored Procedure if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="storedProcedureLink"/> is always "/dbs/{db identifier}/colls/{coll identifier}/sprocs/{sproc identifier}" 
+            only the values within the {...} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.StoredProcedure"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadTriggerAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.Trigger"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Trigger"/> as an asynchronous operation.
             </summary>
-            <param name="triggerLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/colls/coll_rid/triggers/trigger_rid/ </param>
+            <param name="triggerLink">The link to the Trigger to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Trigger"/> containing the read resource record.
@@ -5421,7 +5936,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5431,23 +5946,38 @@
             <example>
             <code language="c#">
             <![CDATA[
-            Trigger trigger = await client.ReadTriggerAsync("/dbs/db_rid/colls/coll_rid/triggers/trigger_rid/");
+            //Reads a Trigger from a Database and DocumentCollection where 
+            // - sample_database is the ID of the database
+            // - sample_collection is the ID of the collection
+            // - trigger_id is the ID of the trigger to be read
+            var triggerLink = "/dbs/sample_database/colls/sample_collection/triggers/trigger_id";
+            Trigger trigger = await client.ReadTriggerAsync(triggerLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the Trigger if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="triggerLink"/> is always "/dbs/{db identifier}/colls/{coll identifier}/triggers/{trigger identifier}" 
+            only the values within the {...} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.Trigger"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadUserDefinedFunctionAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> as an asynchronous operation.
             </summary>
-            <param name="functionLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/colls/coll_rid/udfs/udf_rid/ </param>
+            <param name="functionLink">The link to the User Defined Function to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> containing the read resource record.
@@ -5459,7 +5989,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5469,23 +5999,38 @@
             <example>
             <code language="c#">
             <![CDATA[
-            UserDefinedFunction udf = await client.ReadUserDefinedFunctionAsync("/dbs/db_rid/colls/coll_rid/udfs/udf_rid/");
+            //Reads a User Defined Function from a Database and DocumentCollection where 
+            // - sample_database is the ID of the database
+            // - sample_collection is the ID of the collection
+            // - udf_id is the ID of the user-defined function to be read
+            var udfLink = "/dbs/sample_database/colls/sample_collection/udfs/udf_id";
+            UserDefinedFunction udf = await client.ReadUserDefinedFunctionAsync(udfLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the User Defined Function if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="functionLink"/> is always "/dbs/{db identifier}/colls/{coll identifier}/udfs/{udf identifier}" 
+            only the values within the {...} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadPermissionAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.Permission"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Permission"/> as an asynchronous operation.
             </summary>
-            <param name="permissionLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/users/user_rid/permissions/permission_rid/ </param>
+            <param name="permissionLink">The link for the Permission resource to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Permission"/> containing the read resource record.
@@ -5497,7 +6042,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5507,23 +6052,38 @@
             <example>
             <code language="c#">
             <![CDATA[
-            Permission permission = await client.ReadPermissionAsync("/dbs/db_rid/users/user_rid/permissions/permission_rid/");
+            //Reads a Permission resource from a Database and User where 
+            // - sample_database is the ID of the database
+            // - sample_user is the ID of the user
+            // - permission_id is the ID of the permission to be read
+            var permissionLink = "/dbs/sample_database/users/sample_user/permissions/permission_id";
+            Permission permission = await client.ReadPermissionAsync(permissionLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the Permission if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="permissionLink"/> is always "/dbs/{db identifier}/users/{user identifier}/permissions/{permission identifier}" 
+            only the values within the {...} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.Permission"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadUserAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.User"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.User"/> as an asynchronous operation.
             </summary>
-            <param name="userLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/users/user_rid/users/user_rid/ </param>
+            <param name="userLink">The link to the User resource to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.User"/> containing the read resource record.
@@ -5535,7 +6095,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5545,23 +6105,37 @@
             <example>
             <code language="c#">
             <![CDATA[
-            User user = await client.ReadUserAsync("/dbs/db_rid/users/user_rid/users/user_rid/");
+            //Reads a User resource from a Database
+            // - sample_database is the ID of the database
+            // - user_id is the ID of the user to be read
+            var userLink = "/dbs/sample_database/users/user_id";
+            User user = await client.ReadUserAsync(userLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the User if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="userLink"/> is always "/dbs/{db identifier}/users/{user identifier}" 
+            only the values within the {...} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.User"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadConflictAsync(System.String,Microsoft.Azure.Documents.Client.RequestOptions)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.Conflict"/> as an asynchronous operation using its SelfLink property.
+            Reads a <see cref="T:Microsoft.Azure.Documents.Conflict"/> as an asynchronous operation.
             </summary>
-            <param name="conflictLink">The Resource SelfLink to be read. E.g. /dbs/db_rid/colls/coll_rid/conflicts/conflict_rid/ </param>
+            <param name="conflictLink">The link to the Conflict to be read.</param>
             <param name="options">(Optional) The request options for the request.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Conflict"/> containing the read resource record.
@@ -5573,7 +6147,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5583,23 +6157,38 @@
             <example>
             <code language="c#">
             <![CDATA[
-            Conflict conflict = await client.ReadConflictAsync("/dbs/db_rid/colls/coll_rid/conflicts/conflict_rid/");
+            //Reads a Conflict resource from a Database
+            // - sample_database is the ID of the database
+            // - sample_collection is the ID of the collection
+            // - conflict_id is the ID of the conflict to be read
+            var conflictLink = "/dbs/sample_database/colls/sample_collection/conflicts/conflict_id";
+            Conflict conflict = await client.ReadConflictAsync(conflictLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            The example shown uses ID-based links, where the link is composed of the ID properties used when the resources were created.
+            You can still use the <see cref="P:Microsoft.Azure.Documents.Resource.SelfLink"/> property of the Conflict if you prefer. A self-link is a URI for a resource that is made up of Resource Identifiers  (or the _rid properties).
+            ID-based links and SelfLink will both work.
+            The format for <paramref name="conflictLink"/> is always "/dbs/{db identifier}/colls/{collectioon identifier}/conflicts/{conflict identifier}" 
+            only the values within the {...} change depending on which method you wish to use to address the resource.
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.Conflict"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadOfferAsync(System.String)">
             <summary>
-            Reads a <see cref="T:Microsoft.Azure.Documents.Offer"/> as an asynchronous operation using its SelfLink property.
+            Reads an <see cref="T:Microsoft.Azure.Documents.Offer"/> as an asynchronous operation.
             </summary>
-            <param name="offerLink">The Resource SelfLink to be read. E.g. /offers/offer_rid/ </param>
+            <param name="offerLink">The link to the Offer to be read.</param>
             <returns>
             A <see cref="N:System.Threading.Tasks"/> containing a <see cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/> which wraps a <see cref="T:Microsoft.Azure.Documents.Offer"/> containing the read resource record.
             </returns>
@@ -5610,7 +6199,7 @@
                     <term>StatusCode</term><description>Reason for exception</description>
                 </listheader>
                 <item>
-                    <term>404</term><description>NotFound - This means the resource you tried to delete did not exist.</description>
+                    <term>404</term><description>NotFound - This means the resource you tried to read did not exist.</description>
                 </item>
                 <item>
                     <term>429</term><description>TooManyRequests - This means you have exceeded the number of request units per second. Consult the DocumentClientException.RetryAfter value to see how long you should wait before retrying this operation.</description>
@@ -5620,17 +6209,29 @@
             <example>
             <code language="c#">
             <![CDATA[
-            Offer offer = await client.ReadOfferAsync("/offers/offer_rid/");
+            //Reads an Offer resource from a Database
+            // - offer_id is the ID of the conflict to be read
+            var offerLink = "/offers/offer_id";
+            Offer offer = await client.ReadOfferAsync(offerLink);
             ]]>
             </code>
             </example>
             <remarks>
-            Doing a Read of a resource is the cheapest way to get a resource from the Database. If you know the resource's SelfLink do this instead of a Query by id.
+            <para>
+            Doing a read of a resource is the most efficient way to get a resource from the Database. If you know the resource's ID, do a read instead of a query by ID.
+            </para>
+            <para>
+            For an Offer, id is always generated internally by the system when the linked resource is created. id and _rid are always the same for Offer.
+            </para>
+            <para>
+            The format for <paramref name="offerLink"/> is always "/offers/{offer identifier}" 
+            </para>
             </remarks>
             <seealso cref="T:Microsoft.Azure.Documents.Conflict"/> 
             <seealso cref="T:Microsoft.Azure.Documents.Client.RequestOptions"/>
             <seealso cref="T:Microsoft.Azure.Documents.Client.ResourceResponse`1"/>
             <seealso cref="T:System.Threading.Tasks.Task"/>
+            <seealso cref="T:System.Uri"/> 
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.DocumentClient.ReadAttachmentFeedAsync(System.String,Microsoft.Azure.Documents.Client.FeedOptions)">
             <summary>
@@ -6837,6 +7438,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:Microsoft.Azure.Documents.Client.DocumentClient.UseConsistencyReader">
+            <summary>
+            Processwide static to enable/disable quoeum reader for unit tests.
+            </summary>
+        </member>
         <member name="P:Microsoft.Azure.Documents.Client.DocumentClient.PartitionResolvers">
             <summary>
             Partition Resolvers as a Dictionary of database link to IPartitionResolver to be used in partitioning.
@@ -6925,6 +7531,21 @@
             SqlQuery (application/sql).
             </summary>
         </member>
+        <member name="M:Microsoft.Azure.Documents.Linq.ConstantEvaluator.PartialEval(System.Linq.Expressions.Expression,System.Func{System.Linq.Expressions.Expression,System.Boolean})">
+            <summary> 
+            Performs evaluation and replacement of independent sub-trees 
+            </summary> 
+            <param name="expression">The root of the expression tree.</param>
+            <param name="fnCanBeEvaluated">A function that decides whether a given expression node can be part of the local function.</param>
+            <returns>A new tree with sub-trees evaluated and replaced.</returns> 
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Linq.ConstantEvaluator.PartialEval(System.Linq.Expressions.Expression)">
+            <summary> 
+            Performs evaluation and replacement of independent sub-trees 
+            </summary> 
+            <param name="expression">The root of the expression tree.</param>
+            <returns>A new tree with sub-trees evaluated and replaced.</returns> 
+        </member>
         <member name="T:Microsoft.Azure.Documents.Linq.GeometrySqlExpressionFactory">
             <summary>
             Constructs <see cref="T:Microsoft.Azure.Documents.Linq.SqlScalarExpression"/> from a geometry <see cref="T:System.Linq.Expressions.Expression"/>.
@@ -6945,6 +7566,17 @@
             </summary>
             <param name="jToken">Json token.</param>
             <returns>Instance of <see cref="T:Microsoft.Azure.Documents.Linq.SqlScalarExpression"/>.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Linq.Nominator">
+            <summary> 
+            Performs bottom-up analysis to determine which nodes can possibly 
+            be part of an evaluated sub-tree. 
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Documents.Linq.SubtreeEvaluator">
+            <summary> 
+            Evaluates and replaces sub-trees when first candidate is reached (top-down) 
+            </summary> 
         </member>
         <member name="T:Microsoft.Azure.Documents.Client.ResourceFeedReaderClientExtensions">
             <summary>
@@ -7457,6 +8089,18 @@
             </value>
             <remarks>
             An index will be rebuilt when the IndexPolicy of a collection is updated.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Documents.Client.ResourceResponse`1.LazyIndexingProgress">
+            <summary>
+            Gets the progress of lazy indexing.
+            </summary>
+            <value>
+            An integer from 0 to 100 representing percentage completion of the lazy indexing process.
+            Returns -1 if the lazy indexing progress header could not be found.
+            </value>
+            <remarks>
+            Lazy indexing progress only applies to the collection with indexing mode Lazy.
             </remarks>
         </member>
         <member name="T:Microsoft.Azure.Documents.Linq.ExpressionToSql">
@@ -9366,36 +10010,6 @@
             Option is true if query tracing is enabled; otherwise, false.
             </value>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Services.Gateway.WFStore.GatewayAddressResolver.Microsoft#Azure#Documents#IAddressResolver#GenerateRootIdAsync(System.String,System.Int32,System.Boolean)">
-            <summary>
-            Not called because Database/User/Permission creation is always gateway
-            </summary>
-            <param name="ownerId"></param>
-            <param name="maxResourceIds"></param>
-            <param name="forceRefresh"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Microsoft.Azure.Documents.Services.Gateway.WFStore.GatewayAddressResolver.Microsoft#Azure#Documents#IAddressResolver#GenerateCollectionRootIdAsync(Microsoft.Azure.Documents.DocumentServiceRequest,System.Int32,System.Boolean)">
-            <summary>
-            Not called because Collection creation is always gateway
-            </summary>
-            <param name="notused"></param>
-            <param name="maxResourceIds"></param>
-            <param name="forceRefresh"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Microsoft.Azure.Documents.Services.Gateway.WFStore.GatewayAddressResolver.Microsoft#Azure#Documents#IAddressResolver#GetChildResourcePartitions(System.String)">
-            <summary>
-            Not called because Database deletion is always gateway
-            </summary>
-            <param name="ownerId"></param>
-            <returns></returns>
-        </member>
-        <member name="T:Microsoft.Azure.Documents.Client.GatewayProxy">
-            <summary>
-            StoreProxy implementation via Gateway.
-            </summary>
-        </member>
         <member name="T:Microsoft.Azure.Documents.Linq.ConstantFolding">
             <summary>
             Simplifies an Expression tree evaluating everything that can be evaluated 
@@ -10588,12 +11202,6 @@
             Input subquery.
             </summary>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Linq.QueryUnderConstruction.SetInputElementType(System.Type)">
-            <summary>
-            Set the type of the element that the query computes on.
-            </summary>
-            <param name="elementType">Type of value computed on.</param>
-        </member>
         <member name="M:Microsoft.Azure.Documents.Linq.QueryUnderConstruction.CreateFrom">
             <summary>
             Create a FROM clause from a set of FROM parameter bindings.
@@ -10622,12 +11230,6 @@
             <param name="inScope">Set of parameter names in scope.</param>
             <returns>A new query containing a select clause.</returns>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Linq.QueryUnderConstruction.GetOutputElementType">
-            <summary>
-            This should only be called when the query is complete.
-            </summary>
-            <returns>The type of the output element.</returns>
-        </member>
         <member name="M:Microsoft.Azure.Documents.Linq.QueryUnderConstruction.AddWhereClause(Microsoft.Azure.Documents.Linq.SqlWhereClause,System.Type,System.Collections.Generic.HashSet{System.Linq.Expressions.ParameterExpression})">
             <summary>
             Add a Where clause to a query; may need to create a new query.
@@ -10648,23 +11250,13 @@
             Binding for the FROM parameters.
             </summary>
         </member>
-        <member name="P:Microsoft.Azure.Documents.Linq.QueryUnderConstruction.WhereInputElementType">
-            <summary>
-            Type of element from input collection.
-            </summary>
-        </member>
-        <member name="P:Microsoft.Azure.Documents.Linq.QueryUnderConstruction.OutputElementType">
-            <summary>
-            Type of element from output collection.
-            </summary>
-        </member>
-        <member name="T:Microsoft.Azure.Documents.Linq.SQLTranslator">
+        <member name="T:Microsoft.Azure.Documents.Linq.SqlTranslator">
             <summary>
             Wrapper class for translating LINQ to DocDB SQL.
             </summary>
         </member>
-        <member name="M:Microsoft.Azure.Documents.Linq.SQLTranslator.TranslateExpression(System.Linq.Expressions.Expression)">
-            <summary> 
+        <member name="M:Microsoft.Azure.Documents.Linq.SqlTranslator.TranslateExpression(System.Linq.Expressions.Expression)">
+            <summary>
             This function exists for testing only.
             </summary>
             <param name="inputExpression">Expression to translate.</param>
@@ -12093,10 +12685,10 @@
             Helper class to assist user creating the various Uris needed for use with the DocumentClient
             </summary>
             <example>
-            The example below uses UriFactory to create a CollectionLink and then uses that to create a Document.
+            The example below uses UriFactory to create a DocumentCollectionLink and then uses that to create a Document.
             <code language="c#">
             <![CDATA[ 
-            Uri collUri = UriFactory.CreateCollectionUri("MyDb", "MyCollection");
+            Uri collUri = UriFactory.CreateDocumentCollectionUri("MyDb", "MyCollection");
             var doc = await client.CreateDocumentAsync(collUri, new {id = "MyDoc"});
             ]]>
             </code>
@@ -12114,6 +12706,18 @@
             <seealso cref="M:System.Uri.EscapeUriString(System.String)"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.UriFactory.CreateCollectionUri(System.String,System.String)">
+            <summary>
+            Given a database and collection id, this creates a collection link.
+            </summary>
+            <param name="databaseId">The database id</param>
+            <param name="collectionId">The collection id</param>
+            <returns>
+            A collection link in the format of /dbs/{0}/colls/{1}/ with {0} being a Uri escaped version of the <paramref name="databaseId"/> and {1} being <paramref name="collectionId"/>
+            </returns>
+            <remarks>Would be used when updating or deleting a <see cref="T:Microsoft.Azure.Documents.DocumentCollection"/>, creating <see cref="T:Microsoft.Azure.Documents.Document"/>, a <see cref="T:Microsoft.Azure.Documents.StoredProcedure"/>, a <see cref="T:Microsoft.Azure.Documents.Trigger"/>, a <see cref="T:Microsoft.Azure.Documents.UserDefinedFunction"/> or when executing a query with CreateDocumentQuery/&gt;</remarks>
+            <seealso cref="M:System.Uri.EscapeUriString(System.String)"/>
+        </member>
+        <member name="M:Microsoft.Azure.Documents.Client.UriFactory.CreateDocumentCollectionUri(System.String,System.String)">
             <summary>
             Given a database and collection id, this creates a collection link.
             </summary>
@@ -12148,19 +12752,6 @@
             A document link in the format of /dbs/{0}/colls/{1}/docs/{2}/ with {0} being a Uri escaped version of the <paramref name="databaseId"/>, {1} being <paramref name="collectionId"/> and {2} being the <paramref name="documentId"/>
             </returns>
             <remarks>Would be used when creating an <see cref="T:Microsoft.Azure.Documents.Attachment"/>, or when replacing or deleting a <see cref="T:Microsoft.Azure.Documents.Document"/></remarks>
-            <seealso cref="M:System.Uri.EscapeUriString(System.String)"/>
-        </member>
-        <member name="M:Microsoft.Azure.Documents.Client.UriFactory.CreateAttachmentFeedUri(System.String,System.String,System.String)">
-            <summary>
-            Given a database, collection and document id, this creates an attachments link.
-            </summary>
-            <param name="databaseId">The database id</param>
-            <param name="collectionId">The collection id</param>
-            <param name="documentId">The document id</param>
-            <returns>
-            An attachment link in the format of /dbs/{0}/colls/{1}/docs/{2}/attachments/ with {0} being a Uri escaped version of the <paramref name="databaseId"/>, {1} being <paramref name="collectionId"/> and {2} being the <paramref name="documentId"/>
-            </returns>
-            <remarks>Would be used when replacing or deleting an <see cref="T:Microsoft.Azure.Documents.Attachment"/></remarks>
             <seealso cref="M:System.Uri.EscapeUriString(System.String)"/>
         </member>
         <member name="M:Microsoft.Azure.Documents.Client.UriFactory.CreatePermissionUri(System.String,System.String,System.String)">

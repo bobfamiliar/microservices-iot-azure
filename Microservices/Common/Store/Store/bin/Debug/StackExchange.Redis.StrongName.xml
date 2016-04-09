@@ -5193,6 +5193,11 @@
             Are Lua changes to the calling database transparent to the calling client?
             </summary>
         </member>
+        <member name="P:StackExchange.Redis.RedisFeatures.HyperLogLogCountSlaveSafe">
+            <summary>
+            Is PFCOUNT supported on slaves?
+            </summary>
+        </member>
         <member name="P:StackExchange.Redis.RedisFeatures.Version">
             <summary>
             The Redis version of the server

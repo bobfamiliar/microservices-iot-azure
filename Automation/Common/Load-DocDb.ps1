@@ -1,12 +1,10 @@
 ﻿[CmdletBinding()]
 Param(
     [Parameter(Mandatory=$True, Position=0, HelpMessage="The path to the Git Repo.")]
-    [string]$Repo,
-    [Parameter(Mandatory=$True, Position=1, HelpMessage="The name of the Azure Subscription.")]
-    [string]$Subscription,
-    [Parameter(Mandatory=$True, Position=2, HelpMessage="The name of the Azure Region/Location: East US, Central US, West US.")]
+    [string]$Path,
+    [Parameter(Mandatory=$True, Position=1, HelpMessage="The name of the Azure Region/Location: East US, Central US, West US.")]
     [string]$DocDbConnStr,
-    [Parameter(Mandatory=$True, Position=3, HelpMessage="The common prefix for resource naming")]
+    [Parameter(Mandatory=$True, Position=2, HelpMessage="The common prefix for resource naming")]
     [string]$CollectionName
 )
 
@@ -14,33 +12,14 @@ Param(
 # I M P O R T S
 #######################################################################################
 
-$loaddocdb = $repo + "\Automation\Common\Load-DocumentDb.psm1"
-Import-Module -Name $loaddocdb
+$invokeDT = $Path + "\Automation\Common\Invoke-DataTransfer.psm1"
+Import-Module -Name $invokeDT
 
 #######################################################################################
 # V A R I A B L E S 
 #######################################################################################
 
-$DataPath = $Repo + "\Automation\Deploy\Data\" + $CollectionName
-
-#######################################################################################
-# F U N C T I O N S
-#######################################################################################
-
-Function Select-Subscription()
-{
-    Param([String] $Subscription)
-
-    Try
-    {
-        Select-AzureRmSubscription -SubscriptionName $Subscription
-    }
-    Catch
-    {
-        Write-Verbose -Message $Error[0].Exception.Message
-        Write-Verbose -Message "Exiting due to exception: Subscription Not Selected."
-    }
-}
+$DataPath = $Path + "\Automation\Deploy\Data\" + $CollectionName
 
 ##########################################################################################
 # M A I N
@@ -51,13 +30,10 @@ $Error.Clear()
 # Mark the start time.
 $StartTime = Get-Date
 
-# Select Subscription
-Select-Subscription $Subscription
+Write-Output -Verbose "Load-DocumentDb '$Path' '$DataPath'"
 
-Write-Output -Verbose "Load-DocumentDb '$Repo' '$DataPath'"
-
-# load docdb
-Load-DocumentDb $Repo $DataPath $DocDbConnStr $CollectionName
+# create a database, a collection and transfer data if there is any
+Invoke-DataTransfer $Path $DataPath $DocDbConnStr $CollectionName
 
 # Mark the finish time.
 $FinishTime = Get-Date

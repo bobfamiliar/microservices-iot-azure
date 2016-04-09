@@ -1,8 +1,0 @@
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\CSCFGUpdate\CSCFGUpdate\bin\Debug\CSCFGUpdate.exe.config
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\CSCFGUpdate\CSCFGUpdate\bin\Debug\CSCFGUpdate.exe
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\CSCFGUpdate\CSCFGUpdate\bin\Debug\CSCFGUpdate.pdb
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\CSCFGUpdate\CSCFGUpdate\obj\Debug\CSCFGUpdate.exe
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\CSCFGUpdate\CSCFGUpdate\obj\Debug\CSCFGUpdate.pdb
-C:\Users\bobfa\Source\Repos\Microservices\Tools\CSCFGUpdate\CSCFGUpdate\bin\Debug\CSCFGUpdate.exe.config
-C:\Users\bobfa\Source\Repos\Microservices\Tools\CSCFGUpdate\CSCFGUpdate\obj\Debug\CSCFGUpdate.exe
-C:\Users\bobfa\Source\Repos\Microservices\Tools\CSCFGUpdate\CSCFGUpdate\obj\Debug\CSCFGUpdate.pdb

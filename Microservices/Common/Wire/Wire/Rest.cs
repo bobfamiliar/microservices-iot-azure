@@ -9,15 +9,19 @@ namespace LooksFamiliar.Microservices.Common.Wire
     {
         public static string Get(Uri url)
         {
-            var webrequest = WebRequest.Create(url) as HttpWebRequest;
-            if (webrequest == null) return null;
-            webrequest.Method = WebRequestMethods.Http.Get;
-            webrequest.ContentType = "application/json";
-            var webresponse = (HttpWebResponse)webrequest.GetResponse();
+            var request = WebRequest.Create(url) as HttpWebRequest;
+            if (request == null) return null;
+
+            request.Method = WebRequestMethods.Http.Get;
+            request.ContentType = "application/json";
+
+            var response = (HttpWebResponse)request.GetResponse();
+
             var enc = Encoding.GetEncoding("utf-8");
-            var responseStream = new StreamReader(webresponse.GetResponseStream(), enc);
+            var responseStream = new StreamReader(response.GetResponseStream(), enc);
             var json = responseStream.ReadToEnd();
-            webresponse.Close();
+            response.Close();
+
             return json;
         }
 

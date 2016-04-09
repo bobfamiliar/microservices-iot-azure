@@ -1,5 +1,0 @@
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Dashboards\Biometrics\BiometricsDashboard\Models\bin\Release\Models.dll
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Dashboards\Biometrics\BiometricsDashboard\Models\bin\Release\Models.pdb
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Dashboards\Biometrics\BiometricsDashboard\Models\obj\Release\Models.csprojResolveAssemblyReference.cache
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Dashboards\Biometrics\BiometricsDashboard\Models\obj\Release\Models.dll
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Dashboards\Biometrics\BiometricsDashboard\Models\obj\Release\Models.pdb

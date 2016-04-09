@@ -11,28 +11,45 @@
 ![Microservices, IoT and Azure][1]
 
 ----------
-##Overview
-This code repository is a reference implementation that accompanies the book Microservices, IoT and Azure by Bob Familiar and published by Apress Media. The book is available for purchase [here][2].
 
+##Update - 04.09.2016
+
+In order to support the velocity of development in Azure and Azure PowerShell, I have created a new content collection that is offered as a 5-module hands-on-lab that focuses on automation, microservices and IoT. The previous content collection for the book is located in the 'archive' folder. To leverage the new material, see the Lab Workbooks in the documentation folder.
+
+##Overview
 The book, Microservices, IoT and Azure, provides practical guidance for adopting a high velocity, continuous delivery process to create reliable, scalable, Software-as-a-Service (SaaS) solutions that are designed and built using a microservice architecture, deployed to the Azure cloud, and managed through automation. Microservices, IoT, and Azure offers software developers, architects, and operations engineers’ step-by-step directions for building cloud-native applications through code, script, exercises, and a working reference implementation.
 
-##The Reference Implementation
+This code repository is a reference implementation that accompanies the book Microservices, IoT and Azure by Bob Familiar and published by Apress Media. The book is available for purchase [here][2].
 
-A working definition of microservices is contrasted with with traditional monolithic layered architecture. A fictitious, home-biomedical startup is used to demonstrate microservice architecture and automation capabilities for cross-cutting and business services as well as connected device scenarios for Internet of Things (IoT). Several Azure PaaS services are detailed including Storage, SQL Database, DocumentDb, Redis Cache, Cloud Services, Web API’s, API Management, IoT Hub, IoT Suite, Event Hub, and Stream Analytics. Finally the book looks to the future and examines Service Fabric to see how microservices are becoming the de facto approach to building reliable software in the cloud.
+This hands-on training content provides foundational knowledge in how to architect and implement an IoT solution using Windows 10 Core IoT hardware devices and Azure IoT Hub and Stream Analytics. Both Device to Cloud and Cloud to Device communication patterns are covered.
 
-The Reference Implementation will provide PowerShell scripts to automate the Provisioning, Build, Deployment and De-Provisioning of the solution. The Solution consists of several independent Microservices built using C# and ASP.NET Web API along with DocumentDb and Redis. In addition there is an IoT component of the solution that is built using Event Hub, Stream Analytics, Cloud Services and SQL Database. There is a sample real-time data visualization client that demonstrates how to orchestrate the Microservices into a complete solution.
+At the conclusion of going through this workshop you will have provisioned an Azure environment using PowerShell that contains IoT Hub, DocumentDb, API Management, Storage, Service Bus, Stream Analytics Jobs and a Microservice for provisioning devices. You will also develop a Windows 10 Core IoT application that sends telemetry and receives incoming commands as well as develop a real-time dashboard that displays incoming telemetry and has the ability to send commands to the remote device. Device Provisioning, IoT Hub monitoring and techniques for dynamic business rules are covered.
 
-Viewed as a whole, the Reference Implementation demonstrates how to use several Azure PaaS Services together along with custom code and automation scripts to create a modern Software-as-a-Service solution. 
+The solution that you will build and deploy consists of the following components:
 
-The software is provided under the Microsoft Public License (Ms-PL) and as such the software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions.
+- Device: a Windows 10 IoT Core IoT solution that dynamically connects to IoT hub providing heartbeat and climate telemetry and processes several incoming commands. The device application will run on your local system or can be deployed to a Windows 10 Core IoT device
+- Dashboard: a Windows 10 WPF application that displays registered devices, map location using Bing Maps, incoming device telemetry and alarms
+- Provision API: A ReST API the provides end points for device registration with IoT Hub and DocumentDb and device manifest lookup via unique serial number. The Dashboard application registered devise and the Device application uses the API to retrieve its manifest
+- IoT Hub Listener: a debugging utility that provides visibility to messages arriving from the device
 
-##What you will learn
- - What are Microservices and why are they a compelling architecture pattern for SaaS applications 
- - How to design, develop and deploy Microservices using Visual Studio, PowerShell and Azure
- - Microservice patterns for traditional line of business solutions 
- - Microservice patterns for Internet of Things and Big Data Analytics solutions 
- - Techniques for automating Microservice provisioning, build and deployment 
- - What is Service Fabric and how that is the future direction for Microservices on the Microsoft Azure
+And the following Azure Services
+
+- API Management – provides proxy, policy injection and developer registration services for ReST APIs
+- Service Bus Namespace – two queues are defined, one that is a target for all incoming messages, the other will have receive messages that contain data that is an alarm state, an out of range value
+- IoT Hub – IoT Hub provides device registration, incoming telemetry at scale and cloud to device message services
+- Stream Analytics Job – two solution uses two Stream Analytics jobs, one that handles all incoming messages routing them to one queue and the other identifies alarm states and routs those messages to another queue
+
+##Requirements
+
+ - Windows 10
+ - [Azure Account][4]
+ - [Visual Studio 2015][5]
+ - [Visual Studio 2015 Update 1][6] 
+ - [PowerShell 5][7]
+ - [Azure SDK 2.8 and Azure PowerShell 1.2.1][8]
+ - [Windows 10 Core IoT Templates][9] 
+ - Go to the [Bing Maps Portal][10], sign in and request a developer key
+ - Install the [Bing Maps WPF Control][11]
 
 See the [Wiki][3] for release notes and known issues
 
@@ -53,25 +70,18 @@ See the [Wiki][3] for release notes and known issues
 
 **Chapters 8: Service Fabric** - Service Fabric is the microservice management, runtime, and infrastructure that Microsoft uses to build, deploy, and manage their own first-class cloud services such as SQL Database, DocumentDb, Bing Cortana, Halo Online, Skype for Business, In Tune, Event Hubs, and many others. This chapter provides a primer and demonstrates Service Fabric by migrating one of the Web API microservices to Service Fabric.
 
-##Requirements
-
- - Windows 8.1 or Windows 10
- - Visual Studio 2015
- - .NET 4.5.2
- - Azure SDK 2.7.1
- - Azure PowerShell 0.9.8
-
-##Recommended
-
- - SQL Server Management Studio
- - Postman
- - Azure Management Studio
-
-##Setup
-The details of how to setup the reference implementation are detailed in Chapter 5. There are 10 exercises that take you step by step through the provision, build and deploy process. Once the process is complete, you will have a complete end-to-end IoT solution running in Azure.
-
 ----------
 
   [1]: http://bobfamiliar.azurewebsites.net/wp-content/uploads/2015/10/bookcover-small.jpg
   [2]: http://amzn.to/1RFjiUW "Amazon"
   [3]: https://github.com/bobfamiliar/microservices-iot-azure/wiki
+[4]: https://azure.microsoft.com/en-us/ 
+[5]: https://www.visualstudio.com/en-us/products/vs-2015-product-editions.aspx 
+[6]: https://www.visualstudio.com/en-us/news/vs2015-update1-vs.aspx 
+[7]: https://www.microsoft.com/en-us/download/details.aspx?id=50395
+[8]: https://azure.microsoft.com/en-us/downloads/
+[9]: https://visualstudiogallery.msdn.microsoft.com/55b357e1-a533-43ad-82a5-a88ac4b01dec
+[10]: https://www.bingmapsportal.com 
+[11]: https://www.microsoft.com/en-us/download/details.aspx?id=27165 
+
+

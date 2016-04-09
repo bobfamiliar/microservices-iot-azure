@@ -1,8 +1,0 @@
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\ConfigUpdate\ConfigUpdate\bin\Debug\ConfigUpdate.exe.config
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\ConfigUpdate\ConfigUpdate\bin\Debug\ConfigUpdate.exe
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\ConfigUpdate\ConfigUpdate\bin\Debug\ConfigUpdate.pdb
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\ConfigUpdate\ConfigUpdate\obj\Debug\ConfigUpdate.exe
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\ConfigUpdate\ConfigUpdate\obj\Debug\ConfigUpdate.pdb
-C:\Users\bobfa\Source\Repos\Microservices\Tools\ConfigUpdate\ConfigUpdate\bin\Debug\ConfigUpdate.exe.config
-C:\Users\bobfa\Source\Repos\Microservices\Tools\ConfigUpdate\ConfigUpdate\obj\Debug\ConfigUpdate.exe
-C:\Users\bobfa\Source\Repos\Microservices\Tools\ConfigUpdate\ConfigUpdate\obj\Debug\ConfigUpdate.pdb

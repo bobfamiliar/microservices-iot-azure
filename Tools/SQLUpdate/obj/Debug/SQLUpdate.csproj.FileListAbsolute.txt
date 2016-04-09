@@ -1,8 +1,0 @@
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\SQLUpdate\bin\Debug\SQLUpdate.exe.config
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\SQLUpdate\bin\Debug\SQLUpdate.exe
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\SQLUpdate\bin\Debug\SQLUpdate.pdb
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\SQLUpdate\obj\Debug\SQLUpdate.exe
-C:\Users\bobfa\Source\Repos\LooksFamiliar\Tools\SQLUpdate\obj\Debug\SQLUpdate.pdb
-C:\Users\bobfa\Source\Repos\Microservices\Tools\SQLUpdate\bin\Debug\SQLUpdate.exe.config
-C:\Users\bobfa\Source\Repos\Microservices\Tools\SQLUpdate\obj\Debug\SQLUpdate.exe
-C:\Users\bobfa\Source\Repos\Microservices\Tools\SQLUpdate\obj\Debug\SQLUpdate.pdb
