@@ -1,0 +1,157 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "azureLocation": {
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string"
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_ZRS",
+        "Premium_LRS"
+      ]
+    },
+    "serviceBusNamespace": {
+      "type": "string"
+    },
+    "serviceBusMessageQueue": {
+      "type": "string"
+    },
+    "serviceBusAlarmQueue": {
+      "type": "string"
+    },
+    "databaseAccount": {
+      "type": "string"
+    },
+    "iotHubName": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "docDBResourceId": "[resourceId('Microsoft.DocumentDb/databaseAccounts', parameters('databaseAccount'))]",
+    "iotHubResourceId": "[resourceId('Microsoft.Devices/Iothubs', parameters('iotHubName'))]",
+    "iotHubKeyName": "iothubowner",
+    "iotHubVersion": "2015-08-15-preview",
+    "iotHubKeyResource": "[resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('iotHubKeyName'))]",
+    "d2c2d-messages-queue": "d2c2d-messages-queue",
+    "d2c2d-alarms-queue": "d2c2d-alarms-queue"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('serviceBusNamespace')]",
+      "type": "Microsoft.ServiceBus/namespaces",
+      "location": "[parameters('azureLocation')]",
+      "properties": {
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "[parameters('serviceBusMessageQueue')]",
+          "type": "Queues",
+          "dependsOn": [
+            "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespace'))]"
+          ],
+          "properties": {
+          },
+          "resources": [
+          ]
+        },
+        {
+          "apiVersion": "2015-08-01",
+          "name": "[parameters('serviceBusAlarmQueue')]",
+          "type": "Queues",
+          "dependsOn": [
+            "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespace'))]"
+          ],
+          "properties": {
+          },
+          "resources": [
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[parameters('storageAccountName')]",
+      "apiVersion": "2015-06-15",
+      "location": "[parameters('azureLocation')]",
+      "properties": {
+        "accountType": "[parameters('storageAccountType')]"
+      }
+    },
+    {
+      "apiVersion": "2015-04-08",
+      "type": "Microsoft.DocumentDb/databaseAccounts",
+      "name": "[parameters('databaseAccount')]",
+      "location": "[parameters('azureLocation')]",
+      "properties": {
+        "name": "[parameters('databaseAccount')]",
+        "databaseAccountOfferType": "Standard"
+      }
+    },
+    {
+      "apiVersion": "2016-02-03",
+      "type": "Microsoft.Devices/IotHubs",
+      "name": "[parameters('iotHubName')]",
+      "location": "[parameters('azureLocation')]",
+      "sku": {
+        "name": "S1",
+        "tier": "Standard",
+        "capacity": 1
+      },
+      "properties": {
+        "location": "[parameters('azureLocation')]"
+      }
+    },
+    {
+      "apiVersion": "[variables('iotHubVersion')]",
+      "name": "[concat(parameters('iotHubName'), '/events/', variables('d2c2d-messages-queue'))]",
+      "type": "Microsoft.Devices/Iothubs/eventhubEndpoints/ConsumerGroups",
+      "dependsOn": [
+        "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
+      ]
+    },
+    {
+      "apiVersion": "[variables('iotHubVersion')]",
+      "name": "[concat(parameters('iotHubName'), '/events/', variables('d2c2d-alarms-queue'))]",
+      "type": "Microsoft.Devices/Iothubs/eventhubEndpoints/ConsumerGroups",
+      "dependsOn": [
+        "[concat('Microsoft.Devices/Iothubs/', parameters('iotHubName'))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "iotHubHostName": {
+      "type": "string",
+      "value": "[reference(variables('iotHubResourceId')).hostName]"
+    },
+    "iotHubKey": {
+      "type": "string",
+      "value": "[listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey]"
+    },
+    "iotHubConnectionString": {
+      "type": "string",
+      "value": "[concat('HostName=', reference(variables('iotHubResourceId')).hostName, ';SharedAccessKeyName=', variables('iotHubKeyName'), ';SharedAccessKey=', listkeys(variables('iotHubKeyResource'), variables('iotHubVersion')).primaryKey)]"
+    },
+    "docDbURI": {
+      "type": "string",
+      "value": "[reference(variables('docDBResourceId')).documentEndpoint]"
+    },
+    "docDbKey": {
+      "type": "string",
+      "value": "[listkeys(variables('docDBResourceId'), '2015-04-08').primaryMasterKey]"
+    },
+    "docDbConnectionString": {
+      "type": "string",
+      "value": "[concat('AccountEndpoint=', reference(variables('docDBResourceId')).documentEndpoint, ';AccountKey=', listkeys(variables('docDBResourceId'), '2015-04-08').primaryMasterKey)]"
+    }
+  }
+}

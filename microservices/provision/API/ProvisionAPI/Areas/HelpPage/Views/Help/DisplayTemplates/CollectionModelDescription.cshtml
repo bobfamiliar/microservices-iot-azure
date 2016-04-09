@@ -1,0 +1,6 @@
+@using ProvisionAPI.Areas.HelpPage.ModelDescriptions
+@model ProvisionAPI.Areas.HelpPage.ModelDescriptions.CollectionModelDescription
+@if (Model.ElementDescription is ComplexTypeModelDescription)
+{
+    @Html.DisplayFor(m => m.ElementDescription)
+}

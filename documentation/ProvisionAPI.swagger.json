@@ -1,0 +1,28 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Provision API - TST",
+    "version": "1.0"
+  },
+  "host": "[hostname].azurewebsites.net",
+  "basePath": "/provision",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/devicemanifests": {
+      "get": {
+        "operationId": "All Device Manifests",
+        "responses": { }
+      },
+      "post": {
+        "operationId": "Create Device Manifest",
+        "responses": { }
+      },
+      "put": {
+        "operationId": "Update Device Manifest",
+        "responses": { }
+      }
+    }
+  }
+}

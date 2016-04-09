@@ -1,0 +1,9 @@
+[
+  {
+    "MessageType": 2,
+    "TempUpperBound": 100.0,
+    "TempLowerBound": 32.0,
+    "HumidityUpperBound": 75.0,
+    "HumidityLowerBound": 10.0
+  }
+]

@@ -1,0 +1,46 @@
+﻿<Window x:Class="Looksfamiliar.D2C2D.Dashboard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:local="clr-namespace:Looksfamiliar.D2C2D.Dashboard"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1050"
+        Loaded="MainWindow_OnLoaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"></ColumnDefinition>
+            <ColumnDefinition Width="75*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+            <Button x:Name="ProvisionButton" Height="30" Margin="10,5,10,5" Content="New Device" FontSize="16" Click="ProvisionButton_Click"></Button>
+            <Button x:Name="PingButton" Height="30" Margin="10,5,10,5" Content="Ping" FontSize="16"></Button>
+            <Button x:Name="StartButton" Height="30" Margin="10,5,10,5" Content="Start" FontSize="16" Click="StartButton_Click"></Button>
+            <Button x:Name="StopButton" Height="30" Margin="10,5,10,5" Content="Stop" FontSize="16" Click="StopButton_Click"></Button>
+            <TextBlock Margin="10,10,10,10" TextAlignment="Center" FontSize="16">Heartbeat</TextBlock>
+            <TextBox x:Name="PingFeed" Margin="10,0,10,10" Height="250" IsEnabled="true" VerticalScrollBarVisibility="Auto"></TextBox>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+            <TextBlock Margin="10,5,10,5" TextAlignment="Center" FontSize="16">Devices</TextBlock>
+            <ListBox x:Name="DeviceList" Width="750" Height="100" Margin="10,5,10,10" SelectionChanged="DeviceList_OnSelectionChanged" ></ListBox>
+            <!--<m:Map  x:Name="MyMap"  Width="750" Height="300" Mode="Road" CredentialsProvider="[YOUR-BING-MAPS-KEY-HERE]" Center="42.0,-71" ZoomLevel="12" AnimationLevel="Full"/>-->
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <TextBlock Margin="10,10,10,10" TextAlignment="Center" FontSize="16">Alarms</TextBlock>
+            <TextBox x:Name="AlarmFeed"  Margin="10,0,10,10" Height="140" IsEnabled="true" VerticalScrollBarVisibility="Auto"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Margin="10,10,10,10" TextAlignment="Center" FontSize="16">Telemetry</TextBlock>
+            <TextBox x:Name="TelemetryFeed"  Margin="10,0,10,10" Height="140" IsEnabled="true" VerticalScrollBarVisibility="Auto"></TextBox>
+        </StackPanel>
+    </Grid>
+</Window>

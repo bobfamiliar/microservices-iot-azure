@@ -1,0 +1,80 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "azureLocation": {
+        "type": "string"
+      },
+      "appSiteName": {
+        "type": "string"
+      },
+      "appServicePlan": {
+        "type": "string"
+      },
+      "appServicePlanSku": {
+        "type": "string",
+        "defaultValue": "Standard",
+        "allowedValues": [
+          "Free",
+          "Shared",
+          "Basic",
+          "Standard"
+        ]
+      },
+      "appServicePlanSkuSize": {
+        "type": "string",
+        "defaultValue": "0",
+        "allowedValues": [
+          "0",
+          "1",
+          "2"
+        ]
+      },
+      "msdeployPackageUri": {
+        "type": "string"
+      }
+    },
+    "resources": [
+      {
+        "apiVersion": "2014-04-01",
+        "name": "[parameters('appServicePlan')]",
+        "type": "Microsoft.Web/serverFarms",
+        "location": "[parameters('azureLocation')]",
+        "properties": {
+          "name": "[parameters('appServicePlan')]",
+          "sku": "[parameters('appServicePlanSku')]",
+          "workerSize": "[parameters('appServicePlanSkuSize')]",
+          "numberOfWorkers": 3
+        }
+      },
+      {
+        "apiVersion": "2014-04-01",
+        "name": "[parameters('appSiteName')]",
+        "type": "Microsoft.Web/Sites",
+        "location": "[parameters('azureLocation')]",
+        "dependsOn": [
+          "[concat('Microsoft.Web/serverFarms/', parameters('appServicePlan'))]"
+        ],
+        "properties": {
+          "name": "[parameters('appSiteName')]",
+          "serverFarm": "[parameters('appServicePlan')]"
+        },
+        "resources": [
+          {
+            "name": "MSDeploy",
+            "type": "Extensions",
+            "apiVersion": "2014-01-01",
+            "dependsOn": [ "[concat('Microsoft.Web/Sites/', parameters('appSiteName'))]" ],
+            "properties": {
+              "packageUri": "[parameters('msdeployPackageUri')]",
+              "dbType": "None",
+              "connectionString": "",
+              "setParameters": {
+                "IIS Web Application Name": "[parameters('appSiteName')]"
+              }
+            }
+          }
+        ]
+      }
+    ]
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.DataTransfer.WpfHost.Extensibility</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.DataTransfer.WpfHost.Extensibility.IDataAdapterConfigurationProvider">
+            <summary>
+            Provides configuration for data adapter.
+            </summary>
+        </member>
+        <member name="M:Microsoft.DataTransfer.WpfHost.Extensibility.IDataAdapterConfigurationProvider.CanProvide(System.Type)">
+            <summary>
+            Determines if current instance can provide configuration of <paramref name="configurationType" /> type.
+            </summary>
+            <param name="configurationType">Type of the desired configuration.</param>
+            <returns>true if current instance can provide desired configuration; otherwise, false.</returns>
+        </member>
+        <member name="P:Microsoft.DataTransfer.WpfHost.Extensibility.IDataAdapterConfigurationProvider.Presenter">
+            <summary>
+            Gets the read-write configuration presenter control.
+            </summary>
+        </member>
+        <member name="P:Microsoft.DataTransfer.WpfHost.Extensibility.IDataAdapterConfigurationProvider.SummaryPresenter">
+            <summary>
+            Gets the read-only configuration presenter control.
+            </summary>
+        </member>
+        <member name="P:Microsoft.DataTransfer.WpfHost.Extensibility.IDataAdapterConfigurationProvider.Configuration">
+            <summary>
+            Gets the current configuration instance.
+            </summary>
+            <remarks>
+            Returns null if configuration is not valid.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.DataTransfer.WpfHost.Extensibility.IDataAdapterConfigurationProvider.CommandLineArguments">
+            <summary>
+            Gets the collection of command line arguments, representing current configuration.
+            </summary>
+        </member>
+        <member name="T:AssemblyRef">
+            <summary>
+            Sets public key string for friend assemblies.
+            </summary>
+        </member>
+        <member name="F:AssemblyRef.ProductPublicKey">
+            <summary>ProductPublicKey is an official MS supported public key for external releases. TestPublicKey is an unsupported strong key for testing and internal use only</summary>
+        </member>
+    </members>
+</doc>
