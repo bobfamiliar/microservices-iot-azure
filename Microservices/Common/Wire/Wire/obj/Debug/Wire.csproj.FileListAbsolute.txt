@@ -1,7 +1,0 @@
-c:\users\bobfa\source\repos\d2c2d\Microservices\Common\Wire\Wire\obj\Debug\Wire.csprojResolveAssemblyReference.cache
-C:\Users\bobfa\Source\Repos\D2C2D\microservices\Common\Wire\Wire\bin\Debug\Wire.dll
-C:\Users\bobfa\Source\Repos\D2C2D\microservices\Common\Wire\Wire\bin\Debug\Wire.pdb
-C:\Users\bobfa\Source\Repos\D2C2D\microservices\Common\Wire\Wire\bin\Debug\Newtonsoft.Json.dll
-C:\Users\bobfa\Source\Repos\D2C2D\microservices\Common\Wire\Wire\bin\Debug\Newtonsoft.Json.xml
-C:\Users\bobfa\Source\Repos\D2C2D\microservices\Common\Wire\Wire\obj\Debug\Wire.dll
-C:\Users\bobfa\Source\Repos\D2C2D\microservices\Common\Wire\Wire\obj\Debug\Wire.pdb

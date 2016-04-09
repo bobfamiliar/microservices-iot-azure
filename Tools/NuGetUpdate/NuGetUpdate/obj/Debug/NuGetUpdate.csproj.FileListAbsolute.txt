@@ -1,1 +1,0 @@
-C:\Users\bobfa\Source\Repos\github\d2c2d\tools\NuGetUpdate\NuGetUpdate\bin\Debug\NuGetUpdate.exe.config
