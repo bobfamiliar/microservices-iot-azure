@@ -1,0 +1,81 @@
+    {  
+       "location":"East US",
+       "properties":{  
+          "sku":{  
+             "name":"standard"
+          },
+          "outputStartTime":"2015-10-20 15:05:59Z",
+          "outputStartMode":"CustomTime",
+          "eventsOutOfOrderPolicy":"drop",
+          "eventsOutOfOrderMaxDelayInSeconds":10,
+          "inputs":[  
+             {  
+                "name":"input",
+                "properties":{  
+                   "type":"stream",
+                   "serialization":{  
+                      "type":"JSON",
+                      "properties":{  
+                         "encoding":"UTF8"
+                      }
+                   },
+                   "datasource":{  
+                      "type":"Microsoft.ServiceBus/EventHub",
+                      "properties":{  
+                         "serviceBusNamespace":"looksfamiliarsbdev",
+                         "sharedAccessPolicyName":"RootManageSharedAccessKey",
+                         "sharedAccessPolicyKey":"pEXPRYrlQ8JBxtF8Vl2TWihIh1M0EhYg1olE1Qd7wGs=",
+                         "eventHubName":"biometrics"
+                      }
+                   }
+                }
+             }
+          ],
+          "transformation":{  
+             "name":"temperature-alarms",
+             "properties":{  
+                "streamingUnits":1,
+                "query":
+"WITH Device as (SELECT * from input)
+SELECT
+    Device.deviceid,
+    Device.participantid,
+    Device.location.longitude,
+    Device.location.latitude,
+    Device.reading,
+    DeviceSensors.ArrayValue.type,
+    DeviceSensors.ArrayValue.value
+INTO
+    output
+FROM
+    Device
+CROSS APPLY GetElements(Device.sensors) AS DeviceSensors
+WHERE
+     ((DeviceSensors.ArrayValue.type = 4) AND (DeviceSensors.ArrayValue.value > 104))"
+             }
+          },
+        "outputs": [
+          {
+            "name": "output",
+            "properties": {
+              "type": "stream",
+              "serialization": {
+                "type": "JSON",
+                "properties": {
+                  "encoding": "UTF8"
+                }
+              },
+              "datasource": {
+                "type": "Microsoft.ServiceBus/EventHub",
+                "properties": {
+                    "serviceBusNamespace":"looksfamiliarsbdev",
+                    "sharedAccessPolicyName":"RootManageSharedAccessKey",
+                    "sharedAccessPolicyKey":"pEXPRYrlQ8JBxtF8Vl2TWihIh1M0EhYg1olE1Qd7wGs=",
+                    "eventHubName":"alarms"
+                }
+              }
+            }
+          }
+        ]
+      }
+  }

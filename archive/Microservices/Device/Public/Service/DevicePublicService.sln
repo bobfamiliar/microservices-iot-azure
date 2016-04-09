@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevicePublicService", "DevicePublicService\DevicePublicService.csproj", "{A6DDF03B-B8BA-4A8E-85B6-3494F40E5B32}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E71AA926-7219-4756-B033-D96CE6ACE84B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6DDF03B-B8BA-4A8E-85B6-3494F40E5B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6DDF03B-B8BA-4A8E-85B6-3494F40E5B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6DDF03B-B8BA-4A8E-85B6-3494F40E5B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6DDF03B-B8BA-4A8E-85B6-3494F40E5B32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
