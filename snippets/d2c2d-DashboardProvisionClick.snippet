@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>d2c2d-DashboardProvisionClick</Title>
+      <Author>bobf@bluemetal.com</Author>
+      <Description>d2c2d workshop snippet</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp" Delimiter="$"><![CDATA[        private async void ProvisionButton_Click(object sender, RoutedEventArgs e)
+        {
+            var location = await GetLocationAsync();
+
+            // initialize a device manifest
+            var manifest = new DeviceManifest
+            {
+                latitude = location.lat,
+                longitude = location.lon,
+                manufacturer = "Looksfamiliar, Inc",
+                model = "Weather Station - Win 10 Core IoT",
+                firmwareversion = "1.0.0.0",
+                version = "1.0.0.0",
+                hub = ConfigurationManager.AppSettings["IoTHubName"],
+                serialnumber = "d2c2d-" + Guid.NewGuid()
+            };
+
+            manifest.properties.Add(new DeviceProperty("Hardware Platform", "Raspberry PI"));
+
+            // provision the device in IoT Hub and store the manifest in DocumentDb
+            manifest = _provisionM.Create(manifest);
+
+            MessageBox.Show($"New Device Provisioned: {manifest.serialnumber}", "Confirmation", MessageBoxButton.OK);
+
+            DeviceList.Items.Clear();
+
+            var devices = _provisionM.GetAll();
+
+            foreach (var device in devices.list)
+            {
+                DeviceList.Items.Add(device.serialnumber);
+            }
+
+            if (DeviceList.Items.Count <= 0) return;
+
+            StartButton.IsEnabled = true;
+            StopButton.IsEnabled = true;
+            PingButton.IsEnabled = true;
+        }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

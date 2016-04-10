@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>d2c2d-DeviceStartListenTask</Title>
+      <Author>bobf@bluemetal.com</Author>
+      <Description>d2c2d workshop snippet</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp" Delimiter="$" Kind="method decl"><![CDATA[        private static void StartListenTask(TextBox status)
+        {
+            _listenTask = Task.Factory.StartNew(async () =>
+            {
+                while (true)
+                {
+                    var message = await _deviceClient.ReceiveAsync();
+
+                    if (message == null)
+                        continue;
+
+                    var json = Encoding.ASCII.GetString(message.GetBytes());
+
+                    var command = JsonConvert.DeserializeObject<Command>(json);
+
+                    switch (command.CommandType)
+                    {
+                        case CommandTypeEnum.Ping:
+
+                            var ping = new Ping
+                            {
+                                Ack = AckMessage,
+                                Longitude = _deviceManifest.longitude,
+                                Latitude = _deviceManifest.latitude,
+                                DeviceId = _deviceManifest.serialnumber
+                            };
+
+                            json = JsonConvert.SerializeObject(ping);
+
+                            var pingMessage = new Message(Encoding.ASCII.GetBytes(json));
+
+                            try
+                            {
+                                await _deviceClient.SendEventAsync(pingMessage);
+                            }
+                            catch (Exception err)
+                            {
+                                var errMessage = err.Message;
+                                // not sure this will work as we are executing on bacground thread and UI element is on UI thread
+                                status.Text = errMessage; 
+                            }
+                            break;
+                        case CommandTypeEnum.Start:
+                            // the command is to start telemetry
+                            // get the parameter that define the upper and lower bounds
+                            var settings = JsonConvert.DeserializeObject<ClimateSettings>(command.CommandParameters);
+                            _sendingTelemetry = true;
+                            StartTelemetry(settings, status);
+                            break;
+                        case CommandTypeEnum.Stop:
+                            _sendingTelemetry = false;
+                            break;
+                        case CommandTypeEnum.UpdateFirmeware:
+                            // imagine
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    await _deviceClient.CompleteAsync(message);
+                }
+            });
+        }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

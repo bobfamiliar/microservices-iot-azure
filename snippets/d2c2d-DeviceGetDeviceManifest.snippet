@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>d2c2d-DeviceGetDeviceManifest</Title>
+      <Author>bobf@bluemetal.com</Author>
+      <Description>d2c2d workshop snippet</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp" Delimiter="$" Kind="method decl"><![CDATA[        private static async Task<DeviceManifest> GetDeviceManifest()
+        {
+            var client = new HttpClient();
+            var uriBuilder = new UriBuilder(ProvisionApi)
+            {
+                    Query = SubscriptionKey
+            };
+            var json = await client.GetStringAsync(uriBuilder.Uri);
+            return JsonConvert.DeserializeObject<DeviceManifest>(json);
+        }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

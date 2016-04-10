@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>d2c2d-DeviceStartPingTask</Title>
+      <Author>bobf@bluemetal.com</Author>
+      <Description>d2c2d workshop snippet</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp" Delimiter="$" Kind="method decl"><![CDATA[        private static void StartPingTask(TextBox status)
+        {
+            _pingTask = Task.Factory.StartNew(async () =>
+            {
+                while (true)
+                {
+                    var ping = new Ping
+                    {
+                        Ack = AckMessage,
+                        Longitude = _deviceManifest.longitude,
+                        Latitude = _deviceManifest.latitude,
+                        DeviceId = _deviceManifest.serialnumber
+                    };
+
+                    var json = JsonConvert.SerializeObject(ping);
+
+                    var message = new Message(Encoding.ASCII.GetBytes(json));
+
+                    try
+                    {
+                        await _deviceClient.SendEventAsync(message);
+                    }
+                    catch (Exception err)
+                    {
+                        var errMessage = err.Message;
+                        status.Text = errMessage;
+                    }
+
+                    await Task.Delay(30000);
+                }
+            });
+        }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

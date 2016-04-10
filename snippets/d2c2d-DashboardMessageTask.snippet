@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>d2c2d-DashboardMessageTask</Title>
+      <Author>bobf@bluemetal.com</Author>
+      <Description>d2c2d workshop snippet</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp" Delimiter="$"><![CDATA[            var messageTask = Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    var message = _messageClient.Receive();
+                    var messageBody = string.Empty;
+                    if (message == null) continue;
+
+                    try
+                    {
+                        messageBody = message.GetBody<string>();
+                        var obj = JsonConvert.DeserializeObject<MessageBase>(messageBody);
+                        switch (obj.MessageType)
+                        {
+                            case MessageTypeEnum.NotSet:
+                                throw new Exception("Message Type Not Set");
+                            case MessageTypeEnum.Ping:
+                                var ping = JsonConvert.DeserializeObject<Ping>(messageBody);
+
+                                Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
+                                    new ThreadStart(delegate
+                                    {
+                                        // update the map
+                                        var location = new Location(ping.Latitude, ping.Longitude);
+                                        var pin = new Pushpin {Location = location};
+
+                                        MyMap.Children.Add(pin);
+                                        MyMap.Center = location;
+                                        MyMap.ZoomLevel = 12;
+                                        MyMap.SetView(location, 12);
+                                        MyMap.Focusable = true;
+                                        MyMap.Focus();
+
+                                        var currHeartbeat = PingFeed.Text;
+                                        PingFeed.Text = string.Empty;
+                                        PingFeed.Text += $"{ping.DeviceId}\r\n";
+                                        PingFeed.Text += $"{ping.Ack}\r\n";
+                                        PingFeed.Text += $"{ping.Timestamp}\r\n\r\n";
+                                        PingFeed.Text += $"{currHeartbeat}";
+                                    }));
+
+                                break;
+                            case MessageTypeEnum.Climate:
+                                var climate = JsonConvert.DeserializeObject<Climate>(messageBody);
+                                Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
+                                    new ThreadStart(delegate
+                                    {
+                                        var currTelemetry = TelemetryFeed.Text;
+                                        TelemetryFeed.Text = string.Empty;
+                                        TelemetryFeed.Text += $"Timestamp:   {climate.Timestamp.ToLongDateString()} {climate.Timestamp.ToLongTimeString()}\r\n";
+                                        TelemetryFeed.Text += $"Temperature: {climate.Temperature}\r\n";
+                                        TelemetryFeed.Text += $"Humidity:    {climate.Humidity}\r\n\r\n";
+                                        TelemetryFeed.Text += $"{currTelemetry}\r\n\r\n";
+                                    }));
+                                break;
+                            case MessageTypeEnum.Command:
+                                // noop
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                        message.Complete();
+                    }
+                    catch (Exception err)
+                    {
+                        Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                        {
+                            var currTelemetry = TelemetryFeed.Text;
+                            TelemetryFeed.Text = string.Empty;
+                            TelemetryFeed.Text += $"{err.Message}\r\n";
+                            TelemetryFeed.Text += $"{messageBody}\r\n\r\n";
+                            TelemetryFeed.Text += $"{currTelemetry}\r\n\r\n";
+                            message.Abandon();
+                        }));
+                    }
+                }
+            });]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

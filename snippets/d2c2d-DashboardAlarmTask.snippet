@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>d2c2d-DashboardAlarmTask</Title>
+      <Author>bobf@bluemetal.com</Author>
+      <Description>d2c2d workshop snippet</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp" Delimiter="$"><![CDATA[            var alarmTask = Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    var alarm = _alarmClient.Receive();
+                    var messageBody = string.Empty;
+                    if (alarm == null) continue;
+
+                    try
+                    {
+                        messageBody = alarm.GetBody<string>();
+                        var obj = JsonConvert.DeserializeObject<MessageBase>(messageBody);
+                        switch (obj.MessageType)
+                        {
+                            case MessageTypeEnum.NotSet:
+                                throw new Exception("Message Type Not Set");
+                            case MessageTypeEnum.Ping:
+                                break;
+                            case MessageTypeEnum.Climate:
+                                var climate = JsonConvert.DeserializeObject<Climate>(messageBody);
+                                Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
+                                    new ThreadStart(delegate
+                                    {
+                                        var currAlarm = AlarmFeed.Text;
+                                        AlarmFeed.Text = string.Empty;
+                                        AlarmFeed.Text += $"!!! ALARM !!!\r\n";
+                                        AlarmFeed.Text += $"Timestamp:   {climate.Timestamp.ToLongDateString()} {climate.Timestamp.ToLongTimeString()}\r\n";
+                                        AlarmFeed.Text += $"Temperature: {climate.Temperature}\r\n";
+                                        AlarmFeed.Text += $"Humidity:    {climate.Humidity}\r\n\r\n";
+                                        AlarmFeed.Text += $"{currAlarm}\r\n\r\n";
+                                    }));
+                                break;
+                            case MessageTypeEnum.Command:
+                                // noop
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                        alarm.Complete();
+                    }
+                    catch (Exception err)
+                    {
+                        Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate
+                        {
+                            var currAlarm = AlarmFeed.Text;
+                            AlarmFeed.Text = string.Empty;
+                            AlarmFeed.Text += $"{err.Message}\r\n";
+                            AlarmFeed.Text += $"{messageBody}\r\n\r\n";
+                            AlarmFeed.Text += $"{currAlarm}\r\n\r\n";
+                            alarm.Abandon();
+                        }));
+                    }
+                }
+            });]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

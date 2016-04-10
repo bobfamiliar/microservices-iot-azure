@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>d2c2d-DeviceStartTelemetry</Title>
+      <Author>bobf@bluemetal.com</Author>
+      <Description>d2c2d workshop snippet</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>
+      </Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="csharp" Delimiter="$" Kind="method decl"><![CDATA[        private static void StartTelemetry(ClimateSettings settings, TextBox status)
+        {
+            _telemetryTask = Task.Factory.StartNew(async () =>
+            {
+                while (_sendingTelemetry)
+                {
+                    var random = new Random();
+
+                    var climate = new Climate
+                    {
+                        Longitude = _deviceManifest.longitude,
+                        Latitude = _deviceManifest.latitude,
+                        DeviceId = _deviceManifest.serialnumber,
+                        Temperature = random.Next((int) settings.MinTemperature, (int) settings.MaxTemperature),
+                        Humidity = random.Next((int) settings.MinHumidity, (int) settings.MaxHumiditiy)
+                    };
+
+                    var json = JsonConvert.SerializeObject(climate);
+
+                    var message = new Message(Encoding.ASCII.GetBytes(json));
+
+                    try
+                    {
+                        await _deviceClient.SendEventAsync(message);
+                    }
+                    catch (Exception err)
+                    {
+                        var errMessage = err.Message;
+                        status.Text = errMessage;
+                    }
+
+                    await Task.Delay(5000);
+                }
+            });
+        }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
