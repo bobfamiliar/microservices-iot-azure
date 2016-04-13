@@ -126,7 +126,7 @@ function Invoke-MsBuild
 	.NOTES
 	Name:   Invoke-MsBuild
 	Author: Daniel Schroeder (originally based on the module at http://geekswithblogs.net/dwdii/archive/2011/05/27/part-2-automating-a-visual-studio-build-with-powershell.aspx)
-	Version: 1.5
+	Version: 1.6.3
 #>
 	[CmdletBinding(DefaultParameterSetName="Wait")]
 	param
@@ -136,8 +136,7 @@ function Invoke-MsBuild
 		[string] $Path,
 
 		[parameter(Mandatory=$false)]
-		[Alias("Params")]
-		[Alias("P")]
+		[Alias("Params","P")]
 		[string] $MsBuildParameters,
 
 		[parameter(Mandatory=$false)]
@@ -147,19 +146,16 @@ function Invoke-MsBuild
 
 		[parameter(Mandatory=$false,ParameterSetName="Wait")]
 		[ValidateNotNullOrEmpty()]
-		[Alias("AutoLaunch")]
-		[Alias("A")]
+		[Alias("AutoLaunch","A")]
 		[switch] $AutoLaunchBuildLogOnFailure,
 
 		[parameter(Mandatory=$false,ParameterSetName="Wait")]
 		[ValidateNotNullOrEmpty()]
-		[Alias("Keep")]
-		[Alias("K")]
+		[Alias("Keep","K")]
 		[switch] $KeepBuildLogOnSuccessfulBuilds,
 
 		[parameter(Mandatory=$false)]
-		[Alias("Show")]
-		[Alias("S")]
+		[Alias("Show","S")]
 		[switch] $ShowBuildWindow,
 
 		[parameter(Mandatory=$false)]
@@ -170,8 +166,7 @@ function Invoke-MsBuild
 		[switch] $PassThru,
 
 		[parameter(Mandatory=$false)]
-		[Alias("Get")]
-		[Alias("G")]
+		[Alias("Get","G")]
 		[switch] $GetLogPath
 	)
 
@@ -216,6 +211,12 @@ function Invoke-MsBuild
 			# Build the arguments to pass to MsBuild.
 			$buildArguments = """$Path"" $MsBuildParameters /fileLoggerParameters:LogFile=""$buildLogFilePath"""
 
+			# If the user hasn't set the UseSharedCompilation mode explicitly, turn it off (it's on by default, but can cause msbuild to hang for some reason).
+			if ($buildArguments -notlike '*UseSharedCompilation*')
+			{
+				$buildArguments += " /p:UseSharedCompilation=false " # prevent processes from hanging (Roslyn compiler?)
+			}
+
 			# If a VS Command Prompt was found, call MSBuild from that since it sets environmental variables that may be needed to build some projects.
 			if ($vsCommandPrompt -ne $null)
 			{
@@ -250,7 +251,7 @@ function Invoke-MsBuild
 		{
 			$buildCrashed = $true;
 			$errorMessage = $_
-			Write-Error ("Unexpect error occured while building ""$Path"": $errorMessage" );
+			Write-Error ("Unexpected error occurred while building ""$Path"": $errorMessage");
 		}
 
 		# If the build crashed, return that the build didn't succeed.
@@ -307,53 +308,62 @@ function Get-VisualStudioCommandPromptPath
 #>
 
 	# Get some environmental paths.
-	$vs2010CommandPrompt = $env:VS100COMNTOOLS + "vcvarsall.bat"
-	$vs2012CommandPrompt = $env:VS110COMNTOOLS + "VsDevCmd.bat"
-	$vs2013CommandPrompt = $env:VS120COMNTOOLS + "VsDevCmd.bat"
+	$vs2015CommandPromptPath = $env:VS140COMNTOOLS + 'VsDevCmd.bat'
+	$vs2013CommandPromptPath = $env:VS120COMNTOOLS + 'VsDevCmd.bat'
+	$vs2012CommandPromptPath = $env:VS110COMNTOOLS + 'VsDevCmd.bat'
+	$vs2010CommandPromptPath = $env:VS100COMNTOOLS + 'vcvarsall.bat'
+	$vsCommandPromptPaths = @($vs2015CommandPromptPath, $vs2013CommandPromptPath, $vs2012CommandPromptPath, $vs2010CommandPromptPath)
 
 	# Store the VS Command Prompt to do the build in, if one exists.
-	$vsCommandPrompt = $null
-	if (Test-Path $vs2013CommandPrompt) { $vsCommandPrompt = $vs2013CommandPrompt }
-	elseif (Test-Path $vs2012CommandPrompt) { $vsCommandPrompt = $vs2012CommandPrompt }
-	elseif (Test-Path $vs2010CommandPrompt) { $vsCommandPrompt = $vs2010CommandPrompt }
+	$vsCommandPromptPath = $null
+	foreach ($path in $vsCommandPromptPaths)
+	{
+		try
+		{
+			if (Test-Path -Path $path)
+			{
+				$vsCommandPromptPath = $path
+				break
+			}
+		}
+		catch {}
+	}
 
 	# Return the path to the VS Command Prompt if it was found.
-	return $vsCommandPrompt
+	return $vsCommandPromptPath
 }
 
 function Get-MsBuildPath
 {
 <#
 	.SYNOPSIS
-	Gets the path to the latest version of MsBuild.exe. Returns $null if a path is not found.
+	Gets the path to the latest version of MsBuild.exe. Throws an exception if MSBuild.exe is not found.
 	
 	.DESCRIPTION
-	Gets the path to the latest version of MsBuild.exe. Returns $null if a path is not found.
+	Gets the path to the latest version of MsBuild.exe. Throws an exception if MSBuild.exe is not found.
 #>
 
-	# Array of valid MsBuild versions
-	$versions = @("14.0", "12.0", "4.0", "3.5", "2.0")
+	# Get the path to the directory that the latest version of MSBuild is in.
+	$MsBuildToolsVersionsStrings = Get-ChildItem -Path 'HKLM:\SOFTWARE\Microsoft\MSBuild\ToolsVersions\' | Where-Object { $_ -match '[0-9]+\.[0-9]' } | Select-Object -ExpandProperty PsChildName
+	[double[]]$MsBuildToolsVersions = $MsBuildToolsVersionsStrings | ForEach-Object { [Convert]::ToDouble($_) }
+	$LargestMsBuildToolsVersion = $MsBuildToolsVersions | Sort-Object -Descending | Select-Object -First 1 
+	$MsBuildToolsVersionsKeyToUse = Get-Item -Path ('HKLM:\SOFTWARE\Microsoft\MSBuild\ToolsVersions\{0:n1}' -f $LargestMsBuildToolsVersion)
+	$MsBuildDirectoryPath = $MsBuildToolsVersionsKeyToUse | Get-ItemProperty -Name 'MSBuildToolsPath' | Select -ExpandProperty 'MSBuildToolsPath'
 
-	# Loop through each version from largest to smallest.
-	foreach ($version in $versions) 
+	if(!$MsBuildDirectoryPath)
 	{
-		# Try to find an instance of that particular version in the registry
-		$regKey = "HKLM:\SOFTWARE\Microsoft\MSBuild\ToolsVersions\${Version}"
-		$itemProperty = Get-ItemProperty $RegKey -ErrorAction SilentlyContinue
+		throw 'MsBuild.exe was not found on the system.'          
+	}
 
-		# If registry entry exsists, then get the msbuild path and retrun 
-		if ($itemProperty -ne $null -and $itemProperty.MSBuildToolsPath -ne $null)
-		{
-			# Get the path from the registry entry, and return it if it exists.
-			$msBuildPath = Join-Path $itemProperty.MSBuildToolsPath -ChildPath "MsBuild.exe"
-			if (Test-Path $msBuildPath)
-			{
-				return $msBuildPath
-			}
-		}
-	} 
+	# Get the path to the MSBuild executable.
+	$MsBuildPath = (Join-Path -Path $MsBuildDirectoryPath -ChildPath 'msbuild.exe')
 
-	# Return that we were not able to find MsBuild.exe.
-	return $null
+	if(!(Test-Path $MsBuildPath -PathType Leaf))
+	{
+		throw 'MsBuild.exe was not found on the system.'          
+	}
+
+	return $MsBuildPath
 }
+
 Export-ModuleMember -Function Invoke-MsBuild
